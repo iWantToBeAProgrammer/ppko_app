@@ -1,11 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Bell } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      const topNav = window.scrollY;
+      topNav > 10 ? setIsScrolled(true) : setIsScrolled(false);
+    };
+  }, []);
+
   return (
-    <nav className="font-semibold w-full sticky top-0 left-0">
-      <div className="navbar-wrapper flex justify-between w-full items-center bg-primary px-12 py-4">
+    <nav className="font-semibold w-full sticky z-50 top-0 ">
+      <div
+        className={`navbar-wrapper flex justify-between w-full items-center px-12 py-4 ${
+          isScrolled ? "bg-primary/50 backdrop-blur-lg border border-foreground" : "bg-primary"
+        }`}
+      >
         <div className="navbar-logo cursor-pointer">
           <Image
             width={80}
@@ -18,19 +34,29 @@ export default function Navbar() {
         <div className="navbar-list">
           <ul className="flex items-center gap-8">
             <li>
-              <a className="hover:underline hover:font-bold" href="#">Beranda</a>
+              <a className="hover:underline hover:font-bold" href="#">
+                Beranda
+              </a>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">Tumbuh Kembang</a>
+              <a className="hover:underline hover:font-bold" href="#">
+                Tumbuh Kembang
+              </a>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">Resep Makanan</a>
+              <a className="hover:underline hover:font-bold" href="#">
+                Resep Makanan
+              </a>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">Galeri</a>
+              <a className="hover:underline hover:font-bold" href="#">
+                Galeri
+              </a>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">Artikel</a>
+              <a className="hover:underline hover:font-bold" href="#">
+                Artikel
+              </a>
             </li>
           </ul>
         </div>
