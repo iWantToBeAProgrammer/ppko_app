@@ -27,7 +27,7 @@ export default function TumbuhKembang() {
   ];
 
   return (
-    <section id="tumbuh-kembang" className="relative overflow-x-clip h-screen mb-32">
+    <section id="tumbuh-kembang" className="relative overflow-x-clip h-screen mb-48">
       <div className="border-wrapper">
         <svg
           xmlns="http://www.w3.org/2000/svg"
