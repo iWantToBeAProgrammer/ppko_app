@@ -3,7 +3,6 @@ import Navbar from "@/components/common/navbar";
 import Blog from "@/components/sections/blog";
 import ResepMakanan from "@/components/sections/resep-makanan";
 import TumbuhKembang from "@/components/sections/tumbuh-kembang";
-import Gallery from "@/components/sections/gallery";
 import TumbuhKembangInfo from "@/components/sections/tumbuh-kembang-info";
 
 export default function Home() {
@@ -13,6 +12,7 @@ export default function Home() {
       <Hero />
       <TumbuhKembang />
       <ResepMakanan />
+      <TumbuhKembangInfo />
       <Blog/>
     </div>
   );
