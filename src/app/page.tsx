@@ -2,6 +2,8 @@ import Hero from "@/components/sections/hero";
 import Navbar from "@/components/common/navbar";
 import ResepMakanan from "@/components/sections/resep-makanan";
 import TumbuhKembang from "@/components/sections/tumbuh-kembang";
+import Gallery from "@/components/sections/gallery";
+import TumbuhKembangInfo from "@/components/sections/tumbuh-kembang-info";
 
 export default function Home() {
   return (
@@ -10,6 +12,9 @@ export default function Home() {
       <Hero />
       <TumbuhKembang />
       <ResepMakanan />
+      <TumbuhKembangInfo />
+
+      {/* <Gallery /> */}
     </div>
   );
 }
