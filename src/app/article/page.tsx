@@ -2,6 +2,8 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import CardArticle from "../../components/common/card-article";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 
 // Array data artikel
@@ -59,26 +61,25 @@ const articlesData = [
 export default function ArticlePage() {
   return (
 
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-clip">
       {/* First Trending Artikel Section */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="container mx-auto py-12 ">
         <div className="mb-8">
           <div className="flex items-start gap-8 mb-4">
             <div className="flex-1">
-              <h1 className="text-[38px] font-bold text-black mb-2 h-[60px]">Tranding Artikel</h1>
+              <h1 className="text-[2.375rem] font-bold text-black mb-2 h-[3.75rem]">Tranding Artikel</h1>
             </div>
             
-            <div className="text-gray-600 text-sm leading-relaxed flex-1 text-[18px] mr-[-25px]">
-            Selamat datang di Galeri Kami, tempat di mana kami membagikan dokumentasi kegiatan yang telah dilakukan di Desa Gemawang. Melalui foto-foto ini.
+            <div className="text-gray-600 leading-relaxed flex-1 text-[1.125rem max-w-lg">
+              Selamat datang di Galeri Kami, tempat di mana kami membagikan dokumentasi kegiatan yang telah dilakukan di Desa Gemawang. Melalui foto-foto ini.
             </div>
           </div>
-          
-          <div className="w-375 h-0.5 bg-gray-300 mb-15"></div>
         </div>
+        <Separator className="mb-12 mt-4"/>
         
         <div className="flex gap-8">
           {/* Main Featured Article */}
-          <div className="w-[1100px]">
+          <div className="w-[68.75rem]">
             <Card className="overflow-hidden shadow-lg rounded-lg pb-0 py-0">
               <div className="relative">
                 <Image
@@ -86,20 +87,21 @@ export default function ArticlePage() {
                   alt="Baby with banana"
                   width={920}
                   height={380}
-                  className="w-full h-[300px] object-cover rounded-t-xl"
+                  className="w-full h-[18.75rem] object-cover rounded-t-xl"
                 />
                 <div className="absolute top-4 right-4 z-10">
-                  <span className="bg-primary text-black px-3 py-1 rounded text-sm font-medium">
+                  <Badge className="px-3 py-2 font-semibold">
                     Nutrisi
-                  </span>
+                  </Badge>
                 </div>
                 <div className="bg-primary p-6 rounded-b-xl">
-                  <h2 className="text-[32px] font-bold text-black mb-3 leading-tight">
+                  <h2 className="text-[2rem] font-bold text-black mb-3 leading-tight">
                     Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
                   </h2>
-                  <p className="text-[18px] text-gray-600 text-sm mb-3 leading-relaxed">
-                   Mempersiapkan generasi emas 2045 bukan hal mudah. Pasalnya, stunting masih menjadi masalah gizi utama bagi bayi dan anak dibawah usia dua tahun di...                  </p>
-                   <p className="text-[18px] text-gray-600 text-sm mb-3 leading-relaxed">
+                  <p className="text-[1.125rem] text-gray-600 mb-3 leading-relaxed">
+                    Mempersiapkan generasi emas 2045 bukan hal mudah. Pasalnya, stunting masih menjadi masalah gizi utama bagi bayi dan anak dibawah usia dua tahun di...
+                  </p>
+                  <p className="text-[1.125rem] text-gray-600 mb-3 leading-relaxed">
                     Dr. Andi Setiawan, Pakar Gizi
                   </p>
                 </div>
@@ -108,11 +110,11 @@ export default function ArticlePage() {
           </div>
 
           {/* Side Cards */}
-          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-0 justify-between">
             {/* Card 1 */}
             <div className="flex gap-4">
-              <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer flex-shrink-0 py-0 pb-0">
-                <div className="relative h-32 w-32 overflow-hidden rounded-t-xl h-[172px] w-[300px]">
+              <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer flex-shrink-0 pb-0 py-0 h-[10.80rem]">
+                <div className="relative overflow-hidden rounded-t-xl h-[10.75rem] w-[18.75rem]">
                   <Image
                     src="/assets/images/article/article.png"
                     alt="Baby with banana"
@@ -121,23 +123,21 @@ export default function ArticlePage() {
                   />
                 </div>
               </Card>
-              <div className="flex flex-col justify-center p-4">
-              <div className="aflex flex-col mb-8 -mt-1.5">
-              <span className="bg-primary text-black px-4 py-2 rounded-xl text-xs font-medium text-[18px] ">
-                  Nutrisi
-              </span> 
-              </div>
-                <h3 className="text-[18px] font-semibold text-black leading-snug mb-6 line-clamp-2">
-                    Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
+              <div className="flex flex-col gap-3.5 justify-center p-4">
+                <div className="flex flex-col -mt-1.5 max-w-[5.55rem]">
+                  <Badge className="px-3 py-2 font-semibold">Nutrisi</Badge>
+                </div>
+                <h3 className="text-[1.125rem] font-semibold text-black leading-snug line-clamp-2">
+                  Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
                 </h3>
-                 <p className="text-gray-500 text-xs text-[16px]">Dr. Andi Setiawan, Pakar Gizi</p>
+                <p className="text-gray-500 text-[1rem]">Dr. Andi Setiawan, Pakar Gizi</p>
               </div>
             </div>
 
             {/* Card 2 */}
             <div className="flex gap-4">
-              <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer flex-shrink-0 py-0 pb-0">
-                <div className="relative h-32 w-32 overflow-hidden rounded-t-xl h-[172px] w-[300px]">
+              <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer flex-shrink-0 pb-0 py-0 h-[10.80rem]">
+                <div className="relative overflow-hidden rounded-t-xl h-[10.75rem] w-[18.75rem]">
                   <Image
                     src="/assets/images/article/article.png"
                     alt="Baby with banana"
@@ -146,22 +146,20 @@ export default function ArticlePage() {
                   />
                 </div>
               </Card>
-              <div className="flex flex-col justify-center p-4">
-              <div className="aflex flex-col mb-8 -mt-1.5">
-              <span className="bg-primary text-black px-4 py-2 rounded-xl text-xs font-medium text-[18px] ">
-                  Nutrisi
-              </span> 
-              </div>
-                <h3 className="text-[18px] font-semibold text-black leading-snug mb-6 line-clamp-2">
-                    Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
+              <div className="flex flex-col gap-3.5 justify-center p-4">
+                <div className="flex flex-col -mt-1.5 max-w-[5.55rem]">
+                  <Badge className="px-3 py-2 font-semibold">Nutrisi</Badge>
+                </div>
+                <h3 className="text-[1.125rem] font-semibold text-black leading-snug line-clamp-2">
+                  Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
                 </h3>
-                 <p className="text-gray-500 text-xs text-[16px]">Dr. Andi Setiawan, Pakar Gizi</p>
+                <p className="text-gray-500 text-[1rem]">Dr. Andi Setiawan, Pakar Gizi</p>
               </div>
             </div>
             {/* Card 3 */}
             <div className="flex gap-4">
-              <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer flex-shrink-0 py-0 pb-0">
-                <div className="relative h-32 w-32 overflow-hidden rounded-t-xl h-[172px] w-[300px]">
+              <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer flex-shrink-0 pb-0 py-0 h-[10.80rem]">
+                <div className="relative overflow-hidden rounded-t-xl h-[10.75rem] w-[18.75rem]">
                   <Image
                     src="/assets/images/article/article.png"
                     alt="Baby with banana"
@@ -170,16 +168,14 @@ export default function ArticlePage() {
                   />
                 </div>
               </Card>
-              <div className="flex flex-col justify-center p-4">
-              <div className="aflex flex-col mb-8 -mt-1.5">
-              <span className="bg-primary text-black px-4 py-2 rounded-xl text-xs font-medium text-[18px] ">
-                  Nutrisi
-              </span> 
-              </div>
-                <h3 className="text-[18px] font-semibold text-black leading-snug mb-6 line-clamp-2">
-                    Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
+              <div className="flex flex-col gap-3.5 justify-center p-4">
+                <div className="flex flex-col -mt-1.5 max-w-[5.55rem]">
+                  <Badge className="px-3 py-2 font-semibold">Nutrisi</Badge>
+                </div>
+                <h3 className="text-[1.125rem] font-semibold text-black leading-snug line-clamp-2">
+                  Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
                 </h3>
-                 <p className="text-gray-500 text-xs text-[16px]">Dr. Andi Setiawan, Pakar Gizi</p>
+                <p className="text-gray-500 text-[1rem]">Dr. Andi Setiawan, Pakar Gizi</p>
               </div>
             </div>
           </div>
@@ -191,19 +187,19 @@ export default function ArticlePage() {
         <div className="mb-8">
           <div className="flex items-start gap-8 mb-4">
             <div className="flex-1">
-              <h1 className="text-[38px] font-bold text-black mb-2 h-[60px]">Tranding Artikel</h1>
+              <h1 className="text-[2.375rem] font-bold text-black mb-2 h-[3.75rem]">Tranding Artikel</h1>
             </div>
             
-            <div className="text-gray-600 text-sm leading-relaxed flex-1 text-[18px] mr-[-25px]">
+            <div className="text-gray-600 leading-relaxed flex-1 text-[1.125rem max-w-lg">
             Selamat datang di Galeri Kami, tempat di mana kami membagikan dokumentasi kegiatan yang telah dilakukan di Desa Gemawang. Melalui foto-foto ini.
             </div>
           </div>
           
-          <div className="w-375 h-0.5 bg-gray-300 mb-18"></div>
         </div>
+          <Separator className="mb-12 mt-4"/>
 
         {/* Article Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-">
           {articlesData.map((article) => (
             <CardArticle
               key={article.id}
