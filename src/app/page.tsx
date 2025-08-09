@@ -8,7 +8,6 @@ import TumbuhKembangInfo from "@/components/sections/tumbuh-kembang-info";
 export default function Home() {
   return (
     <div className=" w-full min-h-screen">
-      <Navbar />
       <Hero />
       <TumbuhKembang />
       <ResepMakanan />

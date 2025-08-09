@@ -16,10 +16,12 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="font-semibold w-full sticky z-50 top-0 ">
+    <nav className="font-semibold w-full fixed z-50 top-0">
       <div
         className={`navbar-wrapper flex justify-between w-full items-center px-12 py-4 ${
-          isScrolled ? "bg-primary/50 backdrop-blur-lg border border-foreground" : "bg-primary"
+          isScrolled
+            ? "bg-primary/50 backdrop-blur-lg border border-foreground"
+            : "bg-primary"
         }`}
       >
         <div className="navbar-logo cursor-pointer">
@@ -75,6 +77,14 @@ export default function Navbar() {
             <Bell size={32} />
           </Button>
         </div>
+      </div>
+
+      <div className={`navbar-border-wrapper w-full -translate-y-5 ${isScrolled ? "opacity-0" : "opacity-100"} transition-opacity duration-200 ease-in-out`}>
+        <img
+          src="/assets/images/hero/hero-top-border.svg"
+          alt="hero_border"
+          className="w-full"
+        />
       </div>
     </nav>
   );

@@ -3,15 +3,7 @@ import { Button } from "../ui/button";
 
 export default function Hero() {
   return (
-    <section id="hero" className="w-full bg-[#FFE0E9]">
-      <div className="hero-border-wrapper w-full -translate-y-5 ">
-        <img
-          src="/assets/images/hero/hero-top-border.svg"
-          alt="hero_border"
-          className="w-full"
-        />
-      </div>
-
+    <section id="hero" className="w-full bg-[#FFE0E9] pt-24">
       <div className="hero-content text-foreground bg-[url(/assets/images/hero/hero-bg.png)] w-full h-full bg-cover bg-center py-20 bg-no-repeat">
         <div className="container mx-auto h-full flex flex-col items-center justify-center ">
           <div className="hero-content-wrapper w-1/2 max-2xl:w-3/4 text-center space-y-8">
