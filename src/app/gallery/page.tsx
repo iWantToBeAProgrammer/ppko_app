@@ -2,7 +2,7 @@ import ActivityCard from "@/components/common/activity-card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Image from "next/image";
 
-export default function Gallery() {
+export default function GalleryPage() {
   const cardData = [
     {
       title: "Kegiatan Pembangunan",
@@ -127,7 +127,7 @@ export default function Gallery() {
             </p>
           </div>
 
-          <div className="activity-card-wrapper mt-12 w-full flex justify-center">
+          <div className="activity-card-wrapper mb-32 w-full flex justify-center">
             <Carousel
               opts={{
                 align: "start",
@@ -140,7 +140,7 @@ export default function Gallery() {
                     key={index}
                     className="md:basis-1/2 lg:basis-1/5"
                   >
-                    <div className="p-1">
+                    <div className="pt-12">
                       <ActivityCard
                         title={item.title}
                         description={item.description}

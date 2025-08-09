@@ -4,15 +4,17 @@ import Blog from "@/components/sections/blog";
 import ResepMakanan from "@/components/sections/resep-makanan";
 import TumbuhKembang from "@/components/sections/tumbuh-kembang";
 import TumbuhKembangInfo from "@/components/sections/tumbuh-kembang-info";
+import Gallery from "@/components/sections/gallery";
 
 export default function Home() {
   return (
-    <div className=" w-full min-h-screen">
+    <div className="w-full min-h-screen">
       <Hero />
       <TumbuhKembang />
       <ResepMakanan />
       <TumbuhKembangInfo />
-      <Blog/>
+      <Gallery />
+      <Blog />
     </div>
   );
 }
