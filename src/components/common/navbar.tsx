@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -36,29 +37,29 @@ export default function Navbar() {
         <div className="navbar-list">
           <ul className="flex items-center gap-8">
             <li>
-              <a className="hover:underline hover:font-bold" href="#">
+              <Link className="hover:underline hover:font-bold" href="/">
                 Beranda
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">
+              <Link className="hover:underline hover:font-bold" href="#tumbuh-kembang">
                 Tumbuh Kembang
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">
+              <Link className="hover:underline hover:font-bold" href="#resep-makanan">
                 Resep Makanan
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">
+              <Link className="hover:underline hover:font-bold" href="/gallery">
                 Galeri
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="hover:underline hover:font-bold" href="#">
+              <Link className="hover:underline hover:font-bold" href="/article">
                 Artikel
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
