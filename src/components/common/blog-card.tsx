@@ -8,36 +8,52 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import Link from "next/link";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
 
 export default function BlogCard({
   title,
   image,
-  writer,
+  description,
+  link,
+  category,
 }: {
   title: string;
   image: string;
-  writer: string;
+  description: string;
+  link: string;
+  category: string;
 }) {
   return (
-    <Card className="w-full max-w-sm overflow-hidden pt-0 rounded-md">
+    <>
+    <Card className="w-full max-w-sm overflow-hidden pt-0 rounded-md shadow-none border-0 outline-0 h-96">
       {/* 1. Letakkan gambar di luar CardHeader agar lebarnya penuh */}
       <Image
         width={400}
         height={150}
-        className="w-full object-cover" // object-cover agar gambar tidak gepeng
+        className="w-full object-cover object-center rounded-4xl" 
         src={"https://picsum.photos/300/150"} // Ganti dengan path gambar Anda
         alt="Pentingnya Peran Keluarga dalam Mencegah Stunting"
       />
 
-      {/* 2. Gunakan CardHeader untuk membungkus judul dan deskripsi */}
-      <CardHeader className="">
-        <CardTitle>
+      
+      <CardHeader className="mx-0">
+        <Badge className="mx-0">{category}</Badge>
+        <CardTitle className="">
           {title}
         </CardTitle>
-        <CardDescription>
-          {writer}
+        <CardDescription className="text-md">
+          {description}
         </CardDescription>
+        <Link className="text-md hover:underline tracking-wider" href={link}>
+          {link}
+        </Link>
       </CardHeader>
+
     </Card>
+
+    </>
+
   );
 }
