@@ -53,7 +53,7 @@ export default function GalleryPage() {
     <div className="w-full relative">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="gallery min-h-screen flex flex-col items-center justify-center w-full max-2xl:mt-12 overflow-x-clip py-2 sm:py-12 md:py-8">
-          <div className="gallery-title-wrapper mt-[-12rem] sm:mt-12 text-center w-full sm:w-3/4 mx-auto px-4 sm:px-2">
+          <div className="gallery-title-wrapper mt-[-2rem] sm:mt-18 text-center w-full sm:w-3/4 mx-auto px-4 sm:px-2">
             <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl uppercase mb-4 sm:mb-2 font-semibold tracking-wide text-[1.75rem] leading-[2rem] sm:text-3xl sm:leading-normal lg:text-5xl">
               Galeri Kami
             </h1>
@@ -112,7 +112,7 @@ export default function GalleryPage() {
           </div>
         </div>
 
-        <div className="our-activity mt-[-14rem] sm:mt-8">
+        <div className="our-activity mt-[-3rem] sm:mt-12">
           <div className="our-activity-wrapper w-full sm:w-3/4 mx-auto text-center px-4 sm:px-2">
             <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl uppercase mb-4 sm:mb-2 font-semibold tracking-wide">
               Kegiatan Kami
