@@ -24,7 +24,7 @@ export default function Hero() {
             </Button>
           </div>
           <div className="hero-bottom-wrapper w-full h-full">
-            <div className="image-wrapper w-full flex justify-between h-full items-start">
+            <div className="image-wrapper w-full flex justify-between h-full items-start h-48 sm:h-64 md:h-80">
               <Image
                 width={250}
                 height={250}
