@@ -1,15 +1,118 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model profiles {
+  id                 String         @id @db.Uuid
+  first_name         String?
+  last_name          String?
+  address            String?
+  role               Role           @default(user)
+  village_id         Int?
+  // Relations
+  village            Village?       @relation("ProfileVillage", fields: [village_id], references: [village_id])
+  representedVillage Village?       @relation("VillageRepresentative")
+  children           Child[]
+  zScoreRecords      ZScoreRecord[] @relation("CadreRecords")
+  createdGalleries   Gallery[]
+  createdFoodRecipes FoodRecipe[]
+}
+
+model Village {
+  village_id        Int      @id @default(autoincrement())
+  name              String
+  address           String
+  representative_id String   @unique @db.Uuid
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  // Relations
+  representative profiles   @relation("VillageRepresentative", fields: [representative_id], references: [id])
+  profiles       profiles[] @relation("ProfileVillage")
+
+  @@map("villages")
+}
+
+model Child {
+  child_id      Int      @id @default(autoincrement())
+  parent_id     String   @db.Uuid
+  name          String
+  date_of_birth DateTime @db.Date
+  gender        Gender
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Relations
+  parent        profiles       @relation(fields: [parent_id], references: [id])
+  zScoreRecords ZScoreRecord[]
+
+  @@map("children")
+}
+
+model ZScoreRecord {
+  record_id        Int      @id @default(autoincrement())
+  child_id         Int
+  cadre_id         String   @db.Uuid
+  height_cm        Float
+  weight_kg        Float
+  score            Float
+  measurement_date DateTime @db.Date
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  // Relations
+  child Child    @relation(fields: [child_id], references: [child_id])
+  cadre profiles @relation("CadreRecords", fields: [cadre_id], references: [id])
+
+  @@map("z_score_records")
+}
+
+model Gallery {
+  gallery_id    Int      @id @default(autoincrement())
+  title         String
+  image_url     String
+  description   String?  @db.Text
+  created_by_id String   @db.Uuid
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Relations
+  created_by profiles @relation(fields: [created_by_id], references: [id])
+
+  @@map("galleries")
+}
+
+model FoodRecipe {
+  recipe_id     Int      @id @default(autoincrement())
+  title         String
+  description   String   @db.Text
+  image_url     String
+  ingredients   String   @db.Text
+  instructions  String   @db.Text
+  created_by_id String   @db.Uuid
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Relations
+  created_by profiles @relation(fields: [created_by_id], references: [id])
+
+  @@map("food_recipes")
+}
+
+enum Role {
+  admin
+  cadre
+  user
+}
+
+enum Gender {
+  male
+  female
 }

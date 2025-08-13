@@ -5,9 +5,15 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/app/contexts/AuthContext";
+import { signOut } from "@/actions/auth-action";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const { user } = useAuth();
 
   useEffect(() => {
     window.onscroll = () => {
@@ -17,7 +23,11 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="font-semibold w-full fixed z-50 top-0">
+    <nav
+      className={`font-semibold w-full fixed z-50 top-0 ${
+        isAuthPage ? "hidden" : "block"
+      }`}
+    >
       <div
         className={`navbar-wrapper flex justify-between w-full items-center px-12 py-4 ${
           isScrolled
@@ -42,12 +52,18 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link className="hover:underline hover:font-bold" href="#tumbuh-kembang">
+              <Link
+                className="hover:underline hover:font-bold"
+                href="#tumbuh-kembang"
+              >
                 Tumbuh Kembang
               </Link>
             </li>
             <li>
-              <Link className="hover:underline hover:font-bold" href="#resep-makanan">
+              <Link
+                className="hover:underline hover:font-bold"
+                href="#resep-makanan"
+              >
                 Resep Makanan
               </Link>
             </li>
@@ -65,12 +81,24 @@ export default function Navbar() {
         </div>
 
         <div className="navbar-button flex items-center gap-3">
-          <Button
-            className="bg-transparent border border-foreground rounded-3xl font-semibold cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5"
-            size={"lg"}
-          >
-            Login
-          </Button>
+          {!user ? (
+            <Link href={"/login"}>
+              <Button
+                className={` bg-transparent border border-foreground rounded-3xl font-semibold cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5`}
+                size={"lg"}
+              >
+                Login
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={() => signOut()}
+              className={` bg-transparent border border-foreground rounded-3xl font-semibold cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5`}
+              size={"lg"}
+            >
+              Logout
+            </Button>
+          )}
           <Button
             className="bg-foreground text-primary rounded-full hover:text-primary cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5 hover:text-foreground"
             size={"icon"}
@@ -80,7 +108,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className={`navbar-border-wrapper w-full -translate-y-5 ${isScrolled ? "opacity-0" : "opacity-100"} transition-opacity duration-200 ease-in-out`}>
+      <div
+        className={`navbar-border-wrapper w-full -translate-y-5 ${
+          isScrolled ? "opacity-0" : "opacity-100"
+        } transition-opacity duration-200 ease-in-out`}
+      >
         <img
           src="/assets/images/hero/hero-top-border.svg"
           alt="hero_border"
