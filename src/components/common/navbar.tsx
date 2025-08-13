@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Bell } from "lucide-react";
+import { Bell, User, User2, User2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
@@ -14,7 +14,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isAuthPage = pathname === "/login" || pathname === "/register";
-  const isAdminPage = pathname.startsWith("/admin");
+  const isAdminPage =
+    pathname.startsWith("/admin") || pathname === "/dashboard";
   const { user } = useAuth();
 
   useEffect(() => {
@@ -93,20 +94,13 @@ export default function Navbar() {
               </Button>
             </Link>
           ) : (
-            <Button
-              onClick={() => signOut()}
-              className={` bg-transparent border border-foreground rounded-3xl font-semibold cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5`}
-              size={"lg"}
-            >
-              Logout
-            </Button>
+            <Link href={"/dashboard"}>
+              <div className="flex justify-center items-center bg-background text-foreground p-3 gap-2 rounded-full shadow-lg hover:-translate-y-0.5 transition-transform duration-200 ease-in">
+                <User size={24} />
+                Dashboard
+              </div>
+            </Link>
           )}
-          <Button
-            className="bg-foreground text-primary rounded-full hover:text-primary cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5 hover:text-foreground"
-            size={"icon"}
-          >
-            <Bell size={32} />
-          </Button>
         </div>
       </div>
 

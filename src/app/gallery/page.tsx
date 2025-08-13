@@ -1,8 +1,15 @@
 import ActivityCard from "@/components/common/activity-card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import Image from "next/image";
 
 export default function GalleryPage() {
+  
   const cardData = [
     {
       title: "Kegiatan Pembangunan",
@@ -19,7 +26,8 @@ export default function GalleryPage() {
     },
     {
       title: "Kegiatan Sosial",
-      description: "Program sosial untuk meningkatkan kesejahteraan masyarakat.",
+      description:
+        "Program sosial untuk meningkatkan kesejahteraan masyarakat.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
@@ -54,10 +62,10 @@ export default function GalleryPage() {
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="gallery min-h-screen flex flex-col items-center justify-center w-full max-2xl:mt-12 overflow-x-clip py-2 sm:py-12 md:py-8">
           <div className="gallery-title-wrapper mt-[-2rem] sm:mt-18 text-center w-full sm:w-3/4 mx-auto px-4 sm:px-2">
-            <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl uppercase mb-4 sm:mb-2 font-semibold tracking-wide text-[1.75rem] leading-[2rem] sm:text-3xl sm:leading-normal lg:text-5xl">
+            <h1 className="text-center text-3xl sm:text-4xl  uppercase mb-4 sm:mb-2 font-semibold tracking-wide text-[1.75rem] leading-[2rem] sm:leading-normal lg:text-5xl">
               Galeri Kami
             </h1>
-            <p className="text-black/70 tracking-wider text-sm sm:text-md leading-relaxed text-[0.875rem] leading-[1.25rem] sm:text-sm sm:leading-relaxed">
+            <p className="text-black/70 tracking-wider text-sm sm:text-md leading-relaxed text-[0.875rem]  sm:text-sm sm:leading-relaxed">
               {" "}
               Selamat datang di Galeri Kami, tempat di mana kami membagikan
               dokumentasi kegiatan yang telah dilakukan di Desa Gemawang.
@@ -67,14 +75,15 @@ export default function GalleryPage() {
               seluruh lapisan masyarakat.
             </p>
           </div>
-          
+
           {/* Mobile: Single image display */}
           <div className="image-wrapper w-full h-48 sm:h-64 md:h-80 lg:h-96 mt-8 sm:mt-12 lg:grid lg:grid-cols-4 lg:gap-1 lg:perspective-near mb-2 sm:mb-0">
             {/* Mobile view - single image */}
             <div className="lg:hidden h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-center rounded-lg shadow-lg"></div>
-            
+
             {/* Desktop view - 4 panel layout */}
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "0% 0%",
@@ -83,7 +92,8 @@ export default function GalleryPage() {
               }}
             ></div>
 
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "33.3333% 0%",
@@ -92,7 +102,8 @@ export default function GalleryPage() {
               }}
             ></div>
 
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "66.6666% 0%",
@@ -101,7 +112,8 @@ export default function GalleryPage() {
               }}
             ></div>
 
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 -translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 -translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "100% 0%",
