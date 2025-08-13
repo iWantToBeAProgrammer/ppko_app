@@ -50,15 +50,14 @@ export default function GalleryPage() {
   ];
 
   return (
-    <div className="w-full relative">
+<div className="w-full relative">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="gallery min-h-screen flex flex-col items-center justify-center w-full max-2xl:mt-12 overflow-x-clip py-2 sm:py-12 md:py-8">
           <div className="gallery-title-wrapper mt-[-2rem] sm:mt-18 text-center w-full sm:w-3/4 mx-auto px-4 sm:px-2">
-            <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl uppercase mb-4 sm:mb-2 font-semibold tracking-wide text-[1.75rem] leading-[2rem] sm:text-3xl sm:leading-normal lg:text-5xl">
+            <h1 className="text-center text-3xl sm:text-4xl lg:text-5xl uppercase mb-4 sm:mb-2 font-semibold tracking-wide">
               Galeri Kami
             </h1>
-            <p className="text-black/70 tracking-wider text-sm sm:text-md leading-relaxed text-[0.875rem] leading-[1.25rem] sm:text-sm sm:leading-relaxed">
-              {" "}
+            <p className="text-black/70 tracking-wider text-sm sm:text-md leading-relaxed">
               Selamat datang di Galeri Kami, tempat di mana kami membagikan
               dokumentasi kegiatan yang telah dilakukan di Desa Gemawang.
               Melalui foto-foto ini, kami ingin memperlihatkan berbagai kegiatan
@@ -118,7 +117,6 @@ export default function GalleryPage() {
               Kegiatan Kami
             </h1>
             <p className="text-black/70 tracking-wider text-sm sm:text-md leading-relaxed">
-              {" "}
               Gambar-gambar ini akan menunjukkan beragam kegiatan yang diadakan,
               mulai dari acara budaya, kegiatan pembangunan, hingga program
               sosial yang melibatkan seluruh lapisan masyarakat.

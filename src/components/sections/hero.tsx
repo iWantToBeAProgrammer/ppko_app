@@ -3,15 +3,15 @@ import { Button } from "../ui/button";
 
 export default function Hero() {
   return (
-    <section id="hero" className="w-full bg-[#FFE0E9] pt-24">
+<section id="hero" className="w-full bg-[#FFE0E9] pt-24">
       <div className="hero-content text-foreground bg-[url(/assets/images/hero/hero-bg.png)] w-full h-full bg-cover bg-center py-20 bg-no-repeat">
         <div className="container mx-auto h-full flex flex-col items-center justify-center w-full">
           {/* Mobile: Centered content with adjusted text sizes */}
-          <div className="hero-content-wrapper w-full sm:w-3/4 lg:w-1/2 max-2xl:w-3/4 text-center space-y-6 sm:space-y-6 lg:space-y-8 px-4 sm:px-2">
-            <h1 className="hero-title font-semibold text-3xl sm:text-4xl lg:text-5xl xl:text-7xl leading-tight sm:leading-normal lg:leading-normal">
+          <div className="hero-content-wrapper w-full sm:w-3/4 lg:w-1/2 max-2xl:w-3/4 text-center space-y-6 lg:space-y-8 px-4 sm:px-2">
+            <h1 className="hero-title font-semibold text-3xl sm:text-4xl lg:text-5xl xl:text-7xl leading-tight sm:leading-normal">
               Wujudkan Anak Sehat dengan MPASI Bergizi!
             </h1>
-            <p className="text-base sm:text-base lg:text-lg font-medium text-foreground/70 tracking-wide leading-relaxed">
+            <p className="text-base lg:text-lg font-medium text-foreground/70 tracking-wide leading-relaxed">
               Kami hanya menggunakan bahan terbaik untuk memastikan anak Anda
               mendapatkan MPASI yang bergizi. Jadi, jangan khawatir tentang
               apapun, pastikan anak Anda tumbuh sehat dengan gizi yang tepat!
@@ -19,7 +19,7 @@ export default function Hero() {
             <Button
               size={"lg"}
               variant={"outline"}
-              className="bg-background text-foreground border-foreground rounded-3xl text-base sm:text-base lg:text-md font-semibold w-full sm:w-auto px-8 py-3"
+              className="bg-background text-foreground border-foreground rounded-3xl text-base lg:text-md font-semibold w-full sm:w-auto px-8 py-3"
             >
               Cek Tumbuh Kembang
             </Button>
