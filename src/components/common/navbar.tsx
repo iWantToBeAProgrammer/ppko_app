@@ -8,11 +8,13 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { signOut } from "@/actions/auth-action";
+import path from "path";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAdminPage = pathname.startsWith("/admin");
   const { user } = useAuth();
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function Navbar() {
   return (
     <nav
       className={`font-semibold w-full fixed z-50 top-0 ${
-        isAuthPage ? "hidden" : "block"
+        isAuthPage || isAdminPage ? "hidden" : "block"
       }`}
     >
       <div
