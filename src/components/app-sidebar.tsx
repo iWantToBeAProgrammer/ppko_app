@@ -125,7 +125,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="group-data-[collapsible=icon]:pt-4 ">
         <NavMain items={navigation} />
       </SidebarContent>
       <SidebarFooter>
