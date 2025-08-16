@@ -27,12 +27,12 @@ export default function TumbuhKembang() {
   ];
 
   return (
-    <section id="tumbuh-kembang" className="relative overflow-x-clip h-screen mb-48">
+    <section id="tumbuh-kembang" className="relative overflow-x-clip min-h-screen mb-32 sm:h-screen sm:mb-48">
       <div className="border-wrapper">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
-          className=" bg-[#FFE0E9]"
+          className="bg-[#FFE0E9] w-full h-auto"
         >
           {/* Main fill shape, no stroke */}
           <path
@@ -50,8 +50,8 @@ export default function TumbuhKembang() {
         </svg>
       </div>
 
-      <div className="container mx-auto px-8">
-        <div className="card-wrapper bg-[#FFD5E1]  p-6 rounded-md grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
+      <div className="container mx-auto px-4 sm:px-8 py-8 sm:py-0">
+        <div className="card-wrapper bg-[#FFD5E1] p-4 sm:p-6 rounded-md grid grid-cols-1 gap-4 sm:gap-6 place-items-center sm:grid-cols-2 md:grid-cols-3">
           {cards.map((card, index) => (
             <AppCard
               key={index}

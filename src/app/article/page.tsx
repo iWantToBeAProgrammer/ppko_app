@@ -90,7 +90,7 @@ export default function ArticlePage() {
                   className="w-full h-[18.75rem] object-cover rounded-t-xl"
                 />
                 <div className="absolute top-4 right-4 z-10">
-                  <Badge className="px-3 py-2 font-semibold">
+                  <Badge className="px-3 py-2 font-semibold" style={{ backgroundColor: '#ffbdcf', color: '#000' }}>
                     Nutrisi
                   </Badge>
                 </div>
@@ -125,7 +125,7 @@ export default function ArticlePage() {
               </Card>
               <div className="flex flex-col gap-3.5 justify-center p-4">
                 <div className="flex flex-col -mt-1.5 max-w-[5.55rem]">
-                  <Badge className="px-3 py-2 font-semibold">Nutrisi</Badge>
+                  <Badge className="px-3 py-2 font-semibold" style={{ backgroundColor: '#ffbdcf', color: '#000' }}>Nutrisi</Badge>
                 </div>
                 <h3 className="text-[1.125rem] font-semibold text-black leading-snug line-clamp-2">
                   Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
@@ -148,7 +148,7 @@ export default function ArticlePage() {
               </Card>
               <div className="flex flex-col gap-3.5 justify-center p-4">
                 <div className="flex flex-col -mt-1.5 max-w-[5.55rem]">
-                  <Badge className="px-3 py-2 font-semibold">Nutrisi</Badge>
+                  <Badge className="px-3 py-2 font-semibold" style={{ backgroundColor: '#ffbdcf', color: '#000' }}>Nutrisi</Badge>
                 </div>
                 <h3 className="text-[1.125rem] font-semibold text-black leading-snug line-clamp-2">
                   Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
@@ -170,7 +170,7 @@ export default function ArticlePage() {
               </Card>
               <div className="flex flex-col gap-3.5 justify-center p-4">
                 <div className="flex flex-col -mt-1.5 max-w-[5.55rem]">
-                  <Badge className="px-3 py-2 font-semibold">Nutrisi</Badge>
+                  <Badge className="px-3 py-2 font-semibold" style={{ backgroundColor: '#ffbdcf', color: '#000' }}>Nutrisi</Badge>
                 </div>
                 <h3 className="text-[1.125rem] font-semibold text-black leading-snug line-clamp-2">
                   Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
