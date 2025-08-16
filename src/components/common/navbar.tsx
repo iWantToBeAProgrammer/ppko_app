@@ -163,19 +163,19 @@ export default function Navbar() {
                     <Calculator size={16} /> Tumbuh Kembang
                   </Link>
                   <Link
-                    href={"/calculator"}
+                    href={"/resep-makanan"}
                     className="flex items-center gap-2 px-2 py-2 rounded-sm transition-colors duration-200 ease-linear"
                   >
                     <Utensils size={16} /> Resep Makanan
                   </Link>
                   <Link
-                    href={"/calculator"}
+                    href={"/gallery"}
                     className="flex items-center gap-2 px-2 py-2 rounded-sm transition-colors duration-200 ease-linear"
                   >
                     <GalleryHorizontal size={16} /> Galeri
                   </Link>
                   <Link
-                    href={"/calculator"}
+                    href={"/article"}
                     className="flex items-center gap-2 px-2 py-2 rounded-sm transition-colors duration-200 ease-linear"
                   >
                     <Newspaper size={16} /> Artikel
