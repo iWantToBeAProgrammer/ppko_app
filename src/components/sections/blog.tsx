@@ -37,7 +37,7 @@ export default function Blog() {
         <p className="text-4xl font-semibold">Lany’s Light Foundation Blog</p>
       </div>
       <div className="max-w-6xl mx-auto bg-white rounded-2xl overflow-hidden p-6 md:p-8">
-        <div className="md:flex md:items-center md:gap-8">
+        <div className="md:flex md:items-center md:gap-8 ">
           <div className="md:w-1/2">
             <img
               className="w-full h-full object-cover rounded-lg"
@@ -70,7 +70,7 @@ export default function Blog() {
       </div>
 
       <div className="blog-card-wrapper h-full gap-8 max-w-6xl mx-auto mt-10">
-        <div className="flex h-96 items-center space-x-4 text-sm">
+        <div className="flex h-96 items-center space-x-4 text-sm flex-wrap sm:flex-nowrap justify-center">
           {blogs.map((blog, index) => (
             <React.Fragment key={index}>
               <BlogCard
@@ -80,7 +80,12 @@ export default function Blog() {
                 description={blog.description}
                 link={blog.link}
               />
-              {index < blogs.length - 1 && <Separator orientation="vertical" />}
+              {index < blogs.length - 1 && (
+                <Separator
+                  orientation="vertical"
+                  className="sm:inline-block hidden"
+                />
+              )}
             </React.Fragment>
           ))}
         </div>

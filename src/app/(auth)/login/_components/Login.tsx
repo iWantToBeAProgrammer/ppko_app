@@ -19,8 +19,11 @@ import { loginSchemaForm } from "@/validations/auth-validation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/contexts/AuthContext";
 
 export function LoginForm() {
+  const { refreshUser } = useAuth();
+
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchemaForm),
     defaultValues: INITIAL_LOGIN_FORM,
@@ -46,16 +49,26 @@ export function LoginForm() {
 
   useEffect(() => {
     if (loginState.status === "error") {
-      toast.error("login failed", {
-        description: loginState.errors._form?.[0],
+      toast.error("Login failed", {
+        description: loginState.errors?._form?.[0],
       });
       startTransition(() => {
         loginAction(null);
       });
-    } else {
-      router.refresh();
+    } else if (loginState.status === "success") {
+      // First refresh the auth context
+      refreshUser().then(() => {
+        toast.success("Login successful!");
+
+        // Then handle redirect based on server response
+        if (loginState.redirectTo) {
+          router.push(loginState.redirectTo);
+        } else {
+          router.refresh(); // Just refresh current page if no redirect specified
+        }
+      });
     }
-  }, [loginState]);
+  }, [loginState, router, refreshUser]);
 
   return (
     <Form {...form}>
