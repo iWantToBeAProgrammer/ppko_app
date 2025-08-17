@@ -40,7 +40,7 @@ export default function Navbar() {
   const isAuthPage = pathname === "/login" || pathname === "/register";
   const isAdminPage =
     pathname.startsWith("/admin") || pathname === "/dashboard";
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     window.onscroll = () => {
@@ -48,6 +48,10 @@ export default function Navbar() {
       topNav > 10 ? setIsScrolled(true) : setIsScrolled(false);
     };
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <nav
@@ -190,22 +194,22 @@ export default function Navbar() {
                 href={"/login"}
                 className="flex items-center gap-3 text-foreground/80 mt-1 hover:text-foreground hover:bg-primary p-2 rounded-md transition-colors duration-200 ease-in"
               >
-                <LogIn size={18}/> Login
+                <LogIn size={18} /> Login
               </Link>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
       </div>
 
-      <div
-        className={`navbar-border-wrapper w-full -translate-y-1 sm:-translate-y-5 ${
-          isScrolled ? "opacity-0" : "opacity-100"
-        } transition-opacity duration-200 ease-in-out`}
-      >
+      <div className={`navbar-border-wrapper w-full  `}>
         <img
           src="/assets/images/hero/hero-top-border.svg"
           alt="hero_border"
-          className="w-full"
+          className={`${
+            isScrolled
+              ? "opacity-0 max-h-0"
+              : "opacity-100 -translate-y-1 sm:-translate-y-5 max-h-96"
+          } transition-all duration-200 ease-in-out w-full`}
         />
       </div>
     </nav>

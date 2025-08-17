@@ -7,7 +7,6 @@ import { loginSchemaForm } from "@/validations/auth-validation";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import z from "zod";
 
 export async function login(
@@ -76,11 +75,17 @@ export async function login(
     };
   }
 
+  // Revalidate paths but don't redirect
   if (profile.role === "admin" || profile.role === "cadre") {
     revalidatePath("/admin", "layout");
-    redirect("/admin");
   }
-
   revalidatePath("/", "layout");
-  redirect("/");
+
+  // Return success with redirect information instead of redirecting
+  return {
+    status: "success",
+    message: "Login successful",
+    redirectTo: profile.role === "admin" || profile.role === "cadre" ? "/admin" : "/",
+    user: profile,
+  };
 }

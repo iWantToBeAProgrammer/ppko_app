@@ -82,40 +82,38 @@ export default function ArticlePage() {
 
         <div className="flex sm:items-center sm:gap-4  gap-8 sm:flex-row flex-col ">
           {/* Main Featured Article */}
-          <div className="flex-1 ">
-            <Card className="overflow-hidden shadow-lg rounded-lg pb-0 py-0">
-              <div className="relative">
-                <Image
-                  src="/assets/images/article/article.png"
-                  alt="article"
-                  width={920}
-                  height={380}
-                  className="w-full sm:h-96 object-cover rounded-t-xl"
-                />
-                <div className="absolute top-4 right-4 z-10">
-                  <Badge
-                    className="px-3 py-2 font-semibold"
-                    style={{ backgroundColor: "#ffbdcf", color: "#000" }}
-                  >
-                    Nutrisi
-                  </Badge>
-                </div>
-                <div className="bg-primary p-6 rounded-b-xl">
-                  <h2 className="sm:text-2xl text-xl font-bold text-black mb-3 leading-tight">
-                    Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
-                  </h2>
-                  <p className="sm:text-lg text-sm text-gray-600 mb-3 leading-relaxed">
-                    Mempersiapkan generasi emas 2045 bukan hal mudah. Pasalnya,
-                    stunting masih menjadi masalah gizi utama bagi bayi dan anak
-                    dibawah usia dua tahun di...
-                  </p>
-                  <p className="sm:text-lg text-sm text-gray-600 mb-3 leading-relaxed">
-                    Dr. Andi Setiawan, Pakar Gizi
-                  </p>
-                </div>
+          <Card className="overflow-hidden shadow-lg rounded-lg pb-0 py-0">
+            <div className="relative">
+              <Image
+                src="/assets/images/article/article.png"
+                alt="article"
+                width={920}
+                height={420}
+                className="w-full sm:h-96 object-cover rounded-t-xl"
+              />
+              <div className="absolute top-4 right-4 z-10">
+                <Badge
+                  className="px-3 py-2 font-semibold"
+                  style={{ backgroundColor: "#ffbdcf", color: "#000" }}
+                >
+                  Nutrisi
+                </Badge>
               </div>
-            </Card>
-          </div>
+              <div className="bg-primary p-6 rounded-b-xl">
+                <h2 className="sm:text-2xl text-xl font-bold text-black mb-3 leading-tight">
+                  Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
+                </h2>
+                <p className="sm:text-lg text-sm text-gray-600 mb-3 leading-relaxed">
+                  Mempersiapkan generasi emas 2045 bukan hal mudah. Pasalnya,
+                  stunting masih menjadi masalah gizi utama bagi bayi dan anak
+                  dibawah usia dua tahun di...
+                </p>
+                <p className="sm:text-lg text-sm text-gray-600 mb-3 leading-relaxed">
+                  Dr. Andi Setiawan, Pakar Gizi
+                </p>
+              </div>
+            </div>
+          </Card>
 
           <div className="flex flex-col sm:gap-0 gap-6 sm:items-start items-center justify-between sm:w-1/2">
             {articlesData.slice(0, 3).map((article, index) => (

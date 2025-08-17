@@ -61,7 +61,6 @@ model ZScoreRecord {
   child_id         Int
   cadre_id         String   @db.Uuid
   height_cm        Float
-  weight_kg        Float
   score            Float
   measurement_date DateTime @db.Date
   created_at       DateTime @default(now())

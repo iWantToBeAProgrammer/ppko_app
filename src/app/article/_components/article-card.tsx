@@ -14,7 +14,7 @@ export default function ArticleCard({
   author: string;
 }) {
   return (
-    <Card className="flex flex-col sm:flex-row sm:gap-4 items-center gap-0 w-full sm:w-3/4 border-0 outline-0 px-4 sm:px-0 shadow-lg sm:shadow-none">
+    <Card className="flex flex-col sm:flex-row sm:gap-4 items-center gap-0 w-full  border-0 outline-0 px-4 sm:px-0 shadow-lg sm:shadow-none">
       <CardHeader className=" rounded-2xl w-full sm:w-1/2 p-0 sm:mb-0 mb-3">
         <Image
           width={900}
