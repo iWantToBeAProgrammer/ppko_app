@@ -64,26 +64,33 @@ export default function Blog() {
         </div>
 
 
-        <div className="blog-card-wrapper h-full gap-8 max-w-6xl mx-auto mt-10">
-             <div className="flex h-96 items-center space-x-4 text-sm">
+       <div className="blog-card-wrapper h-full gap-8 max-w-6xl mx-auto mt-10">
+  <div className="flex flex-col md:flex-row md:items-stretch gap-4">
+  {blogs.map((blog, index) => (
+    <React.Fragment key={index}>
+        <BlogCard 
+          title={blog.title}
+          image={blog.image}
+          category={blog.category}
+          description={blog.description}
+          link={blog.link}
+        />
+        {index < blogs.length - 1 && (
+        <>
+          
+          <Separator orientation="horizontal" className="md:hidden w-full" />
 
-            {blogs.map((blog, index) => (
-                <React.Fragment key={index}>
-    <BlogCard 
-      title={blog.title}
-      image={blog.image}
-      category={blog.category}
-      description={blog.description}
-      link={blog.link}
-    />
-    {index < blogs.length - 1 && (
-      <Separator orientation="vertical" />
-    )}
-  </React.Fragment>
-))}
+          
+          <div className="hidden md:flex items-stretch">
+            <Separator orientation="vertical" className="h-auto" />
+          </div>
+        </>
+      )}
+    </React.Fragment>
+  ))}
+</div>
+</div>
 
-            </div>
-        </div>
     </section>
  );
 }

@@ -1,6 +1,7 @@
 import Hero from "@/components/common/hero";
 import Navbar from "@/components/common/navbar";
 import Blog from "@/components/sections/blog";
+import Footer from "@/components/sections/footer";
 import ResepMakanan from "@/components/sections/resep-makanan";
 import TumbuhKembang from "@/components/sections/tumbuh-kembang";
 
@@ -12,6 +13,7 @@ export default function Home() {
       <TumbuhKembang />
       <ResepMakanan />
       <Blog/>
+      <Footer/>
     </div>
   );
 }
