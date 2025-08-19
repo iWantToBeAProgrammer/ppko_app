@@ -20,7 +20,10 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  type ExtendedUser = User & { role?: string };
+
+  const [user, setUser] = useState<ExtendedUser | null>(null);
+
   const [loading, setLoading] = useState(true);
 
   const supabase = createBrowserClient(
@@ -33,7 +36,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const {
         data: { user: sessionUser },
       } = await supabase.auth.getUser();
-      setUser(sessionUser);
+      if (sessionUser) {
+        const res = await fetch(`/api/profiles/me?id=${sessionUser.id}`);
+        const profile = await res.json();
+
+        setUser({ ...sessionUser, role: profile?.role });
+      } else {
+        setUser(null);
+      }
     } catch (error) {
       console.error("Error fetching user:", error);
       setUser(null);
@@ -60,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [refreshUser, supabase]);
 
   if (loading) {
-    return null; // Or a loading spinner
+    return <p>Loading ...</p>; // Or a loading spinner
   }
 
   return (
