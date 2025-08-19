@@ -55,9 +55,9 @@ export default function TumbuhKembangInfo() {
   return (
     <section
       id="tumbuh-kembang-info"
-      className="mt-32 h-screen w-full bg-gradient-to-b from-white from-5% via-amber-100 via-50% to-white to-99% max-md:h-auto max-md:min-h-screen max-md:mt-16"
+      className="mt-32 h-screen  w-full bg-gradient-to-b from-white from-5% via-amber-100 via-50% to-white to-99% max-md:h-auto max-md:min-h-screen max-md:mt-16"
     >
-      <div className="container mx-auto h-full overflow-x-hidden py-16 max-md:py-8">
+      <div className="container mx-auto h-full overflow-hidden py-16 max-md:py-12">
         <div className="relative h-full px-6 flex justify-center max-md:px-4">
           <img
             src="/assets/images/tumbuh-kembang/triangle.svg"

@@ -2,6 +2,7 @@ import ActivityCard from "@/components/common/activity-card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 export default function GalleryPage() {
+  
   const cardData = [
     {
       title: "Kegiatan Pembangunan",
@@ -78,14 +79,15 @@ export default function GalleryPage() {
               seluruh lapisan masyarakat.
             </p>
           </div>
-          
+
           {/* Mobile: Single image display */}
           <div className="image-wrapper w-full h-48 sm:h-64 md:h-80 lg:h-96 mt-8 sm:mt-12 lg:grid lg:grid-cols-4 lg:gap-1 lg:perspective-near mb-2 sm:mb-0">
             {/* Mobile view - single image */}
             <div className="lg:hidden h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-center rounded-lg shadow-lg"></div>
-            
+
             {/* Desktop view - 4 panel layout */}
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "0% 0%",
@@ -94,7 +96,8 @@ export default function GalleryPage() {
               }}
             ></div>
 
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "33.3333% 0%",
@@ -103,7 +106,8 @@ export default function GalleryPage() {
               }}
             ></div>
 
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "66.6666% 0%",
@@ -112,7 +116,8 @@ export default function GalleryPage() {
               }}
             ></div>
 
-            <div className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 -translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
+            <div
+              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 -translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "100% 0%",
