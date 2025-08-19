@@ -3,11 +3,17 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-export default function DetailArticlePage() {
+type DetailArticlePageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export default async function DetailArticlePage({ params }: DetailArticlePageProps) {
+  const { slug } = await params;
+  
   return (
-    <div className="min-h-screen bg-gray-50 py-8 relative">
+    <div className="min-h-screen py-8 relative top-[-12rem]">
       {/* Tombol Kembali - Pojok Kiri Atas */}
-      <div className="absolute top-45 left-15 z-10 max-md:left-2">
+      <div className="absolute top-55 left-15 z-10 max-md:left-2">
         <a
           href="/article"
           className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 px-4 py-2 text-xl"
@@ -27,6 +33,9 @@ export default function DetailArticlePage() {
           <p className="text-lg text-gray-600 font-medium text-center">
             Oleh: Ade Fadly H Masse
           </p>
+          <p className="text-sm text-gray-500 font-normal text-center mt-1">
+            Slug: {slug}
+          </p>
         </div>
 
         {/* Gambar Utama */}
@@ -43,7 +52,7 @@ export default function DetailArticlePage() {
         </div>
 
         {/* Konten Artikel */}
-        <Card className="border-0 shadow-none" style={{ backgroundColor: '#f7f9fa' }}>
+        <Card className="border-0 shadow-none" style={{ backgroundColor: 'white' }}>
           <CardContent className="p-6 md:p-8">
                          <div className="prose prose-lg max-w-none">
                {/* Pendahuluan */}

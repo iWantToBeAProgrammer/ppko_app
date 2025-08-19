@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/common/navbar";
+import NavbarWrapper from "@/components/common/navbar-wrapper";
 import { Toaster } from "sonner";
 import { createClient } from "@/utils/supabase/server";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -32,7 +32,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
-          <Navbar />
+          <NavbarWrapper />
           {children}
           <Toaster position="top-center" />
         </AuthProvider>

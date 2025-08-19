@@ -53,7 +53,7 @@ export async function login(
     };
   }
 
-  const profile = await prisma.profiles.findUnique({
+  const profile = await prisma.users.findUnique({
     where: { id: user?.id },
   });
 
