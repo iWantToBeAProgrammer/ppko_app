@@ -1,49 +1,61 @@
 import ActivityCard from "@/components/common/activity-card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Image from "next/image";
 
 export default function GalleryPage() {
   const cardData = [
     {
       title: "Kegiatan Pembangunan",
       description: "Pembangunan infrastruktur desa yang melibatkan masyarakat.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
-
       link: "/gallery/pembangunan",
     },
     {
       title: "Acara Budaya",
       description: "Perayaan tradisional yang melibatkan seluruh warga desa.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
     {
       title: "Kegiatan Sosial",
       description: "Program sosial untuk meningkatkan kesejahteraan masyarakat.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
     {
       title: "Kegiatan Pendidikan",
       description: "Program pendidikan untuk anak-anak desa.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
     {
       title: "Kegiatan Lingkungan",
       description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
     {
       title: "Kegiatan Lingkungan",
       description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
     {
       title: "Kegiatan Lingkungan",
       description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
+      lightboxDescription:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       image: "/assets/images/gallery/landscape.jpg",
       link: "/gallery/budaya",
     },
@@ -140,8 +152,11 @@ export default function GalleryPage() {
                       <ActivityCard
                         title={item.title}
                         description={item.description}
+                        lightboxDescription={item.lightboxDescription}
                         image={item.image}
                         link={item.link}
+                        allItems={cardData}
+                        initialIndex={index}
                       />
                     </div>
                   </CarouselItem>
