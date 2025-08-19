@@ -17,7 +17,6 @@ export function NavMain({
     title: string;
     url: string;
     icon?: LucideIcon;
-    isActive?: boolean;
     items?: {
       title: string;
       url: string;
@@ -32,7 +31,6 @@ export function NavMain({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}
-                isActive={item.isActive}
                 className="h-12 px-4 py-5 [&>svg:first-child]:w-5 [&>svg:first-child]:h-5 [&>svg:last-child]:w-4 [&>svg:last-child]:h-4" // Custom sizing instead of size="lg"
               >
                 <div className="flex items-center gap-3 w-full">

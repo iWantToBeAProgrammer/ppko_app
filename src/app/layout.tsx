@@ -4,7 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/common/navbar";
 import { Toaster } from "sonner";
 import { createClient } from "@/utils/supabase/server";
-import { AuthProvider } from "./contexts/AuthContext";
+import { cookies } from "next/headers";
+import AuthStoreProvider from "@/providers/auth-store-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,16 +27,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookiesStore = await cookies();
+  const profile = JSON.parse(cookiesStore.get("user")?.value ?? "{}");
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
+        <AuthStoreProvider profile={profile}>
           <Navbar />
           {children}
           <Toaster position="top-center" />
-        </AuthProvider>
+        </AuthStoreProvider>
       </body>
     </html>
   );

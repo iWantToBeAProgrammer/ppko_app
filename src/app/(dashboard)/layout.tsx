@@ -6,6 +6,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import DashboardBreadcrumb from "./_components/dashboard-breadcrumb";
 
 export default function DashboardLayout({
   children,
@@ -30,9 +31,10 @@ export default function DashboardLayout({
               orientation="vertical"
               className="mx-2 data-[orientation=vertical]:h-4"
             />
+            <DashboardBreadcrumb />
           </div>
         </header>
-        <main className="pt-4 ps-4">{children}</main>
+        <main className="sm:pt-4 sm:ps-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
