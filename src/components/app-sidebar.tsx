@@ -71,11 +71,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               asChild
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground  group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-full"
             >
               <div className="font-semibold">
                 <div className="flex items-center justify-center rounded-md p-2 bg-primary">
-                  <Baby size={16} />
+                  <Baby size={18} />
                 </div>
                 <span className="text-md">PPKO Sikumbang</span>
               </div>
@@ -91,8 +91,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg">
-                  <Avatar className="h-8 w-8 rounded-lg">
+                <SidebarMenuButton
+                  size="lg"
+                  className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-full"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg ">
                     <AvatarImage src={""} alt="" />
                     <AvatarFallback className="rounded-lg">A</AvatarFallback>
                   </Avatar>

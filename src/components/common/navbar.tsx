@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/app/contexts/AuthContext";
 import { signOut } from "@/actions/auth-action";
 import path from "path";
 import {
