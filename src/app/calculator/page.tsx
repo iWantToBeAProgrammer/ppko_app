@@ -1,64 +1,157 @@
 "use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Image from "next/image";
+import { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { GrowthChartCalculator } from "@/lib/z-score-calculator-static";
+import boysData from "../data/boys.json";
+import girlsData from "../data/girls.json";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { FormControl } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
+import { Calendar } from "@/components/ui/calendar";
+// import { ZScoreCalculator } from "@/lib/z-score-calculator-static";
 
 export default function CalculatorPage() {
   // State untuk form input
-  const [gender, setGender] = useState('Perempuan');
-  const [birthDate, setBirthDate] = useState('25/02/2025');
-  const [height, setHeight] = useState('30.00');
+  const [gender, setGender] = useState("");
+  const [birthDate, setBirthDate] = useState<Date>();
+  const [height, setHeight] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [measurementResult, setMeasurementResult] = useState({
-    status: 'Stunting Berat',
-    zScore: '2.90',
-    keterangan: 'segera konsultasikan ke dokter/puskesmas.'
+    status: "",
+    zScore: "",
+    keterangan: "",
   });
 
   // Data rekomendasi makanan
   const foodRecommendations = [
     {
       id: 1,
-      image: '/assets/images/resep-makanan/right_picture.png',
-      title: 'Bubur Ayam Ga Enak Kemaren',
-      duration: '30 Mins',
-      description: 'Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...'
+      image: "/assets/images/resep-makanan/right_picture.png",
+      title: "Bubur Ayam Ga Enak Kemaren",
+      duration: "30 Mins",
+      description:
+        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
     },
     {
       id: 2,
-      image: '/assets/images/resep-makanan/right_picture.png',
-      title: 'Bubur Ayam Ga Enak Kemaren',
-      duration: '30 Mins',
-      description: 'Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...'
+      image: "/assets/images/resep-makanan/right_picture.png",
+      title: "Bubur Ayam Ga Enak Kemaren",
+      duration: "30 Mins",
+      description:
+        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
     },
     {
       id: 3,
-      image: '/assets/images/resep-makanan/right_picture.png',
-      title: 'Bubur Ayam Ga Enak Kemaren',
-      duration: '30 Mins',
-      description: 'Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...'
+      image: "/assets/images/resep-makanan/right_picture.png",
+      title: "Bubur Ayam Ga Enak Kemaren",
+      duration: "30 Mins",
+      description:
+        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
     },
     {
       id: 4,
-      image: '/assets/images/resep-makanan/right_picture.png',
-      title: 'Bubur Ayam Ga Enak Kemaren',
-      duration: '30 Mins',
-      description: 'Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...'
+      image: "/assets/images/resep-makanan/right_picture.png",
+      title: "Bubur Ayam Ga Enak Kemaren",
+      duration: "30 Mins",
+      description:
+        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
     },
     {
       id: 5,
-      image: '/assets/images/resep-makanan/right_picture.png',
-      title: 'Bubur Ayam Ga Enak Kemaren',
-      duration: '30 Mins',
-      description: 'Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...'
-    }
+      image: "/assets/images/resep-makanan/right_picture.png",
+      title: "Bubur Ayam Ga Enak Kemaren",
+      duration: "30 Mins",
+      description:
+        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
+    },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowResult(true);
+
+    try {
+      if (!birthDate || !gender || !height) {
+        alert("Lengkapi semua data terlebih dahulu.");
+        return;
+      }
+
+      // ✅ Calculate age in days
+      const today = new Date();
+      const diffMilliseconds = today.getTime() - birthDate.getTime();
+      const millisecondsPerDay = 1000 * 60 * 60 * 24;
+      const ageInDays = Math.floor(diffMilliseconds / millisecondsPerDay);
+
+      // ✅ Pick data by gender
+      const data = gender === "Laki-laki" ? boysData : girlsData;
+      const dataByGender = new GrowthChartCalculator(data);
+
+      // ✅ Calculate Z-score
+      const result = dataByGender.calculateZScore(
+        parseFloat(height),
+        ageInDays
+      );
+
+      if (!result || result.zScore === null) {
+        setMeasurementResult({
+          status: "Data tidak tersedia",
+          zScore: "-",
+          keterangan:
+            "Parameter WHO untuk usia/jenis kelamin ini tidak ditemukan.",
+        });
+      } else {
+        let status = "";
+        if (result.zScore < -3) status = "Stunting Berat";
+        else if (result.zScore < -2) status = "Stunting Sedang";
+        else status = "Normal";
+
+        setMeasurementResult({
+          status,
+          zScore: result.zScore.toFixed(2),
+          keterangan:
+            status === "Normal"
+              ? "Pertumbuhan anak normal."
+              : "Segera konsultasikan ke dokter/puskesmas.",
+        });
+      }
+
+      setShowResult(true);
+    } catch (err) {
+      console.error("Error calculating Z-score:", err);
+    }
   };
 
   return (
@@ -74,16 +167,16 @@ export default function CalculatorPage() {
             className="absolute inset-0 w-full h-full sm:w-[150rem] sm:h-[58rem] object-cover"
           />
         </div>
-        
+
         {/* Card tambahan yang menumpuk di atas dengan ukuran lebih kecil */}
         <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-[90%] h-[16rem] sm:top-12 sm:w-[75rem] sm:h-[40rem] bg-transparent rounded-xl overflow-hidden">
-        <Image
-              src="/assets/images/calculator/gambar bayi.svg"
-              alt="gambar bayi"
-              width={700}
-              height={700}
-              className="w-full h-full object-contain"
-            />
+          <Image
+            src="/assets/images/calculator/gambar bayi.svg"
+            alt="gambar bayi"
+            width={700}
+            height={700}
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
 
@@ -105,34 +198,67 @@ export default function CalculatorPage() {
             {/* Form Input Container */}
             <Card className="bg-white border-black">
               <CardContent className="p-4 sm:p-6">
-                <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+                <form
+                  className="space-y-4 sm:space-y-6"
+                  onSubmit={handleSubmit}
+                >
                   {/* Input Jenis Kelamin */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-800 mb-2">
+                    <label className="block mb-2 font-medium text-gray-700">
                       Jenis Kelamin
                     </label>
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-300"
-                    >
-                      <option value="Perempuan">Perempuan</option>
-                      <option value="Laki-laki">Laki-laki</option>
-                    </select>
+                    <Select value={gender} onValueChange={setGender}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Pilih jenis kelamin" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Jenis Kelamin</SelectLabel>
+                          <SelectItem value="Laki-laki">Laki-laki</SelectItem>
+                          <SelectItem value="Perempuan">Perempuan</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
 
-                  {/* Input Tanggal Lahir */}
+                  {/* Date Picker */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-800 mb-2">
-                      Tanggal Lahir Anak
+                    <label className="block mb-2 font-medium text-gray-700">
+                      Tanggal Lahir
                     </label>
-                    <input
-                      type="text"
-                      value={birthDate}
-                      onChange={(e) => setBirthDate(e.target.value)}
-                      placeholder="DD/MM/YYYY"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-300"
-                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !birthDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {birthDate ? (
+                            format(birthDate, "dd MMMM yyyy", { locale: id }) // ✅ Indonesian format
+                          ) : (
+                            <span>Pilih tanggal</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={birthDate}
+                          onSelect={setBirthDate}
+                          disabled={(date: Date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                          captionLayout="dropdown"
+                          fromYear={1900}
+                          toYear={new Date().getFullYear()}
+                          locale={id} // ✅ Calendar in Indonesian
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
 
                   {/* Input Tinggi Badan */}
@@ -169,7 +295,7 @@ export default function CalculatorPage() {
       </div>
 
       {/* Tampilan Hasil Pengukuran */}
-      {showResult && (
+      {showResult && measurementResult && (
         <div className="w-full max-w-2xl mb-16 px-4 sm:px-0">
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
@@ -186,16 +312,31 @@ export default function CalculatorPage() {
             <CardContent className="p-4 sm:p-8">
               <div className="space-y-4 sm:space-y-6">
                 <div className="flex items-center">
-                  <span className="text-gray-500 font-medium w-20 sm:w-25 text-sm sm:text-base">Status <span className='text-gray-800 ml-2 sm:ml-11'>:</span></span>
-                  <span className="text-gray-800 font-bold text-sm sm:text-base">{measurementResult.status}</span>
+                  <span className="text-gray-500 font-medium w-20 sm:w-25 text-sm sm:text-base">
+                    Status{" "}
+                    <span className="text-gray-800 ml-2 sm:ml-11">:</span>
+                  </span>
+                  <span className="text-gray-800 font-bold text-sm sm:text-base">
+                    {measurementResult.status}
+                  </span>
                 </div>
                 <div className="flex items-center">
-                <span className="text-gray-500 font-medium w-20 sm:w-26 text-sm sm:text-base">Z-score<span className='text-gray-800 ml-2 sm:ml-10'>:</span></span>
-                <span className="text-gray-800 font-bold text-sm sm:text-base">{measurementResult.zScore}</span>
+                  <span className="text-gray-500 font-medium w-20 sm:w-26 text-sm sm:text-base">
+                    Z-score
+                    <span className="text-gray-800 ml-2 sm:ml-10">:</span>
+                  </span>
+                  <span className="text-gray-800 font-bold text-sm sm:text-base">
+                    {measurementResult.zScore}
+                  </span>
                 </div>
                 <div className="flex items-start">
-                  <span className="text-gray-500 font-medium w-20 sm:w-25 text-sm sm:text-base">Keterangan <span className='text-gray-800 ml-1 sm:ml-[0.3rem]'>:</span></span>
-                  <span className="text-gray-800 font-bold flex-1 text-sm sm:text-base">{measurementResult.keterangan}</span>
+                  <span className="text-gray-500 font-medium w-20 sm:w-25 text-sm sm:text-base">
+                    Keterangan{" "}
+                    <span className="text-gray-800 ml-1 sm:ml-[0.3rem]">:</span>
+                  </span>
+                  <span className="text-gray-800 font-bold flex-1 text-sm sm:text-base">
+                    {measurementResult.keterangan}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -242,22 +383,34 @@ export default function CalculatorPage() {
                               className="object-cover"
                             />
                           </div>
-                          
+
                           {/* Konten Card */}
                           <div className="p-3 sm:p-4">
                             {/* Judul */}
                             <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2 line-clamp-2">
                               {food.title}
                             </h3>
-                            
+
                             {/* Durasi */}
                             <div className="flex items-center mb-2 sm:mb-3">
-                              <svg className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              <svg
+                                className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1 sm:mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
                               </svg>
-                              <span className="text-xs sm:text-sm text-gray-500">{food.duration}</span>
+                              <span className="text-xs sm:text-sm text-gray-500">
+                                {food.duration}
+                              </span>
                             </div>
-                            
+
                             {/* Deskripsi */}
                             <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
                               {food.description}

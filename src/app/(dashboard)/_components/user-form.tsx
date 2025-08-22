@@ -68,17 +68,11 @@ interface ExtendedCreateUserForm extends CreateUserForm {
 interface UserFormProps {
   userType: "CADRE" | "PARENT";
   pageTitle: string;
-  avatarInitials: string;
-  userName: string;
 }
 
-export default function UserForm({
-  userType,
-  pageTitle,
-  avatarInitials,
-  userName,
-}: UserFormProps) {
+export default function UserForm({ userType, pageTitle }: UserFormProps) {
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
+  const [username, setUsername] = useState("");
 
   // Determine role based on user type
   const defaultRole = userType === "CADRE" ? Role.CADRE : Role.PARENT;
@@ -136,21 +130,13 @@ export default function UserForm({
       }
     });
 
-    // Add child data if present
     if (userType === "PARENT" && data.childData) {
       console.log("Child data:", data.childData); // Debug log
       Object.entries(data.childData).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
           formData.append(`child_${key}`, value as string);
-          console.log(`Added child_${key}:`, value); // Debug log
         }
       });
-    }
-
-    // Debug: Log all FormData entries
-    console.log("FormData entries:");
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
     }
 
     startTransition(() => {
@@ -174,6 +160,8 @@ export default function UserForm({
   };
 
   const currentEmail = form.watch("email");
+  const firstName = form.watch("first_name");
+  const lastName = form.watch("last_name");
 
   useEffect(() => {
     if (createUserState?.status === "error") {
@@ -197,10 +185,14 @@ export default function UserForm({
 
         <CardContent>
           <div className="personal-information w-full flex gap-4 items-center mb-4">
-            <div className="avatar w-18 h-18 rounded-full flex items-center justify-center border border-black font-semibold text-3xl">
-              {avatarInitials}
-            </div>
-            <h1 className="font-semibold text-xl">{userName}</h1>
+            {firstName !== "" && (
+              <div className="avatar w-18 h-18 rounded-full flex uppercase items-center justify-center border border-black font-semibold text-3xl">
+                {firstName.charAt(0) + lastName.charAt(0)}
+              </div>
+            )}
+            <h1 className="font-semibold text-xl">
+              {firstName + " " + lastName}
+            </h1>
           </div>
 
           <Form {...form}>

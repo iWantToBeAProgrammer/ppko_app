@@ -20,6 +20,9 @@ import {
 import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useState } from "react";
+import { EditUserDialog } from "./edit-user-dialog";
+import { DeleteConfirmationDialog } from "./delete-user-dialog";
 
 type Dashboard = {
   tableTitle: string;
@@ -44,6 +47,11 @@ export default function DashboardLayout({
 }: Dashboard) {
   const pathname = usePathname();
   const cadreDashboard = pathname.startsWith("/cadre");
+
+  // Dialog states
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
 
   const { data: users, isLoading } = useQuery({
     queryKey: ["dashboard-users", cadreDashboard, cadreSubVillage],
@@ -109,7 +117,7 @@ export default function DashboardLayout({
   const tableData =
     users?.flatMap((parent: UserWithChildren) =>
       parent.children.map((child) => ({
-        id: child.id,
+        id: parent.id,
         parents_name: parent.full_name,
         childs_name: child.full_name,
         address: parent.address || "Alamat tidak tersedia",
@@ -140,14 +148,20 @@ export default function DashboardLayout({
     {
       icon: <ArrowUpRight className="h-4 w-4" />,
       label: "Detail Anak",
-      onClick: (row: any) => console.log("View details for", row),
+      onClick: (row: any) => {
+        // Navigate to child detail page
+        window.location.href = `/dashboard/anak/${row.id}`;
+      },
       showOnDesktop: true,
       showOnMobile: false,
     },
     {
       icon: <PenLine className="h-4 w-4" />,
-      label: "Kalkulator",
-      onClick: (row: any) => console.log("Edit", row),
+      label: "Edit",
+      onClick: (row: any) => {
+        setSelectedUser(row);
+        setEditDialogOpen(true);
+      },
       showOnDesktop: true,
       showOnMobile: true,
     },
@@ -156,7 +170,10 @@ export default function DashboardLayout({
           {
             icon: <Trash className="h-4 w-4" />,
             label: "Delete",
-            onClick: (row: any) => console.log("Delete", row),
+            onClick: (row: any) => {
+              setSelectedUser(row);
+              setDeleteDialogOpen(true);
+            },
             variant: "destructive" as const,
             requiresPermission: true,
             showOnDesktop: true,
@@ -282,14 +299,33 @@ export default function DashboardLayout({
               startFrom: 1,
             }}
             isLoading={isLoading}
-            tambahButton={{
-              label: "Tambah Warga",
-              href: "/cadre/warga/tambah",
-              enabled: cadreDashboard,
-            }}
           />
         </CardContent>
       </Card>
+
+      {/* Edit User Dialog */}
+      {selectedUser && (
+        <EditUserDialog
+          isOpen={editDialogOpen}
+          onClose={() => {
+            setEditDialogOpen(false);
+            setSelectedUser(null);
+          }}
+          user={selectedUser}
+        />
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {selectedUser && (
+        <DeleteConfirmationDialog
+          isOpen={deleteDialogOpen}
+          onClose={() => {
+            setDeleteDialogOpen(false);
+            setSelectedUser(null);
+          }}
+          user={selectedUser}
+        />
+      )}
     </div>
   );
 }
