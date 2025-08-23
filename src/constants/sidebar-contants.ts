@@ -56,7 +56,7 @@ export const SIDEBAR_MENU_LIST: {
     },
     {
       title: "Kalkulator",
-      url: "/calculator",
+      url: "/cadre/kalkulator",
       icon: Calculator,
     },
   ],
@@ -74,7 +74,7 @@ export const SIDEBAR_MENU_LIST: {
     },
     {
       title: "Kalkulator",
-      url: "/calculator",
+      url: "/admin/kalkulator",
       icon: Calculator,
     },
     {

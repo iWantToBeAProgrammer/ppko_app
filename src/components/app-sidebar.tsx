@@ -97,12 +97,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 >
                   <Avatar className="h-8 w-8 rounded-lg ">
                     <AvatarImage src={""} alt="" />
-                    <AvatarFallback className="rounded-lg">A</AvatarFallback>
+                    <AvatarFallback className="rounded-lg uppercase">
+                      {profile.first_name?.charAt(0)}
+                      {profile.last_name?.charAt(0)}
+                    </AvatarFallback>
                   </Avatar>
                   <div className=" leading-tight">
-                    <h4 className="truncate font-medium">Juan Stevenson</h4>
+                    <h4 className="truncate font-medium capitalize">
+                      {" "}
+                      {profile?.first_name + " " + profile?.last_name}
+                    </h4>
                     <p className="text-muted-foreground truncate text-xs">
-                      Admin
+                      {profile.role}
                     </p>
                   </div>
                   <EllipsisVertical className="ml-auto size-4" />
@@ -121,9 +127,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       <AvatarFallback className="rounded-lg">A</AvatarFallback>
                     </Avatar>
                     <div className=" leading-tight">
-                      <h4 className="truncate font-medium">Juan Stevenson</h4>
+                      <h4 className="truncate font-medium capitalize">
+                        {profile?.first_name + " " + profile?.last_name}
+                      </h4>
                       <p className="text-muted-foreground truncate text-xs">
-                        Admin
+                        {profile.role}
                       </p>
                     </div>
                   </div>

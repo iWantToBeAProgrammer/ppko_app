@@ -64,8 +64,8 @@ export function DeleteConfirmationDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Konfirmasi Hapus Data</AlertDialogTitle>
           <AlertDialogDescription className="space-y-2">
-            <p>Apakah Anda yakin ingin menghapus data berikut?</p>
             <div className="bg-gray-50 p-3 rounded-md">
+              <p>Apakah Anda yakin ingin menghapus data berikut?</p>
               <div>
                 <strong>Orang Tua:</strong> {user.parents_name}
               </div>

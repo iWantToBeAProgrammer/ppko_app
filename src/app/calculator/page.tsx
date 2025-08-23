@@ -251,10 +251,10 @@ export default function CalculatorPage() {
                           disabled={(date: Date) =>
                             date > new Date() || date < new Date("1900-01-01")
                           }
-                          initialFocus
+                          autoFocus
                           captionLayout="dropdown"
-                          fromYear={1900}
-                          toYear={new Date().getFullYear()}
+                          startMonth={new Date(1900, 0)}
+                          endMonth={new Date()}
                           locale={id} // ✅ Calendar in Indonesian
                         />
                       </PopoverContent>
