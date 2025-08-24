@@ -13,7 +13,11 @@ export type AuthFormState = {
 
 export type Profile = {
   id?: string;
-  name?: string;
-  avatar_url?: string;
+  first_name?: string;
+  last_name?: string;
+  subVillage?: string;
+  email?: string;
+  phoneNumber?: string;
+  gender?: string;
   role?: string;
 };
