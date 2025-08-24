@@ -58,7 +58,6 @@ interface ChildData {
   last_name: string;
   dateOfBirth: string;
   gender: Gender;
-  birthHeight: string;
 }
 
 interface ExtendedCreateUserForm extends CreateUserForm {
@@ -68,12 +67,15 @@ interface ExtendedCreateUserForm extends CreateUserForm {
 interface UserFormProps {
   userType: "CADRE" | "PARENT";
   pageTitle: string;
+  subVillage?: string;
 }
 
-export default function UserForm({ userType, pageTitle }: UserFormProps) {
+export default function UserForm({
+  userType,
+  pageTitle,
+  subVillage,
+}: UserFormProps) {
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
-  const [username, setUsername] = useState("");
-
   // Determine role based on user type
   const defaultRole = userType === "CADRE" ? Role.CADRE : Role.PARENT;
 
@@ -92,7 +94,6 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
           last_name: "",
           dateOfBirth: "",
           gender: Gender.MALE, // Set a default value instead of empty string
-          birthHeight: "",
         },
       };
     }
@@ -115,8 +116,6 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
 
   const onSubmit = form.handleSubmit((data) => {
     const formData = new FormData();
-
-    console.log("Form data before processing:", data); // Debug log
 
     // Add main user data
     Object.entries(data).forEach(([key, value]) => {
@@ -281,7 +280,8 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
                       <FormLabel>Penempatan</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        value={field.value || ""}
+                        value={subVillage || field.value || ""}
+                        disabled={!!subVillage}
                       >
                         <FormControl>
                           <SelectTrigger className="max-w-2xl w-full">
@@ -417,27 +417,6 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
                                 </SelectGroup>
                               </SelectContent>
                             </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="flex flex-col gap-1 sm:col-span-2">
-                      <FormField
-                        control={form.control}
-                        name="childData.birthHeight"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Tinggi Badan Lahir (cm)</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                placeholder="Tinggi badan saat lahir..."
-                                {...field}
-                              />
-                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}

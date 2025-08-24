@@ -33,13 +33,14 @@ export async function GET(request: NextRequest) {
             measurements: {
               select: {
                 id: true,
+                measurementDate: true,
                 stuntingStatus: true,
-                createdAt: true,
+                height: true,
+                heightForAgeZScore: true,
               },
               orderBy: {
-                createdAt: "desc",
+                measurementDate: "desc",
               },
-              take: 1,
             },
           },
         },
@@ -49,23 +50,18 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Transform the data
+    // Transform the data to match what the dashboard expects
     const transformedUsers = users.map((user) => ({
       id: user.id,
-      full_name: user.first_name + " " + user.last_name,
+      first_name: user.first_name,
+      last_name: user.last_name,
       address: user.address,
       subVillage: user.subVillage,
       children: user.children.map((child) => ({
         id: child.id,
-        full_name: child.first_name + " " + child.last_name,
-        measurement_status:
-          child.measurements.length > 0
-            ? child.measurements[0].stuntingStatus
-            : "NOT_MEASURED",
-        last_measured:
-          child.measurements.length > 0
-            ? child.measurements[0].createdAt
-            : null,
+        first_name: child.first_name,
+        last_name: child.last_name,
+        measurements: child.measurements,
       })),
     }));
 

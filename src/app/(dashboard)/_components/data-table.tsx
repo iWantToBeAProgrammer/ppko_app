@@ -458,7 +458,7 @@ export function DataTable<T extends TableData>({
                     colSpan={tableColumns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    Belum ada data
                   </TableCell>
                 </TableRow>
               )}

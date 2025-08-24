@@ -17,8 +17,8 @@ export async function GET() {
 
     // get kader profile
     const kader = await prisma.user.findUnique({
-      where: { id: user.id, role: Role.CADRE },
-      select: { subVillage: true },
+      where: { id: user.id },
+      select: { subVillage: true, role: true },
     });
 
     if (!kader?.subVillage) {
