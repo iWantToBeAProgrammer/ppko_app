@@ -28,7 +28,7 @@ export const SIDEBAR_MENU_LIST: {
   PARENT: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/user",
       icon: Home,
     },
     {
@@ -46,17 +46,17 @@ export const SIDEBAR_MENU_LIST: {
   CADRE: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/cadre",
       icon: Home,
     },
     {
       title: "Tambah Warga",
-      url: "/add-resident",
+      url: "/cadre/warga",
       icon: Users,
     },
     {
       title: "Kalkulator",
-      url: "/calculator",
+      url: "/cadre/kalkulator",
       icon: Calculator,
     },
   ],
@@ -64,17 +64,17 @@ export const SIDEBAR_MENU_LIST: {
   ADMIN: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/admin",
       icon: Home,
     },
     {
       title: "Kader",
-      url: "/cadres",
+      url: "/admin/kader",
       icon: UserCog,
     },
     {
       title: "Kalkulator",
-      url: "/calculator",
+      url: "/admin/kalkulator",
       icon: Calculator,
     },
     {

@@ -9,26 +9,26 @@ datasource db {
 }
 
 model User {
-  id                 String        @id @default(uuid()) @map("id") @db.Uuid
-  email              String?       @unique
-  first_name         String?
-  last_name          String?
-  role               Role          @default(PARENT)
-  phoneNumber        String?
-  address            String?
-  isActive           Boolean       @default(true)
-  subVillage         SubVillage?
-  createdBy          String?       @db.Uuid
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @default(now()) @updatedAt
-  children           Child[]       @relation("ParentChildren")
-  registeredChildren Child[]       @relation("CadreRegistered")
-  galleries          Gallery[]
-  measurements       Measurement[]
-  recipes            Recipe[]
-  creator            User?         @relation("UserCreator", fields: [createdBy], references: [id])
-  createdUsers       User[]        @relation("UserCreator")
-  Article            Article[]
+  id           String        @id @default(uuid()) @map("id") @db.Uuid
+  email        String?       @unique
+  first_name   String?
+  last_name    String?
+  role         Role          @default(PARENT)
+  phoneNumber  String?
+  address      String?
+  isActive     Boolean       @default(true)
+  subVillage   SubVillage?
+  createdBy    String?       @db.Uuid
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now()) @updatedAt
+  gender       Gender?
+  Article      Article[]
+  children     Child[]       @relation("ParentChildren")
+  galleries    Gallery[]
+  measurements Measurement[]
+  recipes      Recipe[]
+  creator      User?         @relation("UserCreator", fields: [createdBy], references: [id])
+  createdUsers User[]        @relation("UserCreator")
 
   @@index([email])
   @@index([role])
@@ -37,33 +37,26 @@ model User {
 }
 
 model Child {
-  id             String        @id @default(cuid())
-  registrationNo String        @unique
-  name           String
-  gender         Gender
-  dateOfBirth    DateTime
-  birthHeight    Float?
-  subVillage     SubVillage
-  parentId       String        @db.Uuid
-  registeredById String        @db.Uuid
-  isActive       Boolean       @default(true)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  parent         User          @relation("ParentChildren", fields: [parentId], references: [id])
-  registeredBy   User          @relation("CadreRegistered", fields: [registeredById], references: [id])
-  measurements   Measurement[]
+  id           String        @id @default(cuid())
+  gender       Gender
+  dateOfBirth  DateTime
+  birthHeight  Float?
+  parentId     String        @db.Uuid
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  first_name   String
+  last_name    String
+  parent       User          @relation("ParentChildren", fields: [parentId], references: [id])
+  measurements Measurement[]
 
   @@index([parentId])
-  @@index([registeredById])
-  @@index([subVillage])
 }
 
 model Measurement {
   id                 String         @id @default(cuid())
   childId            String
   measurementDate    DateTime
-  ageInMonths        Int
-  weight             Float
   height             Float
   heightForAgeZScore Float
   stuntingStatus     StuntingStatus
@@ -112,42 +105,26 @@ model Gallery {
   @@index([createdById])
 }
 
-// Enhanced Article model
 model Article {
-  id          String          @id @default(cuid())
-  title       String
-  slug        String          @unique // Should be unique for SEO
-  imageUrl    String
-  category    ArticleCategory
-  description String          @db.Text
-  content     String          @db.Text // Full article content
-
-  // SEO and metadata
+  id              String          @id @default(cuid())
+  title           String
+  slug            String          @unique
+  imageUrl        String
+  category        ArticleCategory
+  description     String
+  content         String
   metaTitle       String?
   metaDescription String?
+  isPublished     Boolean         @default(false)
+  isDraft         Boolean         @default(true)
+  isFeatured      Boolean         @default(false)
+  viewCount       Int             @default(0)
+  publishedAt     DateTime?
+  createdById     String          @db.Uuid
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  createdBy       User            @relation(fields: [createdById], references: [id])
 
-  // Publishing controls
-  isPublished Boolean @default(false) // Start as draft
-  isDraft     Boolean @default(true)
-
-  // Optional featured article
-  isFeatured Boolean @default(false)
-
-  // View tracking
-  viewCount Int @default(0)
-
-  // Scheduling
-  publishedAt DateTime?
-
-  // Relations
-  createdById String @db.Uuid
-  createdBy   User   @relation(fields: [createdById], references: [id])
-
-  // Timestamps
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Indexes for performance
   @@index([createdById])
   @@index([category])
   @@index([isPublished])
@@ -272,14 +249,14 @@ enum Role {
 }
 
 enum SubVillage {
-  SUB_VILLAGE_1
-  SUB_VILLAGE_2
-  SUB_VILLAGE_3
-  SUB_VILLAGE_4
-  SUB_VILLAGE_5
-  SUB_VILLAGE_6
-  SUB_VILLAGE_7
-  SUB_VILLAGE_8
+  GEMAWANG
+  PENANGKAN
+  DEPOK
+  KLODRAN
+  KALINONGKO
+  TEGAL_PARAKAN
+  DERMONGANTI
+  MARGOSARI
 }
 
 enum Gender {

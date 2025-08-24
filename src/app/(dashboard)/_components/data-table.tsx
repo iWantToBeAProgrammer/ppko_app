@@ -19,6 +19,7 @@ import {
   ChevronDown,
   MoreHorizontal,
   PenLine,
+  Plus,
   Trash,
 } from "lucide-react";
 
@@ -42,54 +43,79 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: User[] = [
-  {
-    id: "m5gr84i9",
-    address: "Jl. Wahid Sangit rt 01/rw 07 No.12",
-    status: "stunting berat",
-    parents_name: "Ahmad Susanto",
-    childs_name: "Sari Susanto",
-  },
-  {
-    id: "3u1reuv4",
-    address: "Jl. Wahid Sangit rt 01/rw 07 No.12",
-    status: "stunting",
-    parents_name: "Budi Hartono",
-    childs_name: "Andi Hartono",
-  },
-  {
-    id: "derv1ws0",
-    address: "Jl. Wahid Sangit rt 01/rw 07 No.12",
-    status: "stunting",
-    parents_name: "Siti Nurhaliza",
-    childs_name: "Maya Nurhaliza",
-  },
-  {
-    id: "5kma53ae",
-    address: "Jl. Wahid Sangit rt 01/rw 07 No.12",
-    status: "stunting berat",
-    parents_name: "Joko Widodo",
-    childs_name: "Rina Widodo",
-  },
-  {
-    id: "bhqecj4p",
-    address: "Jl. Wahid Sangit rt 01/rw 07 No.12",
-    status: "normal",
-    parents_name: "Indira Sari",
-    childs_name: "Dian Sari",
-  },
-];
+// Generic data type
+export type TableData = Record<string, any>;
 
-export type User = {
-  id: string;
-  address: string;
-  status: "stunting berat" | "stunting" | "normal";
-  parents_name: string;
-  childs_name: string;
-};
+// Column configuration types
+export interface StatusConfig {
+  value: string;
+  color: "red" | "yellow" | "green" | "blue" | "purple" | "gray";
+  label?: string;
+}
 
-// Updated responsive columns with better mobile handling
-export function DataTable({ isCadre }: { isCadre: boolean }) {
+export interface ActionConfig<T = any> {
+  icon: React.ReactNode;
+  label: string;
+  onClick: (row: T) => void;
+  variant?: "default" | "destructive";
+  showOnMobile?: boolean;
+  showOnDesktop?: boolean;
+  requiresPermission?: boolean;
+}
+
+export interface ColumnConfig<T = any> {
+  key: string;
+  header: string;
+  type?: "text" | "status" | "actions";
+  sortable?: boolean;
+  hiddenOnMobile?: boolean;
+  hiddenOnTablet?: boolean;
+  width?: string;
+  statusConfig?: StatusConfig[];
+  actions?: ActionConfig<T>[];
+  render?: (value: any, row: T) => React.ReactNode;
+}
+
+export interface DataTableProps<T extends TableData> {
+  data: T[];
+  columns: ColumnConfig<T>[];
+  searchable?: {
+    key: string;
+    placeholder: string;
+  };
+  permissions?: {
+    canEdit?: boolean;
+    canDelete?: boolean;
+    canView?: boolean;
+  };
+  onRowClick?: (row: T) => void;
+  className?: string;
+  showRowNumbers?: boolean;
+  rowNumbersConfig?: {
+    header?: string;
+    startFrom?: number;
+  };
+
+  tambahButton?: {
+    label?: string; // default: "Tambah"
+    href?: string; // dynamic URL
+    enabled?: boolean; // default: true
+  };
+  isLoading?: boolean;
+}
+
+export function DataTable<T extends TableData>({
+  data,
+  columns,
+  searchable,
+  permissions = {},
+  onRowClick,
+  className = "",
+  showRowNumbers = false,
+  rowNumbersConfig = {},
+  tambahButton = {},
+  isLoading = false,
+}: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -98,157 +124,206 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  // Define columns inside component so isCadre is available
-  const columns: ColumnDef<User>[] = React.useMemo(
-    () => [
-      {
-        accessorKey: "parents_name",
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-              className="h-auto p-0 font-semibold"
-            >
-              Nama Orang Tua
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          );
-        },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue("parents_name")}</div>
-        ),
-      },
-      {
-        accessorKey: "childs_name",
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-              className="h-auto p-0 font-semibold"
-            >
-              Nama Anak
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          );
-        },
-        cell: ({ row }) => (
-          <div className="font-medium">{row.getValue("childs_name")}</div>
-        ),
-      },
-      {
-        accessorKey: "address",
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
-              className="h-auto p-0 font-semibold hidden lg:flex"
-            >
-              Alamat
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          );
-        },
-        cell: ({ row }) => (
-          <div className="text-sm text-muted-foreground hidden lg:block max-w-[200px] truncate">
-            {row.getValue("address")}
-          </div>
-        ),
-      },
-      {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => (
-          <div className="flex gap-2 items-center">
-            <div
-              className={`${
-                row.getValue("status") === "stunting berat"
-                  ? "bg-red-500"
-                  : row.getValue("status") === "stunting"
-                  ? "bg-yellow-500"
-                  : "bg-green-500"
-              } w-3 h-3 rounded-full flex-shrink-0`}
-            ></div>
-            <div className="capitalize text-sm font-medium hidden sm:block">
-              {row.getValue("status")}
-            </div>
-          </div>
-        ),
-      },
-      {
-        id: "actions",
+  // Helper function to get status color classes
+  const getStatusColorClass = (color: string) => {
+    const colorMap = {
+      red: "bg-red-500",
+      yellow: "bg-yellow-500",
+      green: "bg-green-500",
+      blue: "bg-blue-500",
+      purple: "bg-purple-500",
+      gray: "bg-gray-500",
+    };
+    return colorMap[color as keyof typeof colorMap] || "bg-gray-500";
+  };
+
+  // Generate table columns based on configuration
+  const tableColumns: ColumnDef<T>[] = React.useMemo(() => {
+    const cols: ColumnDef<T>[] = [];
+
+    // Add row numbers column if enabled
+    if (showRowNumbers) {
+      const { header = "No.", startFrom = 1 } = rowNumbersConfig;
+
+      cols.push({
+        id: "__row_number__",
+        header: () => <div className="text-center font-semibold">{header}</div>,
         enableHiding: false,
-        cell: ({ row }) => {
+        enableSorting: false,
+        size: 60,
+        cell: ({ row, table }) => {
+          const pageIndex = table.getState().pagination.pageIndex;
+          const pageSize = table.getState().pagination.pageSize;
+          const rowIndex = row.index;
+          const globalRowNumber = pageIndex * pageSize + rowIndex + startFrom;
+
+          return (
+            <div className="text-center font-mono text-sm font-medium min-w-[48px] flex items-center justify-center">
+              {globalRowNumber}
+            </div>
+          );
+        },
+      });
+    }
+
+    // Add configured columns
+    const configuredColumns = columns.map((col) => {
+      const baseColumn: ColumnDef<T> = {
+        accessorKey: col.key,
+        enableHiding: col.type !== "actions",
+      };
+
+      // Header configuration
+      if (col.sortable && col.type !== "actions") {
+        baseColumn.header = ({ column }) => (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={`h-auto p-0 font-semibold ${
+              col.hiddenOnMobile ? "hidden lg:flex" : ""
+            } ${col.hiddenOnTablet ? "hidden xl:flex" : ""}`}
+          >
+            {col.header}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      } else if (col.type !== "actions") {
+        baseColumn.header = col.header;
+      } else {
+        baseColumn.header = "";
+      }
+
+      // Cell configuration
+      baseColumn.cell = ({ row }): React.ReactNode => {
+        const value: string = row.getValue(col.key);
+
+        // Custom render function
+        if (col.render) {
+          return col.render(value, row.original);
+        }
+
+        // Status column
+        if (col.type === "status" && col.statusConfig) {
+          const statusItem = col.statusConfig.find((s) => s.value === value);
+          if (statusItem) {
+            return (
+              <div className="flex gap-2 items-center">
+                <div
+                  className={`${getStatusColorClass(
+                    statusItem.color
+                  )} w-3 h-3 rounded-full flex-shrink-0`}
+                />
+                <div className="capitalize text-sm font-medium hidden sm:block">
+                  {statusItem.label || value}
+                </div>
+              </div>
+            );
+          }
+        }
+
+        // Actions column
+        if (col.type === "actions" && col.actions) {
+          const visibleDesktopActions = col.actions.filter(
+            (action) =>
+              action.showOnDesktop !== false &&
+              (!action.requiresPermission ||
+                checkPermission(action, permissions))
+          );
+
+          const mobileActions = col.actions.filter(
+            (action) =>
+              action.showOnMobile !== false &&
+              (!action.requiresPermission ||
+                checkPermission(action, permissions))
+          );
+
           return (
             <div className="flex items-center gap-1">
-              {/* Detail button - always visible */}
-              <Button variant="outline" className="h-8 w-8 p-0">
-                <span className="sr-only">Detail Anak</span>
-                <ArrowUpRight className="h-4 w-4" />
-              </Button>
-
-              {/* Edit button - always visible on desktop */}
-              <Button variant="outline" className="h-8 w-8 p-0 hidden md:flex">
-                <span className="sr-only">Kalkulator</span>
-                <PenLine className="h-4 w-4" />
-              </Button>
-
-              {/* Delete button - only visible for cadres on desktop */}
-              {isCadre && (
+              {/* Desktop actions */}
+              {visibleDesktopActions.map((action, index) => (
                 <Button
+                  key={index}
                   variant="outline"
                   className="h-8 w-8 p-0 hidden md:flex"
+                  onClick={() => action.onClick(row.original)}
                 >
-                  <span className="sr-only">Delete User</span>
-                  <Trash className="h-4 w-4" />
+                  <span className="sr-only">{action.label}</span>
+                  {action.icon}
                 </Button>
-              )}
+              ))}
 
-              {/* Mobile dropdown for additional actions */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild className="md:hidden">
-                  <Button variant="outline" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>
-                    <PenLine className="mr-2 h-4 w-4" />
-                    Kalkulator
-                  </DropdownMenuItem>
-
-                  {/* Delete option in mobile dropdown - only for cadres */}
-                  {isCadre && (
-                    <>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-red-600">
-                        <Trash className="mr-2 h-4 w-4" />
-                        Delete
+              {/* Mobile dropdown */}
+              {mobileActions.length > 0 && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild className="md:hidden">
+                    <Button variant="outline" className="h-8 w-8 p-0">
+                      <span className="sr-only">Open menu</span>
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {mobileActions.map((action, index) => (
+                      <DropdownMenuItem
+                        key={index}
+                        className={
+                          action.variant === "destructive" ? "text-red-600" : ""
+                        }
+                        onClick={() => action.onClick(row.original)}
+                      >
+                        {action.icon}
+                        <span className="ml-2">{action.label}</span>
                       </DropdownMenuItem>
-                    </>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
           );
-        },
-      },
-    ],
-    [isCadre]
-  ); // Add isCadre as dependency
+        }
+
+        // Default text column
+        const responsiveClasses = `
+          ${col.hiddenOnMobile ? "hidden lg:block" : ""}
+          ${col.hiddenOnTablet ? "hidden xl:block" : ""}
+          ${col.width ? col.width : ""}
+        `.trim();
+
+        return (
+          <div className={`font-medium ${responsiveClasses}`}>
+            {typeof value === "string" || typeof value === "number"
+              ? value
+              : String(value || "")}
+          </div>
+        );
+      };
+
+      return baseColumn;
+    });
+
+    cols.push(...configuredColumns);
+    return cols;
+  }, [columns, permissions, showRowNumbers, rowNumbersConfig]);
+
+  // Helper function to check permissions
+  const checkPermission = (
+    action: ActionConfig<T>,
+    perms: typeof permissions
+  ) => {
+    if (action.label.toLowerCase().includes("delete")) {
+      return perms.canDelete !== false;
+    }
+    if (action.label.toLowerCase().includes("edit")) {
+      return perms.canEdit !== false;
+    }
+    if (action.label.toLowerCase().includes("view")) {
+      return perms.canView !== false;
+    }
+    return true;
+  };
 
   const table = useReactTable({
     data,
-    columns,
+    columns: tableColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -266,19 +341,37 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
   });
 
   return (
-    <div className="w-full space-y-4">
-      {/* Header Controls - Responsive */}
+    <div className={`w-full space-y-2 ${className}`}>
+      {tambahButton.enabled === true && (
+        <Button
+          asChild
+          className=" outline-primary border-primary text-primary"
+          variant={"outline"}
+        >
+          <a href={tambahButton.href}>
+            <Plus />
+            {tambahButton.label || "Tambah"}
+          </a>
+        </Button>
+      )}
+      {/* Header Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 py-4">
-        <Input
-          placeholder="Cari Nama Orang Tua"
-          value={
-            (table.getColumn("parents_name")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("parents_name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {searchable && (
+          <Input
+            placeholder={searchable.placeholder}
+            value={
+              (table.getColumn(searchable.key)?.getFilterValue() as string) ??
+              ""
+            }
+            onChange={(event) =>
+              table
+                .getColumn(searchable.key)
+                ?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="sm:ml-auto">
@@ -290,6 +383,9 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
+                const columnConfig = columns.find(
+                  (col) => col.key === column.id
+                );
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -299,13 +395,7 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id === "parents_name"
-                      ? "Nama Orang Tua"
-                      : column.id === "childs_name"
-                      ? "Nama Anak"
-                      : column.id === "address"
-                      ? "Alamat"
-                      : column.id}
+                    {columnConfig?.header || column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
@@ -313,28 +403,28 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
         </DropdownMenu>
       </div>
 
-      {/* Responsive Table with Horizontal Scroll */}
+      {/* Table */}
       <div className="rounded-md border">
         <div className="overflow-x-auto">
           <Table className="min-w-full">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className="whitespace-nowrap px-2 sm:px-4"
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className={`whitespace-nowrap px-2 sm:px-4 ${
+                        header.id === "__row_number__" ? "w-16 text-center" : ""
+                      }`}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : (flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          ) as React.ReactNode)}
+                    </TableHead>
+                  ))}
                 </TableRow>
               ))}
             </TableHeader>
@@ -344,6 +434,10 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    onClick={() => onRowClick?.(row.original)}
+                    className={
+                      onRowClick ? "cursor-pointer hover:bg-muted/50" : ""
+                    }
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
@@ -361,7 +455,7 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={columns.length}
+                    colSpan={tableColumns.length}
                     className="h-24 text-center"
                   >
                     No results.
@@ -373,7 +467,7 @@ export function DataTable({ isCadre }: { isCadre: boolean }) {
         </div>
       </div>
 
-      {/* Footer Controls - Responsive */}
+      {/* Footer */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0 py-4">
         <div className="text-muted-foreground text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
