@@ -8,7 +8,7 @@ import {
 import { AuthFormState } from "@/types/auth";
 import { createClient } from "@/utils/supabase/server";
 import { loginSchemaForm } from "@/validations/auth-validation";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, SubVillage } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import z from "zod";
@@ -57,8 +57,8 @@ export async function login(
     };
   }
 
-  const profile = await prisma.user.findUnique({
-    where: { id: user?.id },
+  const profile = await prisma.profiles.findUnique({
+    where: { id: user?.id},
   });
 
   if (profile) {

@@ -8,131 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id           String        @id @default(uuid()) @map("id") @db.Uuid
-  email        String?       @unique
-  first_name   String?
-  last_name    String?
-  role         Role          @default(PARENT)
-  phoneNumber  String?
-  address      String?
-  isActive     Boolean       @default(true)
-  subVillage   SubVillage?
-  createdBy    String?       @db.Uuid
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @default(now()) @updatedAt
-  gender       Gender?
-  Article      Article[]
-  children     Child[]       @relation("ParentChildren")
-  galleries    Gallery[]
-  measurements Measurement[]
-  recipes      Recipe[]
-  creator      User?         @relation("UserCreator", fields: [createdBy], references: [id])
-  createdUsers User[]        @relation("UserCreator")
-
-  @@index([email])
-  @@index([role])
-  @@index([subVillage])
-  @@map("profiles")
-}
-
-model Child {
-  id           String        @id @default(cuid())
-  gender       Gender
-  dateOfBirth  DateTime
-  birthHeight  Float?
-  parentId     String        @db.Uuid
-  isActive     Boolean       @default(true)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  first_name   String
-  last_name    String
-  parent       User          @relation("ParentChildren", fields: [parentId], references: [id])
-  measurements Measurement[]
-
-  @@index([parentId])
-}
-
-model Measurement {
-  id                 String         @id @default(cuid())
-  childId            String
-  measurementDate    DateTime
-  height             Float
-  heightForAgeZScore Float
-  stuntingStatus     StuntingStatus
-  measuredById       String         @db.Uuid
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
-  child              Child          @relation(fields: [childId], references: [id], onDelete: Cascade)
-  measuredBy         User           @relation(fields: [measuredById], references: [id])
-
-  @@unique([childId, measurementDate])
-  @@index([childId])
-  @@index([measurementDate])
-  @@index([stuntingStatus])
-}
-
-model Recipe {
-  id           String       @id @default(cuid())
-  name         String
-  category     FoodCategory
-  youtubeUrl   String?
-  description  String
-  ingredients  String[]
-  spices       String[]
-  groundSpices String[]
-  createdById  String       @db.Uuid
-  isPublished  Boolean      @default(true)
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  createdBy    User         @relation(fields: [createdById], references: [id])
-
-  @@index([category])
-  @@index([createdById])
-}
-
-model Gallery {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  imageUrl    String
-  createdById String   @db.Uuid
-  isPublished Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdBy   User     @relation(fields: [createdById], references: [id])
-
-  @@index([createdById])
-}
-
-model Article {
-  id              String          @id @default(cuid())
-  title           String
-  slug            String          @unique
-  imageUrl        String
-  category        ArticleCategory
-  description     String
-  content         String
-  metaTitle       String?
-  metaDescription String?
-  isPublished     Boolean         @default(false)
-  isDraft         Boolean         @default(true)
-  isFeatured      Boolean         @default(false)
-  viewCount       Int             @default(0)
-  publishedAt     DateTime?
-  createdById     String          @db.Uuid
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  createdBy       User            @relation(fields: [createdById], references: [id])
-
-  @@index([createdById])
-  @@index([category])
-  @@index([isPublished])
-  @@index([isFeatured])
-  @@index([publishedAt])
-  @@index([slug])
-}
-
 model Article {
   id              String          @id
   title           String
@@ -159,30 +34,23 @@ model Article {
   @@index([isPublished])
   @@index([publishedAt])
   @@index([slug])
-  @@schema("public")
 }
 
 model Child {
-  id                                      String        @id
-  registrationNo                          String        @unique
-  name                                    String
-  gender                                  Gender
-  dateOfBirth                             DateTime
-  birthHeight                             Float?
-  subVillage                              SubVillage
-  parentId                                String        @db.Uuid
-  registeredById                          String        @db.Uuid
-  isActive                                Boolean       @default(true)
-  createdAt                               DateTime      @default(now())
-  updatedAt                               DateTime
-  profiles_Child_parentIdToprofiles       profiles      @relation("Child_parentIdToprofiles", fields: [parentId], references: [id])
-  profiles_Child_registeredByIdToprofiles profiles      @relation("Child_registeredByIdToprofiles", fields: [registeredById], references: [id])
-  Measurement                             Measurement[]
+  id          String        @id
+  gender      Gender
+  dateOfBirth DateTime
+  birthHeight Float?
+  parentId    String        @db.Uuid
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime
+  first_name  String
+  last_name   String
+  profiles    profiles      @relation(fields: [parentId], references: [id])
+  Measurement Measurement[]
 
   @@index([parentId])
-  @@index([registeredById])
-  @@index([subVillage])
-  @@schema("public")
 }
 
 model Gallery {
@@ -197,15 +65,12 @@ model Gallery {
   profiles    profiles @relation(fields: [createdById], references: [id])
 
   @@index([createdById])
-  @@schema("public")
 }
 
 model Measurement {
   id                 String         @id
   childId            String
   measurementDate    DateTime
-  ageInMonths        Int
-  weight             Float
   height             Float
   heightForAgeZScore Float
   stuntingStatus     StuntingStatus
@@ -219,7 +84,6 @@ model Measurement {
   @@index([childId])
   @@index([measurementDate])
   @@index([stuntingStatus])
-  @@schema("public")
 }
 
 model Recipe {
@@ -239,13 +103,67 @@ model Recipe {
 
   @@index([category])
   @@index([createdById])
-  @@schema("public")
+}
+
+model profiles {
+  id             String        @id @db.Uuid
+  email          String?       @unique
+  first_name     String?
+  last_name      String?
+  role           Role          @default(PARENT)
+  phoneNumber    String?
+  address        String?
+  isActive       Boolean       @default(true)
+  subVillage     SubVillage?
+  createdBy      String?       @db.Uuid
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  gender         Gender?
+  Article        Article[]
+  Child          Child[]
+  Gallery        Gallery[]
+  Measurement    Measurement[]
+  Recipe         Recipe[]
+  profiles       profiles?     @relation("profilesToprofiles", fields: [createdBy], references: [id])
+  other_profiles profiles[]    @relation("profilesToprofiles")
+
+  @@index([email])
+  @@index([role])
+  @@index([subVillage])
+}
+
+enum ArticleCategory {
+  NUTRISI
+  KESEHATAN
+  PARENTING
+  RESEP
+  BERITA
+  TIPS
+}
+
+enum FoodCategory {
+  AGE_6_11
+  AGE_12_23
+  AGE_24_35
+  AGE_36_47
+  AGE_48_60
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 enum Role {
   ADMIN
   CADRE
   PARENT
+}
+
+enum StuntingStatus {
+  NORMAL
+  STUNTING
+  STUNTING_BERAT
 }
 
 enum SubVillage {
@@ -257,32 +175,4 @@ enum SubVillage {
   TEGAL_PARAKAN
   DERMONGANTI
   MARGOSARI
-}
-
-enum Gender {
-  MALE
-  FEMALE
-}
-
-enum FoodCategory {
-  AGE_6_11
-  AGE_12_23
-  AGE_24_35
-  AGE_36_47
-  AGE_48_60
-}
-
-enum StuntingStatus {
-  NORMAL
-  STUNTING
-  STUNTING_BERAT
-}
-
-enum ArticleCategory {
-  NUTRISI
-  KESEHATAN
-  PARENTING
-  RESEP
-  BERITA
-  TIPS
 }

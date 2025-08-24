@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import AuthStoreProvider from "@/providers/auth-store-provider";
 import ReactQueryProvider from "@/providers/react-query-provider";
+import Navbar from "@/components/common/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
