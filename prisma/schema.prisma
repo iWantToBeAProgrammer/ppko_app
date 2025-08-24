@@ -57,8 +57,6 @@ model Measurement {
   id                 String         @id @default(cuid())
   childId            String
   measurementDate    DateTime
-  ageInMonths        Int
-  weight             Float
   height             Float
   heightForAgeZScore Float
   stuntingStatus     StuntingStatus

@@ -56,8 +56,8 @@ export function EditUserDialog({
     first_name: firstName,
     last_name: lastName,
     address: user.address === "Alamat tidak tersedia" ? "" : user.address,
-    subVillage: currentUserData?.subVillage || "",
-    gender: currentUserData?.gender || "",
+    subVillage: currentUserData?.subVillage,
+    gender: currentUserData?.gender,
     phoneNumber: currentUserData?.phoneNumber || "",
   });
 
@@ -129,8 +129,6 @@ export function EditUserDialog({
     }));
   };
 
-  console.log(userData);
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -171,7 +169,7 @@ export function EditUserDialog({
                 <div className="space-y-2">
                   <Label htmlFor="gender">Jenis Kelamin</Label>
                   <Select
-                    defaultValue={formData.gender}
+                    value={formData.gender || undefined}
                     onValueChange={(value) => handleChange("gender", value)}
                   >
                     <SelectTrigger>
@@ -200,7 +198,7 @@ export function EditUserDialog({
               <div className="space-y-2">
                 <Label htmlFor="subVillage">Dusun</Label>
                 <Select
-                  defaultValue={formData.subVillage}
+                  value={formData.subVillage || undefined}
                   onValueChange={(value) => handleChange("subVillage", value)}
                 >
                   <SelectTrigger>
