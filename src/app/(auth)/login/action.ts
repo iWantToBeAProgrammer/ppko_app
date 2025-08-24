@@ -1,6 +1,10 @@
 "use server";
 
 import { INITIAL_STATE_LOGIN_FORM } from "@/constants/auth-constants";
+import {
+  SIDEBAR_MENU_LIST,
+  SidebarMenuKey,
+} from "@/constants/sidebar-contants";
 import { AuthFormState } from "@/types/auth";
 import { createClient } from "@/utils/supabase/server";
 import { loginSchemaForm } from "@/validations/auth-validation";
@@ -53,7 +57,7 @@ export async function login(
     };
   }
 
-  const profile = await prisma.users.findUnique({
+  const profile = await prisma.user.findUnique({
     where: { id: user?.id },
   });
 
@@ -76,16 +80,21 @@ export async function login(
   }
 
   // Revalidate paths but don't redirect
-  if (profile.role === "admin" || profile.role === "cadre") {
+  const role = user?.role as SidebarMenuKey | undefined;
+
+  const navigation = role ? SIDEBAR_MENU_LIST[role] : [];
+
+  // Revalidate paths
+  if (role === "ADMIN" || role === "CADRE") {
     revalidatePath("/admin", "layout");
   }
   revalidatePath("/", "layout");
 
-  // Return success with redirect information instead of redirecting
   return {
     status: "success",
     message: "Login successful",
-    redirectTo: profile.role === "admin" || profile.role === "cadre" ? "/admin" : "/",
+    redirectTo: role === "ADMIN" || role === "CADRE" ? "/admin" : "/",
     user: profile,
+    navigation: navigation, // ✅ send navigation back
   };
 }

@@ -33,14 +33,16 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import { Separator } from "../ui/separator";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isAuthPage = pathname === "/login" || pathname === "/register";
   const isAdminPage =
-    pathname.startsWith("/admin") || pathname === "/dashboard";
-  const { user, loading } = useAuth();
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/user") ||
+    pathname.startsWith("/cadre");
 
   useEffect(() => {
     window.onscroll = () => {
@@ -49,9 +51,13 @@ export default function Navbar() {
     };
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const profile = useAuthStore((state) => state.profile);
+  const navigateLink =
+    profile.role === "ADMIN"
+      ? "/admin"
+      : profile.role === "CADRE"
+      ? "/cadre"
+      : "/user";
 
   return (
     <nav
@@ -112,7 +118,7 @@ export default function Navbar() {
         </div>
 
         <div className="navbar-button sm:flex hidden items-center gap-3">
-          {!user ? (
+          {!profile ? (
             <Link href={"/login"}>
               <Button
                 className={` bg-transparent border border-foreground rounded-3xl font-semibold cursor-pointer hover:bg-background transition-[colors, transform] duration-200 hover:-translate-y-0.5`}
@@ -122,7 +128,7 @@ export default function Navbar() {
               </Button>
             </Link>
           ) : (
-            <Link href={"/dashboard"}>
+            <Link href={navigateLink}>
               <div className="flex justify-center items-center bg-background text-foreground p-3 gap-2 rounded-full shadow-lg hover:-translate-y-0.5 transition-transform duration-200 ease-in">
                 <User size={24} />
                 Dashboard
@@ -190,12 +196,20 @@ export default function Navbar() {
             </div>
             <DrawerFooter className="mb-2">
               <Separator />
+              {!profile ?
               <Link
-                href={"/login"}
-                className="flex items-center gap-3 text-foreground/80 mt-1 hover:text-foreground hover:bg-primary p-2 rounded-md transition-colors duration-200 ease-in"
+              href={"/login"}
+              className="flex items-center gap-3 text-foreground/80 mt-1 hover:text-foreground hover:bg-primary p-2 rounded-md transition-colors duration-200 ease-in"
               >
                 <LogIn size={18} /> Login
               </Link>
+              :
+              <Link href={navigateLink}
+              className="flex items-center gap-3 text-foreground/80 mt-1 hover:text-foreground hover:bg-primary p-2 rounded-md transition-colors duration-200 ease-in"
+              >
+                <User size={18}/> Dashboard
+              </Link>
+              }
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
