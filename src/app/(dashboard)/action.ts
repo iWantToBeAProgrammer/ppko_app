@@ -57,7 +57,12 @@ export async function createUser(prevState: AuthFormState, formData: FormData) {
       return {
         status: "error",
         errors: {
-          _form: ["Data anak tidak valid: " + childValidatedFields.error.issues.map(issue => issue.message).join(", ")],
+          _form: [
+            "Data anak tidak valid: " +
+              childValidatedFields.error.issues
+                .map((issue) => issue.message)
+                .join(", "),
+          ],
         },
       };
     }
@@ -125,7 +130,7 @@ export async function createUser(prevState: AuthFormState, formData: FormData) {
     // If database operation fails, we should clean up the Supabase user
     // Note: This is a simplified cleanup, you might want more sophisticated error handling
     console.error("Database operation failed:", dbError);
-    
+
     // Attempt to delete the created Supabase user
     try {
       await supabase.auth.admin.deleteUser(data.user?.id as string);

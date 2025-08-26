@@ -5,7 +5,6 @@ import { useAuthStore } from "@/stores/auth-store";
 
 export default function TambahOrangTuaPage() {
   const cadreSubVillage = useAuthStore((state) => state.profile.subVillage);
-
   return (
     <UserForm
       userType="PARENT"

@@ -34,8 +34,10 @@ type UserWithChildren = {
   id: string;
   first_name: string;
   last_name: string;
-  address: string | null;
-  subVillage: string | null;
+  address: string;
+  subVillage: string;
+  phoneNumber: string;
+  gender: string;
   children: {
     id: string;
     first_name: string;
@@ -291,8 +293,10 @@ export default function DashboardLayout({
           childs_name: fullName,
           address: parent.address || "Alamat tidak tersedia",
           subVillage: parent.subVillage || "Tidak diketahui",
+          gender: parent.gender,
           status,
           lastMeasured: latestMeasurement?.measurementDate || null,
+          phoneNumber: parent.phoneNumber,
         };
       })
     );
