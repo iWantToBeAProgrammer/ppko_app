@@ -20,4 +20,5 @@ export type Profile = {
   phoneNumber?: string;
   gender?: string;
   role?: string;
+  children?: [];
 };

@@ -57,8 +57,9 @@ export async function login(
     };
   }
 
-  const profile = await prisma.profiles.findUnique({
-    where: { id: user?.id},
+  const profile = await prisma.user.findUnique({
+    where: { id: user?.id },
+    include: { children: true },
   });
 
   if (profile) {

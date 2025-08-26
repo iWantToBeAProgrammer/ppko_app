@@ -36,6 +36,8 @@ import {
 } from "@/constants/auth-constants";
 import {
   childDataSchema,
+  CreateParentWithChildForm,
+  createParentWithChildSchema,
   CreateUserForm,
   createUserSchema,
 } from "@/validations/auth-validation";
@@ -58,30 +60,30 @@ interface ChildData {
   last_name: string;
   dateOfBirth: string;
   gender: Gender;
-  birthHeight: string;
-}
-
-interface ExtendedCreateUserForm extends CreateUserForm {
-  childData?: ChildData;
 }
 
 interface UserFormProps {
   userType: "CADRE" | "PARENT";
   pageTitle: string;
+  subVillage?: string;
 }
 
-export default function UserForm({ userType, pageTitle }: UserFormProps) {
+export default function UserForm({
+  userType,
+  pageTitle,
+  subVillage,
+}: UserFormProps) {
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
-  const [username, setUsername] = useState("");
-
   // Determine role based on user type
   const defaultRole = userType === "CADRE" ? Role.CADRE : Role.PARENT;
 
   // Create initial values based on user type
-  const getInitialValues = (): ExtendedCreateUserForm => {
+  const getInitialValues = (): CreateParentWithChildForm => {
     const baseValues = {
       ...INITIAL_CREATE_USER_FORM,
       role: defaultRole,
+      subVillage: subVillage as SubVillage,
+      password: "",
     };
 
     if (userType === "PARENT") {
@@ -92,7 +94,6 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
           last_name: "",
           dateOfBirth: "",
           gender: Gender.MALE, // Set a default value instead of empty string
-          birthHeight: "",
         },
       };
     }
@@ -102,9 +103,9 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
 
   // Use the appropriate schema based on user type
   const validationSchema =
-    userType === "PARENT" ? createParentSchema : createUserSchema;
+    userType === "PARENT" ? createParentWithChildSchema : createUserSchema;
 
-  const form = useForm<ExtendedCreateUserForm>({
+  const form = useForm<CreateParentWithChildForm>({
     resolver: zodResolver(validationSchema),
     defaultValues: getInitialValues(),
     mode: "onSubmit",
@@ -116,12 +117,21 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
   const onSubmit = form.handleSubmit((data) => {
     const formData = new FormData();
 
-    console.log("Form data before processing:", data); // Debug log
-
+    let password = data.password || "";
+    if (userType === "PARENT" && data.childData) {
+      // Generate password from child data
+      const { first_name, last_name, dateOfBirth } = data.childData;
+      const dob = new Date(dateOfBirth);
+      const formattedDob = `${String(dob.getDate()).padStart(2, "0")}${String(
+        dob.getMonth() + 1
+      ).padStart(2, "0")}${String(dob.getFullYear()).slice(-2)}`;
+      password = `${first_name.toLowerCase()}${last_name.toLowerCase()}${formattedDob}`;
+    }
     // Add main user data
     Object.entries(data).forEach(([key, value]) => {
       if (
         key !== "childData" &&
+        key !== "password" &&
         value !== undefined &&
         value !== null &&
         value !== ""
@@ -130,8 +140,9 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
       }
     });
 
+    formData.append("password", password);
+
     if (userType === "PARENT" && data.childData) {
-      console.log("Child data:", data.childData); // Debug log
       Object.entries(data.childData).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
           formData.append(`child_${key}`, value as string);
@@ -164,6 +175,10 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
   const lastName = form.watch("last_name");
 
   useEffect(() => {
+    if (subVillage) {
+      form.setValue("subVillage", subVillage as SubVillage);
+    }
+
     if (createUserState?.status === "error") {
       console.log("Create user error:", createUserState);
       toast.error(`Create ${pageTitle} Failed`, {
@@ -176,7 +191,9 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
       form.reset(getInitialValues());
       document.querySelector<HTMLButtonElement>('[data-state="open"]')?.click();
     }
-  }, [createUserState, pageTitle, form]);
+  }, [createUserState, pageTitle, form, subVillage]);
+
+  console.log(form.getValues());
 
   return (
     <div className="px-8 py-4">
@@ -273,55 +290,71 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
 
               {/* Penempatan Select Field */}
               <div className="flex flex-col gap-1">
-                <FormField
-                  control={form.control}
-                  name="subVillage"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Penempatan</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value || ""}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="max-w-2xl w-full">
-                            <SelectValue placeholder="Pilih penempatan" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Dusun</SelectLabel>
-                            <SelectItem value={SubVillage.GEMAWANG}>
-                              {SubVillage.GEMAWANG}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.PENANGKAN}>
-                              {SubVillage.PENANGKAN}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.DEPOK}>
-                              {SubVillage.DEPOK}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.KLODRAN}>
-                              {SubVillage.KLODRAN}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.KALINONGKO}>
-                              {SubVillage.KALINONGKO}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.TEGAL_PARAKAN}>
-                              {SubVillage.TEGAL_PARAKAN}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.DERMONGANTI}>
-                              {SubVillage.DERMONGANTI}
-                            </SelectItem>
-                            <SelectItem value={SubVillage.MARGOSARI}>
-                              {SubVillage.MARGOSARI}
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {!subVillage ? (
+                  <FormField
+                    control={form.control}
+                    name="subVillage"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Penempatan</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value || ""}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="max-w-2xl w-full">
+                              <SelectValue placeholder="Pilih penempatan" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Dusun</SelectLabel>
+                              <SelectItem value={SubVillage.GEMAWANG}>
+                                {SubVillage.GEMAWANG}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.PENANGKAN}>
+                                {SubVillage.PENANGKAN}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.DEPOK}>
+                                {SubVillage.DEPOK}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.KLODRAN}>
+                                {SubVillage.KLODRAN}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.KALINONGKO}>
+                                {SubVillage.KALINONGKO}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.TEGAL_PARAKAN}>
+                                {SubVillage.TEGAL_PARAKAN}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.DERMONGANTI}>
+                                {SubVillage.DERMONGANTI}
+                              </SelectItem>
+                              <SelectItem value={SubVillage.MARGOSARI}>
+                                {SubVillage.MARGOSARI}
+                              </SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ) : (
+                  <FormField
+                    control={form.control}
+                    name="subVillage"
+                    render={({ field }) => (
+                      <FormControl>
+                        <Input
+                          type="text"
+                          value={field.value ?? ""} // ✅ use RHF value
+                          disabled
+                        />
+                      </FormControl>
+                    )}
+                  />
+                )}
               </div>
 
               {/* Child Data Section - Only for PARENT type */}
@@ -417,27 +450,6 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
                                 </SelectGroup>
                               </SelectContent>
                             </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="flex flex-col gap-1 sm:col-span-2">
-                      <FormField
-                        control={form.control}
-                        name="childData.birthHeight"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Tinggi Badan Lahir (cm)</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                step="0.1"
-                                placeholder="Tinggi badan saat lahir..."
-                                {...field}
-                              />
-                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -540,16 +552,17 @@ export default function UserForm({ userType, pageTitle }: UserFormProps) {
                   </DialogContent>
                 </Dialog>
               </div>
-
-              <div className="flex flex-col gap-1">
-                <FormInput
-                  form={form}
-                  name="password"
-                  label="Password"
-                  placeholder="Password anda..."
-                  type="password"
-                />
-              </div>
+              {userType === "CADRE" && (
+                <div className="flex flex-col gap-1">
+                  <FormInput
+                    form={form}
+                    name="password"
+                    label="Password"
+                    placeholder="Password anda..."
+                    type="password"
+                  />
+                </div>
+              )}
 
               {/* Hidden role field - properly integrated with RHF */}
               <FormField

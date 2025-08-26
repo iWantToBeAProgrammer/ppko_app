@@ -33,7 +33,7 @@ export const SIDEBAR_MENU_LIST: {
     },
     {
       title: "Grafik Pertumbuhan",
-      url: "/growth-chart",
+      url: "/user/pertumbuhan",
       icon: TrendingUp,
     },
     {

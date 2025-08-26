@@ -28,8 +28,12 @@ interface EditUserDialogProps {
   onClose: () => void;
   user: {
     id: string;
+    parentId: string;
     parents_name: string;
     address: string;
+    subVillage?: string;
+    gender?: string;
+    phoneNumber?: string;
   };
   // Add these props to get current user data for editing
   currentUserData?: {
@@ -56,16 +60,16 @@ export function EditUserDialog({
     first_name: firstName,
     last_name: lastName,
     address: user.address === "Alamat tidak tersedia" ? "" : user.address,
-    subVillage: currentUserData?.subVillage,
-    gender: currentUserData?.gender,
-    phoneNumber: currentUserData?.phoneNumber || "",
+    subVillage: user?.subVillage,
+    gender: user?.gender,
+    phoneNumber: user?.phoneNumber || "",
   });
 
   // Fetch current user data when dialog opens
   const { data: userData, isLoading: isLoadingUser } = useQuery({
-    queryKey: ["user", user.id],
+    queryKey: ["user", user.parentId],
     queryFn: async () => {
-      const response = await fetch(`/api/users/${user.id}`);
+      const response = await fetch(`/api/users/${user.parentId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
@@ -82,16 +86,18 @@ export function EditUserDialog({
         first_name: userData.first_name || firstName,
         last_name: userData.last_name || lastName,
         address: userData.address || "",
-        subVillage: userData.subVillage || "",
-        gender: userData.gender || "",
+        subVillage: userData.subVillage,
+        gender: userData.gender,
         phoneNumber: userData.phoneNumber || "",
       });
     }
   }, [userData, isOpen, firstName, lastName]);
 
+  console.log(formData);
+
   const updateUserMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      const response = await fetch(`/api/users/${user.id}`, {
+      const response = await fetch(`/api/users/${user.parentId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +175,7 @@ export function EditUserDialog({
                 <div className="space-y-2">
                   <Label htmlFor="gender">Jenis Kelamin</Label>
                   <Select
-                    value={formData.gender || undefined}
+                    value={formData.gender}
                     onValueChange={(value) => handleChange("gender", value)}
                   >
                     <SelectTrigger>
@@ -198,7 +204,7 @@ export function EditUserDialog({
               <div className="space-y-2">
                 <Label htmlFor="subVillage">Dusun</Label>
                 <Select
-                  value={formData.subVillage || undefined}
+                  value={formData.subVillage}
                   onValueChange={(value) => handleChange("subVillage", value)}
                 >
                   <SelectTrigger>
