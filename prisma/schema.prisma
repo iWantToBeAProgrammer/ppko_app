@@ -104,7 +104,7 @@ model Gallery {
 }
 
 model Article {
-  id              String          @id @default(cuid())
+  id              String          @id
   title           String
   slug            String          @unique
   imageUrl        String
@@ -120,21 +120,50 @@ model Article {
   publishedAt     DateTime?
   createdById     String          @db.Uuid
   createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  createdBy       User            @relation(fields: [createdById], references: [id])
+  updatedAt       DateTime
+  User            User?           @relation(fields: [userId], references: [id])
+  userId          String?         @db.Uuid
 
-  @@index([createdById])
   @@index([category])
-  @@index([isPublished])
+  @@index([createdById])
   @@index([isFeatured])
+  @@index([isPublished])
   @@index([publishedAt])
   @@index([slug])
+}
+
+enum ArticleCategory {
+  NUTRISI
+  KESEHATAN
+  PARENTING
+  RESEP
+  BERITA
+  TIPS
+}
+
+enum FoodCategory {
+  AGE_6_11
+  AGE_12_23
+  AGE_24_35
+  AGE_36_47
+  AGE_48_60
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 enum Role {
   ADMIN
   CADRE
   PARENT
+}
+
+enum StuntingStatus {
+  NORMAL
+  STUNTING
+  STUNTING_BERAT
 }
 
 enum SubVillage {
@@ -146,32 +175,4 @@ enum SubVillage {
   TEGAL_PARAKAN
   DERMONGANTI
   MARGOSARI
-}
-
-enum Gender {
-  MALE
-  FEMALE
-}
-
-enum FoodCategory {
-  AGE_6_11
-  AGE_12_23
-  AGE_24_35
-  AGE_36_47
-  AGE_48_60
-}
-
-enum StuntingStatus {
-  NORMAL
-  STUNTING
-  STUNTING_BERAT
-}
-
-enum ArticleCategory {
-  NUTRISI
-  KESEHATAN
-  PARENTING
-  RESEP
-  BERITA
-  TIPS
 }
