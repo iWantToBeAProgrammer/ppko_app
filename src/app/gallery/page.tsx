@@ -5,60 +5,60 @@ export default function GalleryPage() {
   
   const cardData = [
     {
-      title: "Kegiatan Pembangunan",
-      description: "Pembangunan infrastruktur desa yang melibatkan masyarakat.",
+      title: "Kegiatan Sosialisasi Desa",
+      description: "Pertemuan antara mahasiswa dan masyarakat desa untuk membahas program pembangunan dan pemberdayaan.",
       lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/pembangunan",
+        "Kegiatan ini merupakan bentuk kolaborasi antara mahasiswa dan masyarakat desa dalam forum diskusi terbuka. Melalui pertemuan ini, masyarakat dapat menyampaikan aspirasi sekaligus mendapatkan informasi mengenai program pembangunan desa. Suasana kekeluargaan dan semangat gotong royong menjadi bagian penting dalam mendukung terwujudnya desa yang lebih maju dan sejahtera.",
+      image: "/assets/images/gallery/Foto-Kegiatan-Desa.jpg",
+      link: "/gallery/Kegiatan Sosialisasi Desa",
     },
     {
-      title: "Acara Budaya",
-      description: "Perayaan tradisional yang melibatkan seluruh warga desa.",
+      title: "Diskusi Mahasiswa dengan Perangkat Desa",
+      description: "Pertemuan mahasiswa dengan perangkat desa untuk membahas program kerja dan kebutuhan masyarakat.",
       lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
+        "Kegiatan ini merupakan forum diskusi antara mahasiswa dan perangkat desa dalam rangka merancang program kerja yang relevan dengan kebutuhan masyarakat. Melalui pertemuan ini, mahasiswa dapat memahami kondisi desa secara langsung, sementara perangkat desa berkesempatan menyampaikan aspirasi dan masukan. Sinergi ini diharapkan mampu menghasilkan program yang bermanfaat serta mempererat hubungan antara dunia akademik dan masyarakat.",
+      image: "/assets/images/gallery/Diskusi-Mahasiswa.jpg",
+      link: "/gallery/Diskusi Mahasiswa dengan Perangkat Desa",
+    },
+    {
+      title: "Penyuluhan Kesehatan Gigi",
+      description: "Edukasi kesehatan gigi untuk siswa sekolah dasar sebagai upaya pencegahan sejak dini.",
+      lightboxDescription:
+        "Kegiatan penyuluhan kesehatan gigi ini bertujuan memberikan pemahaman kepada anak-anak tentang pentingnya menjaga kebersihan mulut dan gigi. Melalui presentasi interaktif dan praktik langsung, siswa diajak untuk lebih peduli terhadap kesehatan gigi mereka. Edukasi ini diharapkan dapat menumbuhkan kebiasaan baik sejak dini, sehingga generasi muda memiliki pola hidup sehat dan terhindar dari masalah gigi di masa depan.",
+      image: "/assets/images/gallery/penyuluhan-kesehatan-gizi.jpg",
+      link: "/gallery/Penyuluhan Kesehatan Gigi",
+    },
+    {
+      title: "Edukasi Kreatif Kesehatan Gigi",
+      description: "Kegiatan pembelajaran interaktif untuk anak-anak melalui media boneka gigi yang dibuat dari kapas.",
+      lightboxDescription:
+        "Dalam kegiatan ini, anak-anak diajak belajar tentang pentingnya menjaga kesehatan gigi dengan cara yang menyenangkan. Media boneka gigi dari kapas digunakan sebagai alat peraga kreatif untuk menjelaskan cara merawat gigi yang benar. Melalui metode bermain sambil belajar, anak-anak lebih mudah memahami pentingnya sikat gigi teratur dan menjaga kebersihan mulut sejak dini.",      
+      image: "/assets/images/gallery/Edukasi-Kreatif.jpg",
       link: "/gallery/budaya",
     },
     {
-      title: "Kegiatan Sosial",
-      description: "Program sosial untuk meningkatkan kesejahteraan masyarakat.",
+      title: "Penyuluhan Kesehatan Ibu dan Anak",
+      description: "Sosialisasi langkah-langkah menjaga kebersihan diri dan kesehatan bagi ibu serta anak.",
       lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
+        "Kegiatan ini ditujukan untuk memberikan edukasi kepada ibu-ibu mengenai pentingnya menjaga kebersihan diri, terutama dalam merawat anak. Melalui media poster bergambar, peserta diperkenalkan langkah-langkah sederhana mencuci tangan dan pola hidup bersih. Penyuluhan ini diharapkan dapat meningkatkan kesadaran masyarakat dalam mencegah penyakit serta menjaga kesehatan keluarga sejak dini.",      
+      image: "/assets/images/gallery/Penyuluhan-Kesehatan.jpg",
       link: "/gallery/budaya",
     },
     {
-      title: "Kegiatan Pendidikan",
-      description: "Program pendidikan untuk anak-anak desa.",
+      title: "Sinergi PPK Ormawa Rumah Sahabat di Desa Gemawang",
+      description: "Foto bersama mahasiswa dan masyarakat dalam rangkaian program PPK Ormawa Rumah Sahabat di Desa Gemawang.",
       lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
+        "Dokumentasi kebersamaan antara mahasiswa Universitas Dian Nuswantoro dengan masyarakat Desa Gemawang dalam kegiatan PPK Ormawa Rumah Sahabat. Kegiatan ini berfokus pada edukasi kesehatan, pemberdayaan ibu dan anak, serta penguatan peran masyarakat melalui program berbasis kearifan lokal. Momen kebersamaan ini menjadi bukti nyata sinergi antara mahasiswa dan masyarakat dalam membangun desa yang lebih sehat dan mandiri.",
+      image: "/assets/images/gallery/Sinergi-PPKO.jpg",
+      link: "/gallery/Sinergi PPK Ormawa Rumah Sahabat di Desa Gemawang",
     },
     {
-      title: "Kegiatan Lingkungan",
-      description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
+      title: "Foto Bersama Mahasiswa dan Siswa",
+      description: "Momen kebersamaan mahasiswa dan siswa sekolah dasar dalam rangkaian kegiatan PPK Ormawa Rumah Sahabat.",
       lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
-    },
-    {
-      title: "Kegiatan Lingkungan",
-      description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
-      lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
-    },
-    {
-      title: "Kegiatan Lingkungan",
-      description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
-      lightboxDescription:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
+        "Kegiatan ini menjadi sarana kebersamaan antara mahasiswa dan siswa sekolah dasar dalam program PPK Ormawa Rumah Sahabat. Selain mengikuti edukasi yang interaktif dan menyenangkan, siswa juga mendapat pengalaman baru yang bermanfaat bagi pengembangan diri mereka. Foto bersama ini menjadi simbol kedekatan serta semangat gotong royong dalam mewujudkan generasi muda yang sehat, cerdas, dan berdaya.",      
+      image: "/assets/images/gallery/Foto-Bersama.jpg",
+      link: "/gallery/Foto Bersama Mahasiswa dan Siswa",
     },
   ];
 

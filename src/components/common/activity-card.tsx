@@ -208,7 +208,8 @@ export default function ActivityCard({
       <Dialog.Trigger asChild>
         <Card className="p-0 border border-primary relative group shadow-lg hover:-translate-y-1 transition-transform duration-300 w-full mb-8 md:mb-0 cursor-pointer">
           <CardContent
-            className={`flex aspect-[4/5] sm:aspect-square items-center justify-center py-6 sm:py-8 min-h-90 sm:min-h-80 max-2xl:h-72 bg-[url(${image})] bg-cover bg-center relative overflow-hidden rounded-md`}
+            className={`flex aspect-[4/5] sm:aspect-square items-center justify-center py-6 sm:py-8 min-h-90 sm:min-h-80 max-2xl:h-72 bg-cover bg-center relative overflow-hidden rounded-md`}
+            style={{ backgroundImage: `url(${image || "/assets/images/gallery/landscape.jpg"})` }}
           >
             {/* Overlay hover effect */}
             <div className="card-overlay absolute w-full h-full top-0 inset-0 group-hover:bg-black/15 transition-colors duration-200"></div>
