@@ -19,7 +19,6 @@ const SubVillageValues = Object.values(SubVillage) as [string, ...string[]];
 export const createUserSchema = z.object({
   email: z.email("Email harus sesuai").min(1, "Email harus diisi"),
   password: z.string().min(1, "Password harus diisi"), // Keep required for regular users
-
   first_name: z.string().min(1, "Nama depan harus diisi"),
   last_name: z.string().min(1, "Nama belakang harus diisi"),
   role: z.enum(RoleValues, "role harus diisi"),
@@ -32,7 +31,6 @@ export const createUserSchema = z.object({
 export const createParentSchema = z.object({
   email: z.email("Email harus sesuai").min(1, "Email harus diisi"),
   password: z.string().optional(), // Make password optional for parents
-
   first_name: z.string().min(1, "Nama depan harus diisi"),
   last_name: z.string().min(1, "Nama belakang harus diisi"),
   role: z.enum(RoleValues, "role harus diisi"),

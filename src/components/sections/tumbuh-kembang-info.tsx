@@ -15,17 +15,17 @@ export default function TumbuhKembangInfo() {
   const initialGambarArray = [
     {
       id: 1,
-      src: "/assets/images/tumbuh-kembang/gambar-1.svg",
+      src: "/assets/images/tumbuh-kembang/gambar-1.webp",
       alt: "Gambar Tumbuh Kembang 1",
     },
     {
       id: 2,
-      src: "/assets/images/tumbuh-kembang/gambar-2.png",
+      src: "/assets/images/tumbuh-kembang/gambar-2.webp",
       alt: "Gambar Tumbuh Kembang 2",
     },
     {
       id: 3,
-      src: "/assets/images/tumbuh-kembang/gambar-3.png",
+      src: "/assets/images/tumbuh-kembang/gambar-3.webp",
       alt: "Gambar Tumbuh Kembang 3",
     },
   ];
@@ -82,7 +82,7 @@ export default function TumbuhKembangInfo() {
                          height={360}
                          src={gambar.src}
                          alt={gambar.alt}
-                         className="rounded-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl group-hover:brightness-110 max-md:w-40 max-md:h-40 object-cover"
+                         className="rounded-lg transition-all aspect-video duration-300 group-hover:scale-105 group-hover:shadow-2xl group-hover:brightness-110 max-md:w-40 max-md:h-40 object-cover"
                        />
                     </div>
                   </div>

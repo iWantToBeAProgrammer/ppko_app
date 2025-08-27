@@ -5,6 +5,8 @@ import ResepMakanan from "@/components/sections/resep-makanan";
 import TumbuhKembang from "@/components/sections/tumbuh-kembang";
 import TumbuhKembangInfo from "@/components/sections/tumbuh-kembang-info";
 import Gallery from "@/components/sections/gallery";
+import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function Home() {
   return (

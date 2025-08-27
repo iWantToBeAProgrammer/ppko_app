@@ -3,6 +3,7 @@
 import { createUser } from "@/app/(dashboard)/action";
 import FormInput from "@/components/common/form-card";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Dialog,
@@ -22,6 +23,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -34,6 +40,7 @@ import {
   INITIAL_CREATE_USER_FORM,
   INITIAL_STATE_CREATE_USER,
 } from "@/constants/auth-constants";
+import { cn } from "@/lib/utils";
 import {
   childDataSchema,
   CreateParentWithChildForm,
@@ -43,24 +50,13 @@ import {
 } from "@/validations/auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Gender, Role, SubVillage } from "@prisma/client";
-import { Mail, Plus, User, Calendar } from "lucide-react";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
+import { Mail, Plus, User, CalendarIcon } from "lucide-react";
 import { startTransition, useActionState, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-
-// Extended form schema that includes child data for parents
-const createParentSchema = createUserSchema.extend({
-  childData: childDataSchema,
-});
-
-// Extended form type for parent with child data
-interface ChildData {
-  first_name: string;
-  last_name: string;
-  dateOfBirth: string;
-  gender: Gender;
-}
 
 interface UserFormProps {
   userType: "CADRE" | "PARENT";
@@ -120,14 +116,14 @@ export default function UserForm({
     let password = data.password || "";
     if (userType === "PARENT" && data.childData) {
       // Generate password from child data
-      const { first_name, last_name, dateOfBirth } = data.childData;
+      const { first_name, dateOfBirth } = data.childData;
       const dob = new Date(dateOfBirth);
       const formattedDob = `${String(dob.getDate()).padStart(2, "0")}${String(
         dob.getMonth() + 1
       ).padStart(2, "0")}${String(dob.getFullYear()).slice(-2)}`;
-      password = `${first_name.toLowerCase()}${last_name.toLowerCase()}${formattedDob}`;
+      password = `${first_name.toLowerCase()}${formattedDob}`;
     }
-    // Add main user data
+
     Object.entries(data).forEach(([key, value]) => {
       if (
         key !== "childData" &&
@@ -192,8 +188,6 @@ export default function UserForm({
       document.querySelector<HTMLButtonElement>('[data-state="open"]')?.click();
     }
   }, [createUserState, pageTitle, form, subVillage]);
-
-  console.log(form.getValues());
 
   return (
     <div className="px-8 py-4">
@@ -414,7 +408,55 @@ export default function UserForm({
                           <FormItem>
                             <FormLabel>Tanggal Lahir</FormLabel>
                             <FormControl>
-                              <Input type="date" {...field} />
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <FormControl>
+                                    <Button
+                                      variant={"outline"}
+                                      className={cn(
+                                        "w-[240px] pl-3 text-left font-normal",
+                                        !field.value && "text-muted-foreground"
+                                      )}
+                                    >
+                                      {field.value ? (
+                                        format(field.value, "dd MMM yyyy", {
+                                          locale: id,
+                                        })
+                                      ) : (
+                                        <span>Pilih tanggal</span>
+                                      )}
+                                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                    </Button>
+                                  </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent
+                                  className="w-auto p-0"
+                                  align="start"
+                                >
+                                  <Calendar
+                                    mode="single"
+                                    selected={
+                                      field.value
+                                        ? new Date(field.value)
+                                        : undefined
+                                    }
+                                    onSelect={(date) =>
+                                      field.onChange(
+                                        date ? date.toISOString() : ""
+                                      )
+                                    }
+                                    disabled={(date) =>
+                                      date > new Date() ||
+                                      date < new Date("1900-01-01")
+                                    }
+                                    autoFocus
+                                    captionLayout="dropdown"
+                                    startMonth={new Date(1900, 0)}
+                                    endMonth={new Date()}
+                                    locale={id}
+                                  />
+                                </PopoverContent>
+                              </Popover>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

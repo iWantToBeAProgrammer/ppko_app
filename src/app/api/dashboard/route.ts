@@ -33,9 +33,8 @@ export async function GET(request: NextRequest) {
     }
     // If subVillage is provided, filter by it
     if (subVillage) {
-      whereClause = { subVillage: subVillage };
+      whereClause = { subVillage: subVillage, role: "PARENT" };
     }
-
     if (role) {
       whereClause = { role: role };
     }
@@ -92,7 +91,6 @@ export async function GET(request: NextRequest) {
         measurements: child.measurements,
       })),
     }));
-
 
     return NextResponse.json({ users: transformedUsers });
   } catch (error) {

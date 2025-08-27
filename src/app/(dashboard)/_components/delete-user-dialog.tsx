@@ -46,6 +46,7 @@ export function DeleteConfirmationDialog({
       toast.success("Data orang tua dan anak berhasil dihapus");
       queryClient.invalidateQueries({ queryKey: ["dashboard-users"] });
       queryClient.invalidateQueries({ queryKey: ["kader-warga-users"] });
+      queryClient.invalidateQueries({ queryKey: ["user-cadre"] });
       onClose();
     },
     onError: (error) => {
@@ -64,19 +65,14 @@ export function DeleteConfirmationDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Konfirmasi Hapus Data</AlertDialogTitle>
           <AlertDialogDescription className="space-y-2">
-            <div className="bg-gray-50 p-3 rounded-md">
-              <p>Apakah Anda yakin ingin menghapus data berikut?</p>
-              <div>
-                <strong>Orang Tua:</strong> {user.parents_name}
-              </div>
-              <div>
-                <strong>Anak:</strong> {user.childs_name}
-              </div>
-            </div>
-            <p className="text-red-600 font-medium">
-              Tindakan ini akan menghapus semua data terkait termasuk data
-              pengukuran anak dan tidak dapat dibatalkan.
-            </p>
+            Apakah Anda yakin ingin menghapus data berikut?
+            <br />
+            <strong>Orang Tua:</strong> {user.parents_name}
+            <br />
+            <strong>Anak:</strong> {user.childs_name}
+            <br />
+            Tindakan ini akan menghapus semua data terkait termasuk data
+            pengukuran anak dan tidak dapat dibatalkan.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

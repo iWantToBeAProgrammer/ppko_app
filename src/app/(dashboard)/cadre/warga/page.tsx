@@ -103,7 +103,7 @@ export default function KaderWargaPage() {
     {
       icon: <ArrowUpRight className="h-4 w-4" />,
       label: "Detail Anak",
-      onClick: (row: any) => console.log("View details for", row),
+      onClick: (row: any) => setSelectedUser(row),
       showOnDesktop: true,
       showOnMobile: false,
     },

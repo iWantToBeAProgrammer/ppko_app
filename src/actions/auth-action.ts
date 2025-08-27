@@ -1,6 +1,5 @@
 "use server";
 
-import { useAuth } from "@/app/contexts/AuthContext";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -17,5 +16,5 @@ export async function signOut() {
   } catch (error) {
     console.error("Error signing out: ", error);
   }
-  redirect("/login");
+  redirect("/");
 }

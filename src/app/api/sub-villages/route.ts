@@ -20,6 +20,8 @@ export async function GET() {
       select: { role: true },
     });
 
+    console.log(userProfile)
+
     // Only admins can get all sub-villages
     if (userProfile?.role !== Role.ADMIN) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });

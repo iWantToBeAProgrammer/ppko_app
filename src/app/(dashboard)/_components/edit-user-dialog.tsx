@@ -30,6 +30,7 @@ interface EditUserDialogProps {
     id: string;
     parentId: string;
     parents_name: string;
+    cadres_name: string;
     address: string;
     subVillage?: string;
     gender?: string;
@@ -52,11 +53,13 @@ export function EditUserDialog({
   const queryClient = useQueryClient();
 
   // Split the full name for editing
-  const nameParts = user.parents_name.split(" ");
-  const firstName = nameParts[0] || "";
-  const lastName = nameParts.slice(1).join(" ") || "";
+  const nameParts =
+    user?.parents_name?.split(" ") || user?.cadres_name?.split(" ");
+  const firstName = nameParts?.[0] || "";
+  const lastName = nameParts?.slice(1)?.join(" ") || "";
 
   const [formData, setFormData] = useState({
+    id: "",
     first_name: firstName,
     last_name: lastName,
     address: user.address === "Alamat tidak tersedia" ? "" : user.address,
@@ -83,6 +86,7 @@ export function EditUserDialog({
   useEffect(() => {
     if (userData && isOpen) {
       setFormData({
+        id: userData.id,
         first_name: userData.first_name || firstName,
         last_name: userData.last_name || lastName,
         address: userData.address || "",
@@ -92,8 +96,6 @@ export function EditUserDialog({
       });
     }
   }, [userData, isOpen, firstName, lastName]);
-
-  console.log(formData);
 
   const updateUserMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
@@ -113,8 +115,10 @@ export function EditUserDialog({
     },
     onSuccess: () => {
       toast.success("Data orang tua berhasil diupdate");
+      queryClient.invalidateQueries({ queryKey: ["user", user.parentId] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-users"] });
       queryClient.invalidateQueries({ queryKey: ["kader-warga-users"] });
+      queryClient.invalidateQueries({ queryKey: ["user-cadre"] });
       onClose();
     },
     onError: (error) => {

@@ -79,7 +79,7 @@ export const SIDEBAR_MENU_LIST: {
     },
     {
       title: "Makanan",
-      url: "/food-recipes",
+      url: "/admin/resep-makanan",
       icon: Utensils,
     },
     {

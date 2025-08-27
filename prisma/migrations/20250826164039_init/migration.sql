@@ -40,7 +40,6 @@ CREATE TABLE "public"."Child" (
     "id" TEXT NOT NULL,
     "gender" "public"."Gender" NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
-    "birthHeight" DOUBLE PRECISION,
     "parentId" UUID NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -56,8 +55,6 @@ CREATE TABLE "public"."Measurement" (
     "id" TEXT NOT NULL,
     "childId" TEXT NOT NULL,
     "measurementDate" TIMESTAMP(3) NOT NULL,
-    "ageInMonths" INTEGER NOT NULL,
-    "weight" DOUBLE PRECISION NOT NULL,
     "height" DOUBLE PRECISION NOT NULL,
     "heightForAgeZScore" DOUBLE PRECISION NOT NULL,
     "stuntingStatus" "public"."StuntingStatus" NOT NULL,
@@ -74,14 +71,12 @@ CREATE TABLE "public"."Recipe" (
     "name" TEXT NOT NULL,
     "category" "public"."FoodCategory" NOT NULL,
     "youtubeUrl" TEXT,
-    "description" TEXT NOT NULL,
     "ingredients" TEXT[],
-    "spices" TEXT[],
-    "groundSpices" TEXT[],
     "createdById" UUID NOT NULL,
     "isPublished" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "cookingSteps" TEXT[],
 
     CONSTRAINT "Recipe_pkey" PRIMARY KEY ("id")
 );
@@ -152,6 +147,9 @@ CREATE UNIQUE INDEX "Measurement_childId_measurementDate_key" ON "public"."Measu
 
 -- CreateIndex
 CREATE INDEX "Recipe_category_idx" ON "public"."Recipe"("category");
+
+-- CreateIndex
+CREATE INDEX "Recipe_id_idx" ON "public"."Recipe"("id");
 
 -- CreateIndex
 CREATE INDEX "Recipe_createdById_idx" ON "public"."Recipe"("createdById");

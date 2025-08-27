@@ -7,7 +7,7 @@ export default function Gallery() {
         <Image
           width={800}
           height={300}
-          src={"/assets/images/gallery/landscape.jpg"}
+          src={"/assets/images/gallery/galeri-1.webp"}
           alt="test gambar"
           className="col-span-3 object-cover object-center sm:row-span-2 h-96"
         />
@@ -30,28 +30,28 @@ export default function Gallery() {
         <Image
           width={700}
           height={300}
-          src={"/assets/images/gallery/landscape.jpg"}
+          src={"/assets/images/gallery/galeri-2.webp"}
           alt="test gambar"
           className="col-span-2 object-cover object-center h-48"
         />
         <Image
           width={700}
           height={300}
-          src={"/assets/images/gallery/landscape.jpg"}
+          src={"/assets/images/gallery/galeri-3.webp"}
           alt="test gambar"
           className="col-span-1 object-cover object-center h-48"
         />
         <Image
           width={700}
           height={300}
-          src={"/assets/images/gallery/landscape.jpg"}
+          src={"/assets/images/gallery/galeri-4.webp"}
           alt="test gambar"
           className="col-span-2 object-cover object-center h-48"
         />
         <Image
           width={700}
           height={300}
-          src={"/assets/images/gallery/landscape.jpg"}
+          src={"/assets/images/gallery/galeri-5.webp"}
           alt="test gambar"
           className="col-span-1 object-cover object-center h-48"
         />

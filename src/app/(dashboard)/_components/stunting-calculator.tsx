@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,6 +44,9 @@ type Child = {
   last_name: string;
   gender: "MALE" | "FEMALE";
   dateOfBirth: string;
+  measurements?: {
+    height?: string;
+  }[];
 };
 
 type MeasurementResult = {
@@ -69,6 +72,8 @@ interface StuntingCalculatorProps {
   description?: string;
   showSubVillageFilter?: boolean;
   showMeasurementHistory?: boolean;
+  preSelectedChildId?: string; // Add this new prop
+  readOnly?: boolean; // Add this new prop
 }
 
 export function StuntingCalculator({
@@ -78,6 +83,8 @@ export function StuntingCalculator({
   description = "Masukkan data anak anda untuk memeriksa status pertumbuhan",
   showSubVillageFilter = false,
   showMeasurementHistory = true,
+  preSelectedChildId, // Add this
+  readOnly = false, // Add this
 }: StuntingCalculatorProps) {
   const queryClient = useQueryClient();
 
@@ -130,6 +137,15 @@ export function StuntingCalculator({
     enabled: showMeasurementHistory && !!selectedChild?.id,
   });
 
+  useEffect(() => {
+    if (preSelectedChildId && data?.children) {
+      const child = data.children.find((c) => c.id === preSelectedChildId);
+      if (child) {
+        setSelectedChild(child);
+      }
+    }
+  }, [preSelectedChildId, data?.children]);
+
   // Submit measurement
   const mutation = useMutation({
     mutationFn: async (payload: {
@@ -169,7 +185,6 @@ export function StuntingCalculator({
     },
   });
 
-  console.log(measurementHistory);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -353,7 +368,11 @@ export function StuntingCalculator({
               <label className="block mb-2 font-medium text-gray-700">
                 Nama Anak
               </label>
-              <Select onValueChange={handleSelectChild}>
+              <Select
+                onValueChange={handleSelectChild}
+                disabled={readOnly}
+                value={selectedChild?.id || ""}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Pilih anak" />
                 </SelectTrigger>
@@ -387,7 +406,7 @@ export function StuntingCalculator({
                       : "Perempuan"
                     : ""
                 }
-                disabled
+                disabled={true} // Keep this always disabled as it was
                 className="bg-gray-100"
               />
             </div>
@@ -422,32 +441,36 @@ export function StuntingCalculator({
             </div>
 
             {/* Tinggi Badan */}
-            <div>
-              <label className="block text-sm font-medium text-gray-800 mb-2">
-                Tinggi/Panjang Badan Anak
-                <span className="text-sm font-normal text-gray-500 ml-1 sm:ml-2">
-                  (Cm, misal 75.5)
-                </span>
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                value={height}
-                onChange={(e) => setHeight(e.target.value)}
-                placeholder="0.00"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-300"
-              />
-            </div>
-
-            <CardFooter className="flex justify-center mt-8 sm:mt-12">
-              <button
-                type="submit"
-                disabled={mutation.isPending}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-pink-200 border border-black text-gray-800 font-medium rounded-md hover:bg-pink-300 transition-colors duration-200 disabled:opacity-50"
-              >
-                {mutation.isPending ? "Menyimpan..." : "Cek Status Stunting"}
-              </button>
-            </CardFooter>
+            {!readOnly && (
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Tinggi/Panjang Badan Anak
+                  <span className="text-sm font-normal text-gray-500 ml-1 sm:ml-2">
+                    (Cm, misal 75.5)
+                  </span>
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={selectedChild?.measurements?.[0].height || height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  placeholder="0.00"
+                  disabled={readOnly} // Add this
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-300"
+                />
+              </div>
+            )}
+            {!readOnly && (
+              <CardFooter className="flex justify-center mt-8 sm:mt-12">
+                <button
+                  type="submit"
+                  disabled={mutation.isPending} // Add readOnly condition
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-pink-200 border border-black text-gray-800 font-medium rounded-md hover:bg-pink-300 transition-colors duration-200 disabled:opacity-50"
+                >
+                  {mutation.isPending ? "Menyimpan..." : "Cek Status Stunting"}
+                </button>
+              </CardFooter>
+            )}
           </form>
 
           {showResult && measurementResult && !error && (

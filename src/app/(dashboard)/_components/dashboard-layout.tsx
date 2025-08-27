@@ -107,6 +107,7 @@ export default function DashboardLayout({
   });
 
   // Calculate statistics from the actual data
+  console.log(users)
   const userTotal = users?.length || 0;
 
   // Get the latest measurement for each child to determine current status
@@ -318,7 +319,9 @@ export default function DashboardLayout({
       label: "Detail Anak",
       onClick: (row: any) => {
         // Navigate to child detail page
-        window.location.href = `/dashboard/anak/${row.id}`;
+        window.location.href = `/${
+          cadreDashboard ? "cadre" : "admin"
+        }/warga/${row.id}`;
       },
       showOnDesktop: true,
       showOnMobile: false,

@@ -71,7 +71,7 @@ export function LoginForm() {
           form={form}
           name="email"
           label="Email"
-          placeholder="Insert email here"
+          placeholder="Masukkan email anda"
           type="email"
         />
         <FormInput

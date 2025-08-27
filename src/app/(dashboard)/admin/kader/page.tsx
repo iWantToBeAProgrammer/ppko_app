@@ -14,15 +14,19 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { EditUserDialog } from "../../_components/edit-user-dialog";
 import { DeleteConfirmationDialog } from "../../_components/delete-user-dialog";
+import { Gender } from "@prisma/client";
 
 export default function AdminKaderPage() {
   type UserWithChildren = {
     id: string;
+    parentId: string;
     first_name: string;
     last_name: string;
     address: string | null;
     subVillage: string;
     email: string;
+    gender: Gender;
+    phoneNumber: string;
   };
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -30,7 +34,7 @@ export default function AdminKaderPage() {
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
   const { data: users, isLoading } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["user-cadre"],
     queryFn: async () => {
       const res = await fetch(`/api/dashboard?role=CADRE`);
       if (!res.ok) {
@@ -46,10 +50,13 @@ export default function AdminKaderPage() {
   const tableData =
     users?.flatMap((cadre: UserWithChildren) => ({
       id: cadre.id,
+      parentId: cadre.id,
       cadres_name: cadre.first_name + " " + cadre.last_name,
       address: cadre.address || "Alamat tidak tersedia",
       subVillage: cadre.subVillage,
       email: cadre.email,
+      gender: cadre.gender,
+      phoneNumber: cadre.phoneNumber,
     })) || [];
 
   // Define action configurations
@@ -65,7 +72,10 @@ export default function AdminKaderPage() {
     {
       icon: <ArrowUpRight className="h-4 w-4" />,
       label: "Detail Anak",
-      onClick: (row: any) => console.log("View details for", row),
+      href: (row: any) => `/warga/${row.id}`, // 👈 dynamic link
+      onClick: (row: any) => {
+        setSelectedUser(row);
+      },
       showOnDesktop: true,
       showOnMobile: false,
     },
