@@ -10,3 +10,14 @@ export type AuthFormState = {
     _form?: string[];
   };
 };
+
+export type Profile = {
+  id?: string;
+  first_name?: string;
+  last_name?: string;
+  subVillage?: string;
+  email?: string;
+  phoneNumber?: string;
+  gender?: string;
+  role?: string;
+};
