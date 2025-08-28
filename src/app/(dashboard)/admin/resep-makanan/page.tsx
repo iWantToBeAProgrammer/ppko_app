@@ -196,8 +196,6 @@ function RecipeForm({
     [FoodCategory.AGE_6_11]: "6 - 11 bulan",
     [FoodCategory.AGE_12_23]: "12 - 23 bulan",
     [FoodCategory.AGE_24_35]: "24 - 35 bulan",
-    [FoodCategory.AGE_36_47]: "36 - 47 bulan",
-    [FoodCategory.AGE_48_60]: "48 - 60 bulan",
   };
 
   return (
