@@ -15,13 +15,17 @@ import {
 import { useState } from "react";
 import { EditUserDialog } from "../../_components/edit-user-dialog";
 import { DeleteConfirmationDialog } from "../../_components/delete-user-dialog";
+import { Gender, SubVillage } from "@prisma/client";
 
 type UserWithChildren = {
   id: string;
+  parentId: string;
   first_name: string;
   last_name: string;
   address: string | null;
-  subVillage: string | null;
+  subVillage: SubVillage | null;
+  phoneNumber: string;
+  gender: Gender;
   children: {
     id: string;
     first_name: string;
@@ -66,16 +70,19 @@ export default function KaderWargaPage() {
     },
   });
 
-  console.log(users);
-
   // Flatten the data for the table (one row per child)
   const tableData =
     users?.flatMap((parent: UserWithChildren) =>
       parent.children.map((child) => ({
         id: parent.id,
+        parentId: parent.id,
         parents_name: parent.first_name + " " + parent.last_name,
-        childs_name: child.first_name + " " + parent.last_name,
+        childId: child.id,
+        childs_name: child.first_name + " " + child.last_name,
         address: parent.address || "Alamat tidak tersedia",
+        gender: parent.gender,
+        phoneNumber: parent.phoneNumber,
+        subVillage: parent.subVillage,
         stuntingStatus:
           child.measurements[0]?.stuntingStatus === "NOT_MEASURED"
             ? "belum diukur"
@@ -103,7 +110,10 @@ export default function KaderWargaPage() {
     {
       icon: <ArrowUpRight className="h-4 w-4" />,
       label: "Detail Anak",
-      onClick: (row: any) => setSelectedUser(row),
+      href: (row: any) => `/cadre/warga/${row.childId}`, // 👈 dynamic link
+      onClick: (row: any) => {
+        setSelectedUser(row);
+      },
       showOnDesktop: true,
       showOnMobile: false,
     },

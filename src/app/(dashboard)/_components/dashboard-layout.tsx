@@ -24,10 +24,12 @@ import { useState, useMemo } from "react";
 import { EditUserDialog } from "./edit-user-dialog";
 import { DeleteConfirmationDialog } from "./delete-user-dialog";
 import { useAuthStore } from "@/stores/auth-store"; // Assuming this is your auth store
+import { Role } from "@prisma/client";
 
 type Dashboard = {
   tableTitle: string;
   cadreSubVillage?: string; // Pass the cadre's subVillage when needed
+  role?: Role;
 };
 
 type UserWithChildren = {
@@ -61,6 +63,7 @@ type ChartData = {
 export default function DashboardLayout({
   tableTitle,
   cadreSubVillage,
+  role,
 }: Dashboard) {
   const pathname = usePathname();
   const cadreDashboard = pathname.startsWith("/cadre");
@@ -77,6 +80,7 @@ export default function DashboardLayout({
       cadreDashboard,
       cadreSubVillage,
       currentUser?.subVillage,
+      role,
     ],
     queryFn: async () => {
       try {
@@ -88,6 +92,8 @@ export default function DashboardLayout({
         } else if (cadreSubVillage) {
           // Fallback to passed subVillage prop
           url.searchParams.set("subVillage", cadreSubVillage);
+        } else if (role) {
+          url.searchParams.set("role", role);
         }
 
         const response = await fetch(url.toString());
@@ -107,7 +113,7 @@ export default function DashboardLayout({
   });
 
   // Calculate statistics from the actual data
-  console.log(users)
+  console.log(users);
   const userTotal = users?.length || 0;
 
   // Get the latest measurement for each child to determine current status
@@ -319,9 +325,9 @@ export default function DashboardLayout({
       label: "Detail Anak",
       onClick: (row: any) => {
         // Navigate to child detail page
-        window.location.href = `/${
-          cadreDashboard ? "cadre" : "admin"
-        }/warga/${row.id}`;
+        window.location.href = `/${cadreDashboard ? "cadre" : "admin"}/warga/${
+          row.id
+        }`;
       },
       showOnDesktop: true,
       showOnMobile: false,

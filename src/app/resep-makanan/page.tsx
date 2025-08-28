@@ -139,6 +139,7 @@ export default function ResepMakananPage() {
                   >
                     <div className="pt-6 sm:pt-12">
                       <RecipeCard
+                        id={item.id}
                         title={item.name}
                         description={""}
                         image={youtubeThumbnail}
@@ -179,6 +180,7 @@ export default function ResepMakananPage() {
               return (
                 <div key={index} className="recommendation-card">
                   <RecipeCard
+                    id={item.id}
                     title={item.name}
                     description={""}
                     image={youtubeThumbnail}

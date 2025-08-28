@@ -144,7 +144,14 @@ export function StuntingCalculator({
         setSelectedChild(child);
       }
     }
-  }, [preSelectedChildId, data?.children]);
+
+    if (selectedChild?.id) {
+      // Invalidate and refetch measurement history when child changes
+      queryClient.invalidateQueries({
+        queryKey: ["measurement-history", selectedChild.id],
+      });
+    }
+  }, [preSelectedChildId, data?.children, selectedChild?.id]);
 
   // Submit measurement
   const mutation = useMutation({

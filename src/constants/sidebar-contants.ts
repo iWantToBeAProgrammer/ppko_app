@@ -12,6 +12,7 @@ import {
   BookOpen,
   Settings2,
   LucideIcon,
+  User,
 } from "lucide-react";
 
 interface SidebarMenuItem {
@@ -73,6 +74,11 @@ export const SIDEBAR_MENU_LIST: {
       icon: UserCog,
     },
     {
+      title: "Warga",
+      url: "/admin/warga",
+      icon: User,
+    },
+    {
       title: "Kalkulator",
       url: "/admin/kalkulator",
       icon: Calculator,
@@ -81,16 +87,6 @@ export const SIDEBAR_MENU_LIST: {
       title: "Makanan",
       url: "/admin/resep-makanan",
       icon: Utensils,
-    },
-    {
-      title: "Gallery",
-      url: "/galleries",
-      icon: BookOpen,
-    },
-    {
-      title: "Artikel",
-      url: "/articles",
-      icon: Settings2,
     },
   ],
 };

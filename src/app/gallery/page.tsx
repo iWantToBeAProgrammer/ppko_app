@@ -6,59 +6,58 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 
 export default function GalleryPage() {
-  
   const cardData = [
     {
-      title: "Kegiatan Pembangunan",
-      description: "Pembangunan infrastruktur desa yang melibatkan masyarakat.",
-      image: "/assets/images/gallery/landscape.jpg",
-
-      link: "/gallery/pembangunan",
-    },
-    {
-      title: "Acara Budaya",
-      description: "Perayaan tradisional yang melibatkan seluruh warga desa.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
-    },
-    {
-      title: "Kegiatan Sosial",
+      title: "Kegiatan Sosialisasi Desa",
       description:
-        "Program sosial untuk meningkatkan kesejahteraan masyarakat.",
-      image: "/assets/images/gallery/landscape.jpg",
+        "Pertemuan antara mahasiswa dan masyarakat desa untuk membahas program pembangunan dan pemberdayaan.",
+      lightboxDescription:
+        "Kegiatan ini merupakan bentuk kolaborasi antara mahasiswa dan masyarakat desa dalam forum diskusi terbuka. Melalui pertemuan ini, masyarakat dapat menyampaikan aspirasi sekaligus mendapatkan informasi mengenai program pembangunan desa. Suasana kekeluargaan dan semangat gotong royong menjadi bagian penting dalam mendukung terwujudnya desa yang lebih maju dan sejahtera.",
+      image: "/assets/images/gallery/galeri-1.webp",
+      link: "/gallery/Kegiatan Sosialisasi Desa",
+    },
+    {
+      title: "Diskusi Mahasiswa dengan Perangkat Desa",
+      description:
+        "Pertemuan mahasiswa dengan perangkat desa untuk membahas program kerja dan kebutuhan masyarakat.",
+      lightboxDescription:
+        "Kegiatan ini merupakan forum diskusi antara mahasiswa dan perangkat desa dalam rangka merancang program kerja yang relevan dengan kebutuhan masyarakat. Melalui pertemuan ini, mahasiswa dapat memahami kondisi desa secara langsung, sementara perangkat desa berkesempatan menyampaikan aspirasi dan masukan. Sinergi ini diharapkan mampu menghasilkan program yang bermanfaat serta mempererat hubungan antara dunia akademik dan masyarakat.",
+      image: "/assets/images/gallery/galeri-2.webp",
+      link: "/gallery/Diskusi Mahasiswa dengan Perangkat Desa",
+    },
+    {
+      title: "Penyuluhan Kesehatan Gigi",
+      description:
+        "Edukasi kesehatan gigi untuk siswa sekolah dasar sebagai upaya pencegahan sejak dini.",
+      lightboxDescription:
+        "Kegiatan penyuluhan kesehatan gigi ini bertujuan memberikan pemahaman kepada anak-anak tentang pentingnya menjaga kebersihan mulut dan gigi. Melalui presentasi interaktif dan praktik langsung, siswa diajak untuk lebih peduli terhadap kesehatan gigi mereka. Edukasi ini diharapkan dapat menumbuhkan kebiasaan baik sejak dini, sehingga generasi muda memiliki pola hidup sehat dan terhindar dari masalah gigi di masa depan.",
+      image: "/assets/images/gallery/galeri-3.webp",
+      link: "/gallery/Penyuluhan Kesehatan Gigi",
+    },
+    {
+      title: "Edukasi Kreatif Kesehatan Gigi",
+      description:
+        "Kegiatan pembelajaran interaktif untuk anak-anak melalui media boneka gigi yang dibuat dari kapas.",
+      lightboxDescription:
+        "Dalam kegiatan ini, anak-anak diajak belajar tentang pentingnya menjaga kesehatan gigi dengan cara yang menyenangkan. Media boneka gigi dari kapas digunakan sebagai alat peraga kreatif untuk menjelaskan cara merawat gigi yang benar. Melalui metode bermain sambil belajar, anak-anak lebih mudah memahami pentingnya sikat gigi teratur dan menjaga kebersihan mulut sejak dini.",
+      image: "/assets/images/gallery/galeri-4.webp",
       link: "/gallery/budaya",
     },
     {
-      title: "Kegiatan Pendidikan",
-      description: "Program pendidikan untuk anak-anak desa.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
-    },
-    {
-      title: "Kegiatan Lingkungan",
-      description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
-    },
-    {
-      title: "Kegiatan Lingkungan",
-      description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
-      image: "/assets/images/gallery/landscape.jpg",
-      link: "/gallery/budaya",
-    },
-    {
-      title: "Kegiatan Lingkungan",
-      description: "Inisiatif untuk menjaga kelestarian lingkungan desa.",
-      image: "/assets/images/gallery/landscape.jpg",
+      title: "Penyuluhan Kesehatan Ibu dan Anak",
+      description:
+        "Sosialisasi langkah-langkah menjaga kebersihan diri dan kesehatan bagi ibu serta anak.",
+      lightboxDescription:
+        "Kegiatan ini ditujukan untuk memberikan edukasi kepada ibu-ibu mengenai pentingnya menjaga kebersihan diri, terutama dalam merawat anak. Melalui media poster bergambar, peserta diperkenalkan langkah-langkah sederhana mencuci tangan dan pola hidup bersih. Penyuluhan ini diharapkan dapat meningkatkan kesadaran masyarakat dalam mencegah penyakit serta menjaga kesehatan keluarga sejak dini.",
+      image: "/assets/images/gallery/galeri-5.webp",
       link: "/gallery/budaya",
     },
   ];
 
   return (
-<div className="w-full relative">
+    <div className="w-full relative">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="gallery min-h-screen flex flex-col items-center justify-center w-full max-2xl:mt-12 overflow-x-clip py-2 sm:py-12 md:py-8">
           <div className="gallery-title-wrapper mt-[-2rem] sm:mt-18 text-center w-full sm:w-3/4 mx-auto px-4 sm:px-2">
@@ -78,11 +77,11 @@ export default function GalleryPage() {
           {/* Mobile: Single image display */}
           <div className="image-wrapper w-full h-48 sm:h-64 md:h-80 lg:h-96 mt-8 sm:mt-12 lg:grid lg:grid-cols-4 lg:gap-1 lg:perspective-near mb-2 sm:mb-0">
             {/* Mobile view - single image */}
-            <div className="lg:hidden h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-center rounded-lg shadow-lg"></div>
+            <div className="lg:hidden h-full bg-[url(/assets/images/login/login.webp)] bg-cover bg-center rounded-lg shadow-lg"></div>
 
             {/* Desktop view - 4 panel layout */}
             <div
-              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
+              className="hidden lg:block h-full bg-[url(/assets/images/login/login.webp)] bg-cover bg-no-repeat -translate-z-16 translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "0% 0%",
@@ -92,7 +91,7 @@ export default function GalleryPage() {
             ></div>
 
             <div
-              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
+              className="hidden lg:block h-full bg-[url(/assets/images/login/login.webp)] bg-cover bg-no-repeat -translate-z-32"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "33.3333% 0%",
@@ -102,7 +101,7 @@ export default function GalleryPage() {
             ></div>
 
             <div
-              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-32"
+              className="hidden lg:block h-full bg-[url(/assets/images/login/login.webp)] bg-cover bg-no-repeat -translate-z-32"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "66.6666% 0%",
@@ -112,7 +111,7 @@ export default function GalleryPage() {
             ></div>
 
             <div
-              className="hidden lg:block h-full bg-[url(/assets/images/gallery/landscape.jpg)] bg-cover bg-no-repeat -translate-z-16 -translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
+              className="hidden lg:block h-full bg-[url(/assets/images/login/login.webp)] bg-cover bg-no-repeat -translate-z-16 -translate-x-2 max-2xl:-translate-z-20 max-2xl:translate-x-0"
               style={{
                 backgroundSize: "400% 100%",
                 backgroundPosition: "100% 0%",
@@ -152,8 +151,11 @@ export default function GalleryPage() {
                       <ActivityCard
                         title={item.title}
                         description={item.description}
+                        lightboxDescription={item.lightboxDescription}
                         image={item.image}
                         link={item.link}
+                        allItems={cardData}
+                        initialIndex={index}
                       />
                     </div>
                   </CarouselItem>

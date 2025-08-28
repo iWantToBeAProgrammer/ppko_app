@@ -44,8 +44,10 @@ export function DeleteConfirmationDialog({
     },
     onSuccess: () => {
       toast.success("Data orang tua dan anak berhasil dihapus");
+      queryClient.invalidateQueries({ queryKey: ["user", user.id] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-users"] });
       queryClient.invalidateQueries({ queryKey: ["kader-warga-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-warga-users"] });
       queryClient.invalidateQueries({ queryKey: ["user-cadre"] });
       onClose();
     },

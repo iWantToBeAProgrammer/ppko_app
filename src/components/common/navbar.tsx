@@ -43,6 +43,8 @@ export default function Navbar() {
     pathname.startsWith("/user") ||
     pathname.startsWith("/cadre");
 
+  const isRecipeDetailPage = pathname.startsWith("/resep-makanan/");
+
   useEffect(() => {
     window.onscroll = () => {
       const topNav = window.scrollY;
@@ -62,7 +64,7 @@ export default function Navbar() {
   return (
     <nav
       className={`font-semibold w-full fixed z-50 top-0 ${
-        isAuthPage || isAdminPage ? "hidden" : "block"
+        isAuthPage || isAdminPage || isRecipeDetailPage ? "hidden" : "block"
       }`}
     >
       <div
