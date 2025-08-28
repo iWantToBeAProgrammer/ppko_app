@@ -91,7 +91,7 @@ export default function ResepMakananPage() {
     <div className="w-full min-h-screen overflow-hidden sm:pt-56 pt-28">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <h1 className="text-4xl font-semibold mb-2">Semua Tentang Asupan</h1>
-        <p className="text-lg text-foreground/50 w-1/2 tracking-wider font-medium">
+        <p className="text-sm mt-2 sm:text-lg text-foreground/50 sm:w-1/2 tracking-wider font-medium">
           Explore different types of meals such as breakfast, brunch, lunch, and
           more to find delicious recipes and ideas for every time of day for
           your child.
@@ -159,10 +159,10 @@ export default function ResepMakananPage() {
 
         {/* 🔹 Recommended Recipes */}
         <div className="recommended-recipe w-full mt-12">
-          <div className="recommended-recipe-title w-full flex items-center justify-between">
+          <div className="recommended-recipe-title w-full flex flex-col sm:flex-row sm:gap-0 gap-4 sm:items-center justify-between">
             <h1 className="text-2xl font-bold flex-1">Rekomendasi Menu</h1>
 
-            <p className="text-sm text-muted-foreground w-1/3">
+            <p className="text-sm text-muted-foreground sm:w-1/3">
               Selamat datang di Galeri Resep Kami, tempat di mana kami
               membagikan dokumentasi kegiatan yang telah dilakukan di Desa
               Gemawang. Melalui foto-foto ini.

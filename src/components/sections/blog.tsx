@@ -44,7 +44,7 @@ export default function Blog() {
               width={960}
               height={960}
               className="w-full h-full object-cover rounded-lg"
-              src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?q=80&w=2070&auto=format&fit=crop"
+              src="/assets/images/article/article.png"
               alt="Families In Need"
             />
           </div>
@@ -57,10 +57,10 @@ export default function Blog() {
               Bringing Hope And Support To Families In Need
             </h1>
             <p className="text-gray-600 text-base leading-relaxed mb-4">
-              At Lainy`&apos;`s Light Foundation, we believe that every child and
-              family facing cancer deserves full support, both emotionally and
-              practically. Our mission is to provide comfort, strength, and hope
-              to them through various forms of assistance.
+              At Lainy`&apos;`s Light Foundation, we believe that every child
+              and family facing cancer deserves full support, both emotionally
+              and practically. Our mission is to provide comfort, strength, and
+              hope to them through various forms of assistance.
             </p>
             <a
               href="#"
@@ -73,7 +73,7 @@ export default function Blog() {
       </div>
 
       <div className="blog-card-wrapper h-full gap-8 max-w-6xl mx-auto mt-10">
-        <div className="flex h-96 items-center space-x-4 text-sm flex-wrap sm:flex-nowrap justify-center">
+        <div className="flex  items-center space-x-4 text-sm flex-wrap sm:flex-nowrap justify-center">
           {blogs.map((blog, index) => (
             <React.Fragment key={index}>
               <BlogCard

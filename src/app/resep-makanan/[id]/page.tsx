@@ -90,6 +90,7 @@ export default function FoodRecipeDetails() {
           <iframe
             width="1080"
             height="500"
+            className="aspect-video w-full h-auto"
             src={`https://youtube.com/embed/${videoId}?autoplay=1&mute=1`}
           ></iframe>
         </div>

@@ -12,19 +12,19 @@ export default function TestimonialCards() {
 
   const items = [
     {
-      img: "/assets/images/gallery/landscape.jpg",
+      img: "/assets/images/login/login.webp",
       title: "Sorotan pada Allrecipes Allstar: Ashley Berger",
     },
     {
-      img: "/assets/images/gallery/landscape.jpg",
+      img: "/assets/images/login/login.webp",
       title: "Sorotan pada Allrecipes Allstar: Ashley Berger",
     },
     {
-      img: "/assets/images/gallery/landscape.jpg",
+      img: "/assets/images/login/login.webp",
       title: "Sorotan pada Allrecipes Allstar: Ashley Berger",
     },
     {
-      img: "/assets/images/gallery/landscape.jpg",
+      img: "/assets/images/login/login.webp",
       title: "Sorotan pada Allrecipes Allstar: Ashley Berger",
     },
   ];
