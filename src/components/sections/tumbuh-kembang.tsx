@@ -8,26 +8,29 @@ export default function TumbuhKembang() {
       title: "Cek Tumbuh Kembang",
       description:
         "Fitur untuk memeriksa apakah tumbuh kembang anak sudah sesuai dengan usia atau membutuhkan perhatian khusus.",
-      link: "#",
+      link: "/calculator",
     },
     {
       icon: Utensils,
       title: "Rekomendasi MPASI Bergizi",
       description:
         "Memberikan rekomendasi menu MPASI yang bergizi dan berbasis bahan pangan lokal untuk anak.",
-      link: "#",
+      link: "/resep-makanan",
     },
     {
       icon: UtensilsCrossed,
       title: "Edukasi Gizi untuk Balita",
       description:
         "Memberikan informasi dan edukasi seputar pentingnya asupan gizi yang tepat bagi anak, serta cara mengatasi kekurangan gizi.",
-      link: "#",
+      link: "/article",
     },
   ];
 
   return (
-    <section id="tumbuh-kembang" className="relative overflow-x-clip min-h-screen mb-32 sm:h-screen sm:mb-48">
+    <section
+      id="tumbuh-kembang"
+      className="relative overflow-x-clip min-h-screen mb-32 sm:h-screen sm:mb-48"
+    >
       <div className="border-wrapper">
         <svg
           xmlns="http://www.w3.org/2000/svg"

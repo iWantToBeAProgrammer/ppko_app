@@ -29,13 +29,18 @@ import { useAuthStore } from "@/stores/auth-store";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAuthPage =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/forgot-password" ||
+    pathname === "/reset-password";
   const isAdminPage =
     pathname.startsWith("/admin") ||
     pathname.startsWith("/user") ||
     pathname.startsWith("/cadre");
 
-  const isRecipeDetailPage = pathname.startsWith("/resep-makanan/");
+  const isDetailPage =
+    pathname.startsWith("/resep-makanan/") || pathname.startsWith("/article/");
 
   useEffect(() => {
     window.onscroll = () => {
@@ -56,7 +61,7 @@ export default function Navbar() {
   return (
     <nav
       className={`font-semibold w-full fixed z-50 top-0 ${
-        isAuthPage || isAdminPage || isRecipeDetailPage ? "hidden" : "block"
+        isAuthPage || isAdminPage || isDetailPage ? "hidden" : "block"
       }`}
     >
       <div

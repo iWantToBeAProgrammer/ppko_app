@@ -5,58 +5,11 @@ import CardArticle from "../../components/common/card-article";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import ArticleCard from "./_components/article-card";
+import { articles } from "../data/articles";
+import Link from "next/link";
 
 // Array data artikel
-const articlesData = [
-  {
-    id: 1,
-    imageSrc: "/assets/images/article/article.png",
-    imageAlt: "Group meeting around table",
-    title: "Pentingnya Peran Keluarga dalam Mencegah Stunting",
-    author: "Dr. Liana Pratiwi, Ahli Gizi Keluarga",
-    link: "/article/1",
-  },
-  {
-    id: 2,
-    imageSrc: "/assets/images/article/article.png",
-    imageAlt: "Office interior with city view",
-    title: "Langkah-langkah Pemerintah Desa dalam Mengatasi Stunting",
-    author: "Kepala Desa Gumawang",
-    link: "/article/2",
-  },
-  {
-    id: 3,
-    imageSrc: "/assets/images/article/article.png",
-    imageAlt: "Office interior with city view",
-    title: "Langkah-langkah Pemerintah Desa dalam Mengatasi Stunting",
-    author: "Kepala Desa Gumawang",
-    link: "/article/3",
-  },
-  {
-    id: 4,
-    imageSrc: "/assets/images/article/article.png",
-    imageAlt: "Meeting room with oval table",
-    title: "Membangun Kesadaran Masyarakat untuk Mengatasi Stunting",
-    author: "Tim Kesehatan Desa Gumawang",
-    link: "/article/4",
-  },
-  {
-    id: 5,
-    imageSrc: "/assets/images/article/article.png",
-    imageAlt: "Meeting room with oval table",
-    title: "Membangun Kesadaran Masyarakat untuk Mengatasi Stunting",
-    author: "Tim Kesehatan Desa Gumawang",
-    link: "/article/5",
-  },
-  {
-    id: 6,
-    imageSrc: "/assets/images/article/article.png",
-    imageAlt: "Meeting room with oval table",
-    title: "Membangun Kesadaran Masyarakat untuk Mengatasi Stunting",
-    author: "Tim Kesehatan Desa Gumawang",
-    link: "/article/6",
-  },
-];
+const articlesData = articles;
 
 export default function ArticlePage() {
   return (
@@ -100,16 +53,16 @@ export default function ArticlePage() {
                 </Badge>
               </div>
               <div className="bg-primary p-6 rounded-b-xl">
-                <h2 className="sm:text-2xl text-xl font-bold text-black mb-3 leading-tight">
-                  Antisipasi Generasi Stunting Guna Mencapai Indonesia Emas
-                </h2>
+                <Link href={`article/${articles[3].slug}`}>
+                  <h2 className="sm:text-2xl hover:underline text-xl font-bold text-black mb-3 leading-tight">
+                    {articles[3].title}
+                  </h2>
+                </Link>
                 <p className="sm:text-lg text-sm text-gray-600 mb-3 leading-relaxed">
-                  Mempersiapkan generasi emas 2045 bukan hal mudah. Pasalnya,
-                  stunting masih menjadi masalah gizi utama bagi bayi dan anak
-                  dibawah usia dua tahun di...
+                  {articles[3].description}
                 </p>
                 <p className="sm:text-lg text-sm text-gray-600 mb-3 leading-relaxed">
-                  Dr. Andi Setiawan, Pakar Gizi
+                  Admin
                 </p>
               </div>
             </div>
@@ -120,8 +73,7 @@ export default function ArticlePage() {
               <ArticleCard
                 key={index}
                 title={article.title}
-                image={article.imageSrc}
-                author={article.author}
+                link={`/article/${article.slug}`}
               />
             ))}
           </div>
@@ -152,11 +104,9 @@ export default function ArticlePage() {
           {articlesData.map((article) => (
             <CardArticle
               key={article.id}
-              imageSrc={article.imageSrc}
-              imageAlt={article.imageAlt}
+              imageAlt={article.slug}
               title={article.title}
-              author={article.author}
-              link={article.link}
+              link={`/article/${article.slug}`}
             />
           ))}
         </div>

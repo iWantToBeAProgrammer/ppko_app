@@ -19,6 +19,7 @@ import { loginSchemaForm } from "@/validations/auth-validation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function LoginForm() {
   const form = useForm<LoginForm>({
@@ -74,13 +75,24 @@ export function LoginForm() {
           placeholder="Masukkan email anda"
           type="email"
         />
-        <FormInput
-          form={form}
-          name="password"
-          label="Password"
-          placeholder="******"
-          type="password"
-        />
+         <div className="space-y-2">
+          <FormInput
+            form={form}
+            name="password"
+            label="Password"
+            placeholder="******"
+            type="password"
+          />
+          {/* Forgot Password Link */}
+          <div className="flex justify-end">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              Lupa password?
+            </Link>
+          </div>
+        </div>
 
         <Button type="submit">
           {isPendingLogin ? <Loader2 className="animate-spin" /> : "Login"}

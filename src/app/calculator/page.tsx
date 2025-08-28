@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Card,
   CardHeader,
@@ -40,6 +40,8 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
+import RecipeRecommendations from "@/components/recipe-recommendations";
+import { FoodCategory } from "@prisma/client";
 
 export default function CalculatorPage() {
   // State untuk form input
@@ -73,7 +75,7 @@ export default function CalculatorPage() {
 
     const timer = setInterval(() => {
       currentStep++;
-      
+
       const progress = currentStep / steps;
       const easeOutQuart = 1 - Math.pow(1 - progress, 4); // Easing function
 
@@ -94,48 +96,6 @@ export default function CalculatorPage() {
   }, []);
 
   // Data rekomendasi makanan
-  const foodRecommendations = [
-    {
-      id: 1,
-      image: "/assets/images/resep-makanan/right_picture.png",
-      title: "Bubur Ayam Ga Enak Kemaren",
-      duration: "30 Mins",
-      description:
-        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
-    },
-    {
-      id: 2,
-      image: "/assets/images/resep-makanan/right_picture.png",
-      title: "Bubur Ayam Ga Enak Kemaren",
-      duration: "30 Mins",
-      description:
-        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
-    },
-    {
-      id: 3,
-      image: "/assets/images/resep-makanan/right_picture.png",
-      title: "Bubur Ayam Ga Enak Kemaren",
-      duration: "30 Mins",
-      description:
-        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
-    },
-    {
-      id: 4,
-      image: "/assets/images/resep-makanan/right_picture.png",
-      title: "Bubur Ayam Ga Enak Kemaren",
-      duration: "30 Mins",
-      description:
-        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
-    },
-    {
-      id: 5,
-      image: "/assets/images/resep-makanan/right_picture.png",
-      title: "Bubur Ayam Ga Enak Kemaren",
-      duration: "30 Mins",
-      description:
-        "Hidangan sarapan yang kemaren dibuat anak rs yg gaenak ituu...",
-    },
-  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,6 +151,29 @@ export default function CalculatorPage() {
     }
   };
 
+  const calculateAgeInMonths = (dateOfBirth: Date) => {
+    const today = new Date();
+    const birth = new Date(dateOfBirth);
+    const months =
+      (today.getFullYear() - birth.getFullYear()) * 12 +
+      (today.getMonth() - birth.getMonth());
+    return months;
+  };
+
+  const getAgeCategory = (ageInMonths: number): FoodCategory | null => {
+    if (ageInMonths >= 6 && ageInMonths <= 8) return FoodCategory.AGE_6_8;
+    if (ageInMonths >= 9 && ageInMonths <= 11) return FoodCategory.AGE_9_11;
+    if (ageInMonths >= 12 && ageInMonths <= 23) return FoodCategory.AGE_12_23;
+    return null;
+  };
+
+  const childAgeData = useMemo(() => {
+    if (!birthDate) return null;
+    const ageInMonths = calculateAgeInMonths(birthDate);
+    const ageCategory = getAgeCategory(ageInMonths);
+    return { ageInMonths, ageCategory };
+  }, [birthDate]);
+
   return (
     <div className="min-h-screen bg-white flex flex-col items-center p-4 pt-55 z-[-1] sm:p-4 sm:pt-55">
       {/* Card utama dengan gradient background */}
@@ -203,46 +186,68 @@ export default function CalculatorPage() {
             height={740}
             className="absolute inset-0 w-[130%] h-[130%] -top-[15%] -left-[5%] scale-110 sm:w-[150rem] sm:h-[58rem] sm:top-0 sm:left-0 sm:scale-100 object-cover"
           />
-          
-          {/* Konten di kiri gambar bayi */}
+
           <div className="absolute top-12 left-8 sm:top-16 sm:left-24 z-10">
-            {/* Badge "You Are Not Alone" */}
             <div className="bg-purple-600 text-white p-2 flex items-center justify-center sm:px-1.5 sm:py-1.5 rounded-full sm:text-lg text-xs font-medium mb-6 sm:mb-24 sm:w-52">
               You Are Not Alone
             </div>
-            
+
             {/* Teks vertikal di kiri */}
             <div className=" sm:space-y-3">
-              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">Informasi</div>
-              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">Edukasi</div>
-              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">Support</div>
-              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">Advokasi</div>
+              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">
+                Informasi
+              </div>
+              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">
+                Edukasi
+              </div>
+              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">
+                Support
+              </div>
+              <div className="text-gray-800 font-semibold text-sm sm:text-6xl mb-1 sm:mb-8">
+                Advokasi
+              </div>
             </div>
           </div>
 
           {/* Konten di kanan gambar bayi */}
           <div className="absolute top-20 right-8  sm:top-16 sm:right-24 z-10 max-w-[6rem] sm:max-w-[17.5rem] text-right">
             {/* Tanda kutip - hanya tampil di desktop */}
-            <div className="hidden sm:block text-gray-800 text-lg sm:text-4xl font-bold mb-1 sm:mb-3 text-right">"</div>
-            
+            <div className="hidden sm:block text-gray-800 text-lg sm:text-4xl font-bold mb-1 sm:mb-3 text-right">
+              "
+            </div>
+
             {/* Definisi stunting - hanya tampil di desktop */}
             <div className="hidden sm:block text-gray-800 text-xs sm:text-lg font-semibold leading-tight mb-3 sm:mb-10 text-right">
-              Stunting (kerdil) adalah gangguan pertumbuhan kronis akibat kekurangan gizi, infeksi berulang, dan stimulasi kurang selama 1.000 hari pertama kehidupan.
+              Stunting (kerdil) adalah gangguan pertumbuhan kronis akibat
+              kekurangan gizi, infeksi berulang, dan stimulasi kurang selama
+              1.000 hari pertama kehidupan.
             </div>
-            
+
             {/* Data statistik - tampil di mobile dan desktop */}
             <div className="space-y-1 sm:space-y-4 text-right">
               <div>
-                <div className="text-gray-800 font-bold text-xs sm:text-3xl text-right mb-0.5 sm:mb-2">{count1}%</div>
-                <div className="text-gray-800 text-[0.6rem] sm:text-base font-medium text-right mb-3 sm:mb-10">Faktor Ibu Hamil</div>
+                <div className="text-gray-800 font-bold text-xs sm:text-3xl text-right mb-0.5 sm:mb-2">
+                  {count1}%
+                </div>
+                <div className="text-gray-800 text-[0.6rem] sm:text-base font-medium text-right mb-3 sm:mb-10">
+                  Faktor Ibu Hamil
+                </div>
               </div>
               <div>
-                <div className="text-gray-800 font-bold text-xs sm:text-3xl text-right mb-0.5 sm:mb-2">{count2}%</div>
-                <div className="text-gray-800 text-[0.6rem] sm:text-base font-medium text-right mb-3 sm:mb-10">Sanitasi Buruk</div>
+                <div className="text-gray-800 font-bold text-xs sm:text-3xl text-right mb-0.5 sm:mb-2">
+                  {count2}%
+                </div>
+                <div className="text-gray-800 text-[0.6rem] sm:text-base font-medium text-right mb-3 sm:mb-10">
+                  Sanitasi Buruk
+                </div>
               </div>
               <div>
-                <div className="text-gray-800 font-bold text-xs sm:text-3xl text-right mb-0.5 sm:mb-2">{count3}%</div>
-                <div className="text-gray-800 text-[0.6rem] sm:text-base font-medium text-right mb-3 sm:mb-10">MP-ASI Tidak Adekuat</div>
+                <div className="text-gray-800 font-bold text-xs sm:text-3xl text-right mb-0.5 sm:mb-2">
+                  {count3}%
+                </div>
+                <div className="text-gray-800 text-[0.6rem] sm:text-base font-medium text-right mb-3 sm:mb-10">
+                  MP-ASI Tidak Adekuat
+                </div>
               </div>
             </div>
           </div>
@@ -394,7 +399,9 @@ export default function CalculatorPage() {
                 <div className="flex items-center">
                   <span className="text-gray-500 font-medium w-16 sm:w-20 md:w-25 text-xs sm:text-sm md:text-base">
                     Status{" "}
-                    <span className="text-gray-800 ml-1 sm:ml-2 md:ml-11">:</span>
+                    <span className="text-gray-800 ml-1 sm:ml-2 md:ml-11">
+                      :
+                    </span>
                   </span>
                   <span className="text-gray-800 font-bold text-xs sm:text-sm md:text-base">
                     {measurementResult.status}
@@ -403,7 +410,9 @@ export default function CalculatorPage() {
                 <div className="flex items-center">
                   <span className="text-gray-500 font-medium w-16 sm:w-20 md:w-26 text-xs sm:text-sm md:text-base">
                     Z-score
-                    <span className="text-gray-800 ml-1 sm:ml-2 md:ml-10">:</span>
+                    <span className="text-gray-800 ml-1 sm:ml-2 md:ml-10">
+                      :
+                    </span>
                   </span>
                   <span className="text-gray-800 font-bold text-xs sm:text-sm md:text-base">
                     {measurementResult.zScore}
@@ -412,7 +421,9 @@ export default function CalculatorPage() {
                 <div className="flex items-start">
                   <span className="text-gray-500 font-medium w-16 sm:w-20 md:w-25 text-xs sm:text-sm md:text-base">
                     Keterangan{" "}
-                    <span className="text-gray-800 ml-0.5 sm:ml-1 md:ml-[0.3rem]">:</span>
+                    <span className="text-gray-800 ml-0.5 sm:ml-1 md:ml-[0.3rem]">
+                      :
+                    </span>
                   </span>
                   <span className="text-gray-800 font-bold flex-1 text-xs sm:text-sm md:text-base">
                     {measurementResult.keterangan}
@@ -425,7 +436,7 @@ export default function CalculatorPage() {
       )}
 
       {/* Section Rekomendasi Makanan */}
-      {showResult && (
+      {showResult && childAgeData && (
         <div className="w-full max-w-6xl mt-[3rem] sm:mt-[5rem] px-4 sm:px-0">
           {/* Header Rekomendasi */}
           <div className="text-center mb-6 sm:mb-8">
@@ -436,76 +447,13 @@ export default function CalculatorPage() {
               Masukkan data anak anda untuk memeriksa status pertumbuhan
             </p>
           </div>
-
           {/* Carousel Rekomendasi Makanan */}
-          <div className="w-full flex justify-center">
-            <Carousel
-              opts={{
-                align: "start",
-              }}
-              className="w-full max-w-full"
-            >
-              <CarouselContent className="-ml-1 sm:-ml-2 md:-ml-4">
-                {foodRecommendations.map((food, index) => (
-                  <CarouselItem
-                    key={food.id}
-                    className="pl-1 sm:pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-                  >
-                    <div className="pt-4 sm:pt-6">
-                      <Card className="bg-white border border-gray-200 rounded-xl shadow-sm h-full pb-0 py-0">
-                        <CardContent className="p-0">
-                          {/* Gambar Makanan */}
-                          <div className="relative w-full h-40 sm:h-48 rounded-t-xl overflow-hidden">
-                            <Image
-                              src={food.image}
-                              alt={food.title}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-
-                          {/* Konten Card */}
-                          <div className="p-3 sm:p-4">
-                            {/* Judul */}
-                            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2 line-clamp-2">
-                              {food.title}
-                            </h3>
-
-                            {/* Durasi */}
-                            <div className="flex items-center mb-2 sm:mb-3">
-                              <svg
-                                className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1 sm:mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                              <span className="text-xs sm:text-sm text-gray-500">
-                                {food.duration}
-                              </span>
-                            </div>
-
-                            {/* Deskripsi */}
-                            <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
-                              {food.description}
-                            </p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex min-w-10 min-h-10 sm:min-w-11 sm:min-h-11" />
-              <CarouselNext className="hidden sm:flex min-w-10 min-h-10 sm:min-w-11 sm:min-h-11" />
-            </Carousel>
-          </div>
+          <RecipeRecommendations
+            childName="Ahmad"
+            ageInMonths={childAgeData.ageInMonths}
+            ageCategory={childAgeData.ageCategory}
+            title="Rekomendasi Resep"
+          />
         </div>
       )}
     </div>

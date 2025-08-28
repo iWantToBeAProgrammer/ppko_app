@@ -17,11 +17,11 @@ export default function Gallery() {
             Galeri
           </h4>
           <h1 className="text-2xl sm:text-4xl font-semibold">
-            Mencegah Stunting di Desa Gumawang
+            Mencegah Stunting di Desa Gemawang
           </h1>
 
           <p className="text-md sm:text-lg">
-            “Kegiatan pencegahan stunting di Desa Gumawang bertujuan untuk
+            “Kegiatan pencegahan stunting di Desa Gemawang bertujuan untuk
             meningkatkan kesadaran masyarakat tentang pentingnya gizi seimbang
             bagi tumbuh kembang anak.
           </p>

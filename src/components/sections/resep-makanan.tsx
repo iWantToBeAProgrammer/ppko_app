@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function ResepMakanan() {
   return (
@@ -29,13 +30,15 @@ export default function ResepMakanan() {
               mendapatkan MPASI yang bergizi. Bersama kita cegah stunting dan
               wujudkan anak sehat dengan gizi yang tepat!
             </p>
-            <Button
-              size={"lg"}
-              variant={"outline"}
-              className="bg-background text-foreground border-foreground rounded-3xl text-md font-semibold mt-6 max-md:mx-auto max-md:block max-md:w-fit max-md:px-8 max-md:py-3 max-md:text-sm"
-            >
-              Resep Makanan
-            </Button>
+            <Link href={"/resep-makanan"}>
+              <Button
+                size={"lg"}
+                variant={"outline"}
+                className="bg-background cursor-pointer text-foreground border-foreground rounded-3xl text-md font-semibold mt-6 max-md:mx-auto max-md:block max-md:w-fit max-md:px-8 max-md:py-3 max-md:text-sm"
+              >
+                Resep Makanan
+              </Button>
+            </Link>
           </div>
           <div className="right-content max-md:w-full max-md:flex max-md:justify-center max-md:mt-4">
             <div className="bg-transparent relative before:content[''] before:absolute before:-top-8 before:-right-8 before:w-full before:h-full before:bg-secondary before:rounded-lg max-w-sm max-md:before:-top-4 max-md:before:-right-4 max-md:max-w-[320px] max-md:w-full">

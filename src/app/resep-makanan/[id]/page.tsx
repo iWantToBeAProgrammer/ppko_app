@@ -7,7 +7,7 @@ import Link from "next/link";
 import { FoodCategory } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/app/loading";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function FoodRecipeDetails() {
@@ -50,12 +50,16 @@ export default function FoodRecipeDetails() {
 
   const videoId = extractYouTubeID(data.youtubeUrl || "");
   const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+  const router = useRouter();
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-4 mt-8">
-      <Link href="/resep-makanan" className="flex gap-2 items-center mb-4">
+      <button
+        onClick={() => router.back()}
+        className="flex gap-2 items-center mb-4"
+      >
         <ArrowLeft size={20} /> <span className="text-sm">Kembali</span>
-      </Link>
+      </button>
 
       <h1 className="text-center text-2xl font-bold">{data.name}</h1>
       <p className="text-center mt-1 text-gray-500">Oleh : {data.author}</p>

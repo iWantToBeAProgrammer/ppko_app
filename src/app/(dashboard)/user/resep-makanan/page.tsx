@@ -66,9 +66,9 @@ export default function ResepMakananPage() {
   };
 
   const getAgeCategory = (ageInMonths: number) => {
-    if (ageInMonths >= 6 && ageInMonths <= 11) return "AGE_6_11";
+    if (ageInMonths >= 6 && ageInMonths <= 8) return "AGE_6_8";
+    if (ageInMonths >= 9 && ageInMonths <= 11) return "AGE_9_11";
     if (ageInMonths >= 12 && ageInMonths <= 23) return "AGE_12_23";
-    if (ageInMonths >= 24 && ageInMonths <= 35) return "AGE_24_35";
     return null;
   };
 
@@ -81,9 +81,9 @@ export default function ResepMakananPage() {
   };
 
   const FoodCategoryLabels: Record<FoodCategory, string> = {
-    [FoodCategory.AGE_6_11]: "6 - 11 bulan",
+    [FoodCategory.AGE_6_8]: "6 - 8 bulan",
+    [FoodCategory.AGE_9_11]: "9 - 11 bulan",
     [FoodCategory.AGE_12_23]: "12 - 23 bulan",
-    [FoodCategory.AGE_24_35]: "24 - 35 bulan",
     
   };
 

@@ -1,15 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ArticleCard({
-  image,
   title,
-  author,
+  link,
 }: {
-  image: string;
   title: string;
-  author: string;
+  link: string;
 }) {
   return (
     <Card className="flex flex-col sm:flex-row sm:gap-4 items-center gap-0 w-full  border-0 outline-0 px-4 sm:px-0 shadow-lg sm:shadow-none">
@@ -17,7 +16,7 @@ export default function ArticleCard({
         <Image
           width={900}
           height={420}
-          src={image}
+          src={"/assets/images/article/article.png"}
           alt={title}
           className="rounded-3xl"
         />
@@ -26,8 +25,10 @@ export default function ArticleCard({
         <Badge className="px-4 py-1 font-semibold text-md bg-primary">
           Nutrisi
         </Badge>
-        <CardTitle className="text-xl">{title}</CardTitle>
-        <p className="text-muted-foreground">{author}</p>
+        <Link href={link}>
+          <CardTitle className="text-xl hover:underline">{title}</CardTitle>
+        </Link>
+        <p className="text-muted-foreground">{"Dibuat oleh: Admin"}</p>
       </CardContent>
     </Card>
   );

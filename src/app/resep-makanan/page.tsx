@@ -77,9 +77,9 @@ export default function ResepMakananPage() {
   }
 
   const FoodCategoryLabels: Record<FoodCategory, string> = {
-    [FoodCategory.AGE_6_11]: "6 - 11 bulan",
+    [FoodCategory.AGE_6_8]: "6 - 8 bulan",
+    [FoodCategory.AGE_9_11]: "9 - 11 bulan",
     [FoodCategory.AGE_12_23]: "12 - 23 bulan",
-    [FoodCategory.AGE_24_35]: "24 - 35 bulan",
   };
 
   // 🔹 Filter recipes based on selected category

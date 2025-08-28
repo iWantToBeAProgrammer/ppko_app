@@ -27,33 +27,25 @@ export default function BlogCard({
 }) {
   return (
     <>
-    <Card className="w-full max-w-sm overflow-hidden pt-0 rounded-md shadow-none border-0 outline-0 h-96">
-      {/* 1. Letakkan gambar di luar CardHeader agar lebarnya penuh */}
-      <Image
-        width={400}
-        height={150}
-        className="w-full object-cover object-center rounded-4xl" 
-        src={'/assets/images/article/article.png'} // Ganti dengan path gambar Anda
-        alt="Pentingnya Peran Keluarga dalam Mencegah Stunting"
-      />
+      <Card className="w-full max-w-sm overflow-hidden pt-0 rounded-md shadow-none border-0 outline-0 min-h-96">
+        {/* 1. Letakkan gambar di luar CardHeader agar lebarnya penuh */}
+        <Image
+          width={400}
+          height={150}
+          className="w-full object-cover object-center rounded-4xl"
+          src={"/assets/images/article/article.png"} // Ganti dengan path gambar Anda
+          alt="Pentingnya Peran Keluarga dalam Mencegah Stunting"
+        />
 
-      
-      <CardHeader className="mx-0">
-        <Badge className="mx-0">{category}</Badge>
-        <CardTitle className="">
-          {title}
-        </CardTitle>
-        <CardDescription className="text-md">
-          {description}
-        </CardDescription>
-        <Link className="text-md hover:underline tracking-wider" href={link}>
-          {link}
-        </Link>
-      </CardHeader>
-
-    </Card>
-
+        <CardHeader className="mx-0">
+          <Badge className="mx-0">{category}</Badge>
+          <CardTitle className="">{title}</CardTitle>
+          <CardDescription className="text-md">{description}</CardDescription>
+          <Link className="text-md hover:underline tracking-wider" href={link}>
+            Read more
+          </Link>
+        </CardHeader>
+      </Card>
     </>
-
   );
 }

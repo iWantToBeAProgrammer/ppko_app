@@ -13,7 +13,7 @@ model User {
   email        String?       @unique
   first_name   String?
   last_name    String?
-  role         Role          @default(PARENT)
+  role         Role          @default(ADMIN)
   phoneNumber  String?
   address      String?
   isActive     Boolean       @default(true)
@@ -142,9 +142,9 @@ enum ArticleCategory {
 }
 
 enum FoodCategory {
-  AGE_6_11
+  AGE_6_8
+  AGE_9_11
   AGE_12_23
-  AGE_24_35
 }
 
 enum Gender {
