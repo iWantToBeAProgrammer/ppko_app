@@ -39,7 +39,7 @@ export const SIDEBAR_MENU_LIST: {
     },
     {
       title: "Rekomendasi Makanan",
-      url: "/food-recommendations",
+      url: "/user/resep-makanan",
       icon: Utensils,
     },
   ],

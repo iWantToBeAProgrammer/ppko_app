@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import RecipeCard from "./_components/recipe-card";
+import RecipeCard from "../../components/common/recipe-card";
 import { Separator } from "@/components/ui/separator";
 import TestimonialCards from "./_components/testimonial-card";
 import { useQuery } from "@tanstack/react-query";

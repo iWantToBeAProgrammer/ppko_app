@@ -145,8 +145,6 @@ enum FoodCategory {
   AGE_6_11
   AGE_12_23
   AGE_24_35
-  AGE_36_47
-  AGE_48_60
 }
 
 enum Gender {
