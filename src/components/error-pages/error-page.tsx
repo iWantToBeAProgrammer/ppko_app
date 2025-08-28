@@ -26,7 +26,6 @@ export default function ErrorPage({
   statusCode,
   title,
   description,
-  image,
   showHomeButton = true,
   showRefreshButton = false,
   imageAlt,
@@ -39,7 +38,6 @@ export default function ErrorPage({
   };
 
   const displayImage = defaultImages[statusCode];
-  const displayTitle = title || `${statusCode} Error`;
   const altText = imageAlt || `${statusCode} error illustration`;
 
   return (

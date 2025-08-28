@@ -44,15 +44,16 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { first_name, last_name, address, subVillage, gender, phoneNumber } =
       body;
 
     const updatedUser = await prisma.user.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         first_name,
         last_name,
@@ -81,12 +82,13 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     // First check if user exists
     const user = await prisma.user.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         children: {
           include: {
@@ -111,12 +113,12 @@ export async function DELETE(
 
       // Delete all children
       await tx.child.deleteMany({
-        where: { parentId: params.id },
+        where: { parentId: id },
       });
 
       // Finally delete the user
       await tx.user.delete({
-        where: { id: params.id },
+        where: { id: id },
       });
     });
 

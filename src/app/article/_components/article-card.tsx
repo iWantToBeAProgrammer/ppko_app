@@ -4,12 +4,10 @@ import Image from "next/image";
 
 export default function ArticleCard({
   image,
-  category,
   title,
   author,
 }: {
   image: string;
-  category: string;
   title: string;
   author: string;
 }) {

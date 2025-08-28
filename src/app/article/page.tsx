@@ -122,7 +122,6 @@ export default function ArticlePage() {
                 title={article.title}
                 image={article.imageSrc}
                 author={article.author}
-                category={article.title}
               />
             ))}
           </div>

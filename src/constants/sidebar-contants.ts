@@ -1,16 +1,10 @@
 import {
-  LayoutDashboard,
-  Album,
-  SquareMenu,
-  Armchair,
   Users,
   Home,
   TrendingUp,
   Utensils,
   Calculator,
   UserCog,
-  BookOpen,
-  Settings2,
   LucideIcon,
   User,
 } from "lucide-react";

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavbarWrapper from "@/components/common/navbar-wrapper";
 import { Toaster } from "sonner";
-import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import AuthStoreProvider from "@/providers/auth-store-provider";
 import ReactQueryProvider from "@/providers/react-query-provider";

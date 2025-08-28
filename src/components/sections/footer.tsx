@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   FaFacebook,
   FaTwitter,
@@ -14,7 +15,9 @@ export default function Footer() {
     <footer className="bg-[#333030] text-white py-12 px-4 sm:px-8 md:px-12 lg:px-36 mt-36">
       <div className="max-w-7xl mx-auto grid gap-8 sm:gap-12 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <img
+          <Image
+            width={720}
+            height={720}
             src="/assets/images/footer/logo2.png"
             alt="Logo"
             className="mb-3 w-40 h-auto"
@@ -22,19 +25,19 @@ export default function Footer() {
           <h3 className="font-semibold text-lg mb-2">Company</h3>
           <ul className="space-y-1 text-sm md:text-base">
             <li>
-              <a href="#">Beranda</a>
+              <Link href="#">Beranda</Link>
             </li>
             <li>
-              <a href="/calculator">Tumbuh Kembang</a>
+              <Link href="/calculator">Tumbuh Kembang</Link>
             </li>
             <li>
-              <a href="/resep-makanan">Resep</a>
+              <Link href="/resep-makanan">Resep</Link>
             </li>
             <li>
-              <a href="/gallery">Gallery</a>
+              <Link href="/gallery">Gallery</Link>
             </li>
             <li>
-              <a href="/article">Artikel</a>
+              <Link href="/article">Artikel</Link>
             </li>
           </ul>
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import * as Dialog from "@radix-ui/react-dialog";
+import Image from "next/image";
 
 // Tipe data untuk item lightbox
 type LightboxItem = {
@@ -82,7 +83,9 @@ function ThumbnailStrip({
                   }`}
                   aria-label={`Pilih gambar ${idx + 1}`}
                 >
-                  <img
+                  <Image
+                    width={500}
+                    height={500}
                     src={item.image || "/assets/images/gallery/landscape.jpg"}
                     alt={item.title}
                     className="h-16 w-full object-cover rounded-md"
@@ -142,7 +145,9 @@ function LightboxContent({
       {/* Gambar utama */}
       <div className="w-full h-[70vh] sm:h-[75vh] grid place-items-center">
         <div className="relative inline-block max-w-full max-h-full">
-          <img
+          <Image
+            width={1000}
+            height={1000}
             src={current.image || "/assets/images/gallery/landscape.jpg"}
             alt={current.title}
             className="block max-h-[70vh] sm:max-h-[75vh] max-w-[92vw] w-auto h-auto object-contain rounded-md"

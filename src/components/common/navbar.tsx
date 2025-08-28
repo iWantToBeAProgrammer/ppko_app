@@ -4,28 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import {
-  Bell,
   Calculator,
   GalleryHorizontal,
   LogIn,
-  Minus,
   Newspaper,
-  Plus,
   User,
-  User2,
-  User2Icon,
   Utensils,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { signOut } from "@/actions/auth-action";
-import path from "path";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -219,7 +211,9 @@ export default function Navbar() {
       </div>
 
       <div className={`navbar-border-wrapper w-full  `}>
-        <img
+        <Image
+          width={2000}
+          height={200}
           src="/assets/images/hero/hero-top-border.svg"
           alt="hero_border"
           className={`${

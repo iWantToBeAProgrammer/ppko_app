@@ -1,5 +1,5 @@
 import { environment } from "@/config/environment";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 type CreateClientOptions = {
@@ -27,7 +27,7 @@ export async function createClient({
               cookieStore.set(name, value, options);
             });
           } catch (error) {
-            console.error("Error setting cookies:", cookiesToSet);
+            console.error("Error setting cookies:", cookiesToSet, error);
           }
         },
       },

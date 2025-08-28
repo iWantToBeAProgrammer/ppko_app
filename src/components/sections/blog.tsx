@@ -2,6 +2,7 @@ import React from "react";
 import BlogCard from "../common/blog-card";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
+import Image from "next/image";
 
 export default function Blog() {
   const blogs = [
@@ -39,7 +40,9 @@ export default function Blog() {
       <div className="max-w-6xl mx-auto bg-white rounded-2xl overflow-hidden p-6 md:p-8">
         <div className="md:flex md:items-center md:gap-8 ">
           <div className="md:w-1/2">
-            <img
+            <Image
+              width={960}
+              height={960}
               className="w-full h-full object-cover rounded-lg"
               src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?q=80&w=2070&auto=format&fit=crop"
               alt="Families In Need"
@@ -54,7 +57,7 @@ export default function Blog() {
               Bringing Hope And Support To Families In Need
             </h1>
             <p className="text-gray-600 text-base leading-relaxed mb-4">
-              At Lainy's Light Foundation, we believe that every child and
+              At Lainy`&apos;`s Light Foundation, we believe that every child and
               family facing cancer deserves full support, both emotionally and
               practically. Our mission is to provide comfort, strength, and hope
               to them through various forms of assistance.

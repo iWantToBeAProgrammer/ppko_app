@@ -8,7 +8,9 @@ export default function ResepMakanan() {
       className="relative overflow-x-clip h-screen bg-primary mb-32 max-md:h-auto max-md:min-h-screen max-md:py-12"
     >
       <div className="cloud-top">
-        <img
+        <Image
+          width={1080}
+          height={200}
           src="/assets/images/common/cloud.svg"
           alt="cloud"
           className="w-full rotate-180 absolute -top-24 left-0 max-md:-top-6"
@@ -50,7 +52,9 @@ export default function ResepMakanan() {
       </div>
 
       <div className="cloud-bottom absolute -bottom-24 left-0 w-full max-md:-bottom-6">
-        <img
+        <Image
+          width={960}
+          height={200}
           src="/assets/images/common/cloud.svg"
           alt="cloud"
           className="w-full"

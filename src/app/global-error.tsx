@@ -1,17 +1,12 @@
-'use client'
+"use client";
 
-import ErrorPage from "@/components/error-pages/error-page"
+import ErrorPage from "@/components/error-pages/error-page";
 
-interface GlobalErrorProps {
-  error: Error & { digest?: string }
-  reset: () => void
-}
-
-export default function GlobalError({ error, reset }: GlobalErrorProps) {
+export default function GlobalError() {
   return (
     <html>
       <body>
-        <ErrorPage 
+        <ErrorPage
           statusCode={500}
           title="Critical System Error"
           description="Terjadi kesalahan kritis pada sistem. Silakan refresh halaman atau coba lagi nanti."
@@ -21,5 +16,5 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         />
       </body>
     </html>
-  )
+  );
 }
