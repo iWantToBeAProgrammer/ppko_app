@@ -42,7 +42,6 @@ export async function createUser(prevState: AuthFormState, formData: FormData) {
       last_name: z.string().min(1, "Nama belakang anak harus diisi"),
       dateOfBirth: z.string().min(1, "Tanggal lahir harus diisi"),
       gender: z.nativeEnum(Gender),
-      birthHeight: z.string().min(1, "Tinggi badan lahir harus diisi"),
     });
 
     const childValidatedFields = childValidationSchema.safeParse({
@@ -50,14 +49,20 @@ export async function createUser(prevState: AuthFormState, formData: FormData) {
       last_name: formData.get("child_last_name"),
       dateOfBirth: formData.get("child_dateOfBirth"),
       gender: formData.get("child_gender"),
-      birthHeight: formData.get("child_birthHeight"),
     });
+
+    console.log(childValidatedFields);
 
     if (!childValidatedFields.success) {
       return {
         status: "error",
         errors: {
-          _form: ["Data anak tidak valid: " + childValidatedFields.error.issues.map(issue => issue.message).join(", ")],
+          _form: [
+            "Data anak tidak valid: " +
+              childValidatedFields.error.issues
+                .map((issue) => issue.message)
+                .join(", "),
+          ],
         },
       };
     }
@@ -109,7 +114,6 @@ export async function createUser(prevState: AuthFormState, formData: FormData) {
             last_name: childData.last_name,
             gender: childData.gender as Gender,
             dateOfBirth: new Date(childData.dateOfBirth),
-            birthHeight: parseFloat(childData.birthHeight),
             parentId: createdUser.id, // Link child to parent
             // isActive defaults to true
             // createdAt and updatedAt are handled automatically
@@ -125,7 +129,7 @@ export async function createUser(prevState: AuthFormState, formData: FormData) {
     // If database operation fails, we should clean up the Supabase user
     // Note: This is a simplified cleanup, you might want more sophisticated error handling
     console.error("Database operation failed:", dbError);
-    
+
     // Attempt to delete the created Supabase user
     try {
       await supabase.auth.admin.deleteUser(data.user?.id as string);

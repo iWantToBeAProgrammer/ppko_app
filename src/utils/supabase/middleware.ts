@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
+    !request.nextUrl.pathname.startsWith("/")
   ) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
@@ -65,21 +65,20 @@ export async function updateSession(request: NextRequest) {
 
   if (pathname.startsWith("/admin") && role !== "ADMIN") {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+    url.pathname = "/unauthorized";
+    return NextResponse.rewrite(url);
   }
 
   if (pathname.startsWith("/cadre") && role !== "CADRE") {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+    url.pathname = "/unauthorized";
+    return NextResponse.rewrite(url);
   }
 
   if (pathname.startsWith("/user") && role !== "PARENT") {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+    url.pathname = "/unauthorized";
+    return NextResponse.rewrite(url);
   }
-
   return supabaseResponse;
 }

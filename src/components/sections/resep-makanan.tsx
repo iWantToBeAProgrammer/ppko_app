@@ -41,8 +41,8 @@ export default function ResepMakanan() {
                 width={500}
                 height={500}
                 alt="resep-makanan-image"
-                src={"/assets/images/resep-makanan/right_picture.png"}
-                className="w-full h-80 object-cover rounded-lg relative max-md:h-64 max-md:w-full"
+                src={"/assets/images/resep-makanan/right_picture.webp"}
+                className="w-full h-80 object-cover rounded-lg relative max-md:h-64 max-md:w-full aspect-square"
               />
             </div>
           </div>

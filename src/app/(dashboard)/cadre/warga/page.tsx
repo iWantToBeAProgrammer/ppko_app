@@ -15,23 +15,27 @@ import {
 import { useState } from "react";
 import { EditUserDialog } from "../../_components/edit-user-dialog";
 import { DeleteConfirmationDialog } from "../../_components/delete-user-dialog";
+import { Gender, SubVillage } from "@prisma/client";
 
 type UserWithChildren = {
   id: string;
-  full_name: string;
+  parentId: string;
+  first_name: string;
+  last_name: string;
   address: string | null;
-  subVillage: string | null;
+  subVillage: SubVillage | null;
+  phoneNumber: string;
+  gender: Gender;
   children: {
     id: string;
-    full_name: string;
-    measurement_status: string;
-    last_measured: Date | null;
+    first_name: string;
+    last_name: string;
+    measurements: {
+      stuntingStatus: string;
+      last_measured: Date | null;
+    }[];
   }[];
 };
-
-interface KaderWargaPageProps {
-  cadreSubVillage: string;
-}
 
 export default function KaderWargaPage() {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -71,17 +75,22 @@ export default function KaderWargaPage() {
     users?.flatMap((parent: UserWithChildren) =>
       parent.children.map((child) => ({
         id: parent.id,
-        parents_name: parent.full_name,
-        childs_name: child.full_name,
+        parentId: parent.id,
+        parents_name: parent.first_name + " " + parent.last_name,
+        childId: child.id,
+        childs_name: child.first_name + " " + child.last_name,
         address: parent.address || "Alamat tidak tersedia",
-        status:
-          child.measurement_status === "NOT_MEASURED"
+        gender: parent.gender,
+        phoneNumber: parent.phoneNumber,
+        subVillage: parent.subVillage,
+        stuntingStatus:
+          child.measurements[0]?.stuntingStatus === "NOT_MEASURED"
             ? "belum diukur"
-            : child.measurement_status === "NORMAL"
+            : child.measurements[0]?.stuntingStatus === "NORMAL"
             ? "normal"
-            : child.measurement_status === "STUNTING"
+            : child.measurements[0]?.stuntingStatus === "STUNTING"
             ? "stunting"
-            : child.measurement_status === "STUNTING_BERAT"
+            : child.measurements[0]?.stuntingStatus === "STUNTING_BERAT"
             ? "stunting berat"
             : "tidak diketahui",
       }))
@@ -101,7 +110,10 @@ export default function KaderWargaPage() {
     {
       icon: <ArrowUpRight className="h-4 w-4" />,
       label: "Detail Anak",
-      onClick: (row: any) => console.log("View details for", row),
+      href: (row: any) => `/cadre/warga/${row.childId}`, // 👈 dynamic link
+      onClick: (row: any) => {
+        setSelectedUser(row);
+      },
       showOnDesktop: true,
       showOnMobile: false,
     },
@@ -157,7 +169,7 @@ export default function KaderWargaPage() {
       ),
     },
     {
-      key: "status",
+      key: "stuntingStatus",
       header: "Status",
       type: "status",
       statusConfig: statusConfigs,

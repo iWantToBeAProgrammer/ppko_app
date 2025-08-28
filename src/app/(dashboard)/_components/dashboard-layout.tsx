@@ -20,33 +20,54 @@ import {
 import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { EditUserDialog } from "./edit-user-dialog";
 import { DeleteConfirmationDialog } from "./delete-user-dialog";
+import { useAuthStore } from "@/stores/auth-store"; // Assuming this is your auth store
+import { Role } from "@prisma/client";
 
 type Dashboard = {
   tableTitle: string;
   cadreSubVillage?: string; // Pass the cadre's subVillage when needed
+  role?: Role;
 };
 
 type UserWithChildren = {
   id: string;
-  full_name: string;
-  address: string | null;
+  first_name: string;
+  last_name: string;
+  address: string;
+  subVillage: string;
+  phoneNumber: string;
+  gender: string;
   children: {
     id: string;
-    full_name: string;
-    measurement_status: string;
-    last_measured: Date | null;
+    first_name: string;
+    last_name: string;
+    measurements: {
+      id: string;
+      measurementDate: Date | string;
+      stuntingStatus: string;
+      height: number;
+      heightForAgeZScore: number;
+    }[];
   }[];
+};
+
+type ChartData = {
+  month: string;
+  normal: number;
+  stunting: number;
 };
 
 export default function DashboardLayout({
   tableTitle,
   cadreSubVillage,
+  role,
 }: Dashboard) {
   const pathname = usePathname();
   const cadreDashboard = pathname.startsWith("/cadre");
+  const currentUser = useAuthStore((state) => state.profile);
 
   // Dialog states
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -54,14 +75,25 @@ export default function DashboardLayout({
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
   const { data: users, isLoading } = useQuery({
-    queryKey: ["dashboard-users", cadreDashboard, cadreSubVillage],
+    queryKey: [
+      "dashboard-users",
+      cadreDashboard,
+      cadreSubVillage,
+      currentUser?.subVillage,
+      role,
+    ],
     queryFn: async () => {
       try {
         const url = new URL("/api/dashboard", window.location.origin);
 
-        // Add subVillage parameter if it's a cadre dashboard
-        if (cadreDashboard && cadreSubVillage) {
+        // For cadre dashboard, filter by their subVillage
+        if (cadreDashboard && currentUser?.subVillage) {
+          url.searchParams.set("subVillage", currentUser.subVillage);
+        } else if (cadreSubVillage) {
+          // Fallback to passed subVillage prop
           url.searchParams.set("subVillage", cadreSubVillage);
+        } else if (role) {
+          url.searchParams.set("role", role);
         }
 
         const response = await fetch(url.toString());
@@ -81,58 +113,201 @@ export default function DashboardLayout({
   });
 
   // Calculate statistics from the actual data
+  console.log(users);
   const userTotal = users?.length || 0;
 
-  const stuntingTotal =
-    users?.reduce((count: number, user: UserWithChildren) => {
-      return (
-        count +
-        user.children.filter(
-          (child) =>
-            child.measurement_status === "STUNTING" ||
-            child.measurement_status === "STUNTING_BERAT"
-        ).length
-      );
-    }, 0) || 0;
+  // Get the latest measurement for each child to determine current status
+  const getLatestMeasurement = (
+    measurements: UserWithChildren["children"][0]["measurements"]
+  ) => {
+    if (!measurements || measurements.length === 0) return null;
+    return measurements.reduce((latest, current) => {
+      const currentDate = new Date(current.measurementDate);
+      const latestDate = new Date(latest.measurementDate);
+      return currentDate > latestDate ? current : latest;
+    });
+  };
 
-  const normalTotal =
-    users?.reduce((count: number, user: UserWithChildren) => {
+  const stuntingTotal = useMemo(() => {
+    if (!users) return 0;
+    return users.reduce((count: number, user: UserWithChildren) => {
       return (
         count +
-        user.children.filter((child) => child.measurement_status === "NORMAL")
-          .length
+        user.children.filter((child) => {
+          const latestMeasurement = getLatestMeasurement(child.measurements);
+          return (
+            latestMeasurement &&
+            (latestMeasurement.stuntingStatus === "STUNTING" ||
+              latestMeasurement.stuntingStatus === "STUNTING_BERAT")
+          );
+        }).length
       );
-    }, 0) || 0;
+    }, 0);
+  }, [users]);
+
+  const normalTotal = useMemo(() => {
+    if (!users) return 0;
+    return users.reduce((count: number, user: UserWithChildren) => {
+      return (
+        count +
+        user.children.filter((child) => {
+          const latestMeasurement = getLatestMeasurement(child.measurements);
+          return (
+            latestMeasurement && latestMeasurement.stuntingStatus === "NORMAL"
+          );
+        }).length
+      );
+    }, 0);
+  }, [users]);
 
   // Get unique subVillages count (only for admin dashboard)
-  const villageTotal = !cadreDashboard
-    ? new Set(
-        users?.map((user: UserWithChildren) =>
-          user.children.length > 0 ? "hasChildren" : "noChildren"
-        )
-      ).size || 0
-    : undefined;
+  const villageTotal = useMemo(() => {
+    if (cadreDashboard || !users) return undefined;
+    const uniqueSubVillages = new Set(
+      users
+        .filter((user: UserWithChildren) => user.subVillage)
+        .map((user: UserWithChildren) => user.subVillage)
+    );
+    return uniqueSubVillages.size;
+  }, [users, cadreDashboard]);
 
-  // Flatten the data for the table (one row per child)
-  const tableData =
-    users?.flatMap((parent: UserWithChildren) =>
-      parent.children.map((child) => ({
-        id: parent.id,
-        parents_name: parent.full_name,
-        childs_name: child.full_name,
-        address: parent.address || "Alamat tidak tersedia",
-        status:
-          child.measurement_status === "NOT_MEASURED"
-            ? "belum diukur"
-            : child.measurement_status === "NORMAL"
-            ? "normal"
-            : child.measurement_status === "STUNTING"
-            ? "stunting"
-            : child.measurement_status === "STUNTING_BERAT"
-            ? "stunting berat"
-            : "tidak diketahui",
-      }))
-    ) || [];
+  // Process data for chart - group by month
+  const chartData: ChartData[] = useMemo(() => {
+    if (!users || users.length === 0) return [];
+
+    // Collect all measurements from all children
+    type ProcessedMeasurement = {
+      id: string;
+      measurementDate: Date;
+      stuntingStatus: string;
+      height: number;
+      heightForAgeZScore: number;
+    };
+
+    const allMeasurements: ProcessedMeasurement[] = users.flatMap(
+      (user: UserWithChildren) =>
+        user.children.flatMap((child) =>
+          child.measurements.map((measurement) => ({
+            id: measurement.id,
+            measurementDate: new Date(measurement.measurementDate),
+            stuntingStatus: measurement.stuntingStatus,
+            height: measurement.height,
+            heightForAgeZScore: measurement.heightForAgeZScore,
+          }))
+        )
+    );
+
+    if (allMeasurements.length === 0) return [];
+
+    // Group by month-year
+    const monthlyData = allMeasurements.reduce(
+      (acc: Record<string, ChartData>, measurement) => {
+        const monthKey = measurement.measurementDate.toLocaleDateString(
+          "id-ID",
+          {
+            year: "numeric",
+            month: "short",
+          }
+        );
+
+        if (!acc[monthKey]) {
+          acc[monthKey] = {
+            month: monthKey,
+            normal: 0,
+            stunting: 0,
+          };
+        }
+
+        if (measurement.stuntingStatus === "NORMAL") {
+          acc[monthKey].normal++;
+        } else if (
+          measurement.stuntingStatus === "STUNTING" ||
+          measurement.stuntingStatus === "STUNTING_BERAT"
+        ) {
+          acc[monthKey].stunting++;
+        }
+
+        return acc;
+      },
+      {}
+    );
+
+    // Convert to array and sort by date
+    const sortedData: ChartData[] = Object.values(monthlyData).sort((a, b) => {
+      // Parse month-year strings for proper sorting
+      const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agu",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
+      ];
+
+      const [monthA, yearA] = a.month.split(" ");
+      const [monthB, yearB] = b.month.split(" ");
+
+      const monthIndexA = monthNames.indexOf(monthA);
+      const monthIndexB = monthNames.indexOf(monthB);
+
+      const dateA = new Date(parseInt(yearA), monthIndexA);
+      const dateB = new Date(parseInt(yearB), monthIndexB);
+
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    // Get last 12 months of data or all data if less than 12 months
+    return sortedData.slice(-12);
+  }, [users]);
+
+  // Flatten the data for the table (one row per child with latest measurement)
+  const tableData = useMemo(() => {
+    if (!users) return [];
+
+    return users.flatMap((parent: UserWithChildren) =>
+      parent.children.map((child) => {
+        const latestMeasurement = getLatestMeasurement(child.measurements);
+        const fullName = `${child.first_name} ${child.last_name}`;
+        const parentFullName = `${parent.first_name} ${parent.last_name}`;
+
+        let status = "belum diukur";
+        if (latestMeasurement) {
+          switch (latestMeasurement.stuntingStatus) {
+            case "NORMAL":
+              status = "normal";
+              break;
+            case "STUNTING":
+              status = "stunting";
+              break;
+            case "STUNTING_BERAT":
+              status = "stunting berat";
+              break;
+            default:
+              status = "tidak diketahui";
+          }
+        }
+
+        return {
+          id: child.id,
+          parentId: parent.id,
+          parents_name: parentFullName,
+          childs_name: fullName,
+          address: parent.address || "Alamat tidak tersedia",
+          subVillage: parent.subVillage || "Tidak diketahui",
+          gender: parent.gender,
+          status,
+          lastMeasured: latestMeasurement?.measurementDate || null,
+          phoneNumber: parent.phoneNumber,
+        };
+      })
+    );
+  }, [users]);
 
   // Define status configurations
   const statusConfigs: StatusConfig[] = [
@@ -150,7 +325,9 @@ export default function DashboardLayout({
       label: "Detail Anak",
       onClick: (row: any) => {
         // Navigate to child detail page
-        window.location.href = `/dashboard/anak/${row.id}`;
+        window.location.href = `/${cadreDashboard ? "cadre" : "admin"}/warga/${
+          row.id
+        }`;
       },
       showOnDesktop: true,
       showOnMobile: false,
@@ -210,6 +387,17 @@ export default function DashboardLayout({
         </div>
       ),
     },
+    // Show subVillage column only for admin dashboard
+    ...(!cadreDashboard
+      ? [
+          {
+            key: "subVillage",
+            header: "Dusun",
+            sortable: true,
+            hiddenOnMobile: true,
+          },
+        ]
+      : []),
     {
       key: "status",
       header: "Status",
@@ -273,7 +461,8 @@ export default function DashboardLayout({
         )}
       </div>
 
-      <ChartBarMultiple />
+      {/* Pass the processed chart data to ChartBarMultiple */}
+      <ChartBarMultiple data={chartData} isLoading={isLoading} />
 
       <Card className="shadow-md rounded-lg mt-4">
         <CardHeader>

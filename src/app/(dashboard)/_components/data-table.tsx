@@ -42,6 +42,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 // Generic data type
 export type TableData = Record<string, any>;
@@ -58,6 +59,7 @@ export interface ActionConfig<T = any> {
   label: string;
   onClick: (row: T) => void;
   variant?: "default" | "destructive";
+  href?: (row: T) => string;
   showOnMobile?: boolean;
   showOnDesktop?: boolean;
   requiresPermission?: boolean;
@@ -240,17 +242,31 @@ export function DataTable<T extends TableData>({
           return (
             <div className="flex items-center gap-1">
               {/* Desktop actions */}
-              {visibleDesktopActions.map((action, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="h-8 w-8 p-0 hidden md:flex"
-                  onClick={() => action.onClick(row.original)}
-                >
-                  <span className="sr-only">{action.label}</span>
-                  {action.icon}
-                </Button>
-              ))}
+              {visibleDesktopActions.map((action, index) =>
+                action.href ? (
+                  <Button
+                    key={index}
+                    asChild
+                    variant={action.variant || "outline"}
+                    className="h-8 w-8 p-0 hidden md:flex"
+                  >
+                    <Link href={action.href(row.original)}>
+                      <span className="sr-only">{action.label}</span>
+                      {action.icon}
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button
+                    key={index}
+                    variant={action.variant || "outline"}
+                    className="h-8 w-8 p-0 hidden md:flex"
+                    onClick={() => action.onClick(row.original)}
+                  >
+                    <span className="sr-only">{action.label}</span>
+                    {action.icon}
+                  </Button>
+                )
+              )}
 
               {/* Mobile dropdown */}
               {mobileActions.length > 0 && (
@@ -262,18 +278,29 @@ export function DataTable<T extends TableData>({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    {mobileActions.map((action, index) => (
-                      <DropdownMenuItem
-                        key={index}
-                        className={
-                          action.variant === "destructive" ? "text-red-600" : ""
-                        }
-                        onClick={() => action.onClick(row.original)}
-                      >
-                        {action.icon}
-                        <span className="ml-2">{action.label}</span>
-                      </DropdownMenuItem>
-                    ))}
+                    {mobileActions.map((action, index) =>
+                      action.href ? (
+                        <DropdownMenuItem key={index} asChild>
+                          <Link href={action.href(row.original)}>
+                            {action.icon}
+                            <span className="ml-2">{action.label}</span>
+                          </Link>
+                        </DropdownMenuItem>
+                      ) : (
+                        <DropdownMenuItem
+                          key={index}
+                          className={
+                            action.variant === "destructive"
+                              ? "text-red-600"
+                              : ""
+                          }
+                          onClick={() => action.onClick(row.original)}
+                        >
+                          {action.icon}
+                          <span className="ml-2">{action.label}</span>
+                        </DropdownMenuItem>
+                      )
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
@@ -458,7 +485,7 @@ export function DataTable<T extends TableData>({
                     colSpan={tableColumns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    Belum ada data
                   </TableCell>
                 </TableRow>
               )}

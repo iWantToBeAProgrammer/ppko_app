@@ -12,6 +12,7 @@ import {
   BookOpen,
   Settings2,
   LucideIcon,
+  User,
 } from "lucide-react";
 
 interface SidebarMenuItem {
@@ -33,12 +34,12 @@ export const SIDEBAR_MENU_LIST: {
     },
     {
       title: "Grafik Pertumbuhan",
-      url: "/growth-chart",
+      url: "/user/pertumbuhan",
       icon: TrendingUp,
     },
     {
       title: "Rekomendasi Makanan",
-      url: "/food-recommendations",
+      url: "/user/resep-makanan",
       icon: Utensils,
     },
   ],
@@ -73,24 +74,19 @@ export const SIDEBAR_MENU_LIST: {
       icon: UserCog,
     },
     {
+      title: "Warga",
+      url: "/admin/warga",
+      icon: User,
+    },
+    {
       title: "Kalkulator",
       url: "/admin/kalkulator",
       icon: Calculator,
     },
     {
       title: "Makanan",
-      url: "/food-recipes",
+      url: "/admin/resep-makanan",
       icon: Utensils,
-    },
-    {
-      title: "Gallery",
-      url: "/galleries",
-      icon: BookOpen,
-    },
-    {
-      title: "Artikel",
-      url: "/articles",
-      icon: Settings2,
     },
   ],
 };

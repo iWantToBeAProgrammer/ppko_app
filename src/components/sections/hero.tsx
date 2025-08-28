@@ -35,21 +35,21 @@ export default function Hero() {
                   height={350}
                   alt="hero-image"
                   src={"/assets/images/hero/child1.png"}
-                  className="w-36 h-38 sm:w-36 sm:h-42 object-contain rounded-lg"
+                  className="w-36 h-38 sm:w-36 sm:h-42 object-contain rounded-t-[9rem] rounded-b-[9rem]"
                 />
                 <Image
                   width={350}
                   height={350}
                   alt="hero-image"
                   src={"/assets/images/hero/child2.png"}
-                  className="w-36 h-38 sm:w-36 sm:h-42 object-contain rounded-lg"
+                  className="w-36 h-38 sm:w-36 sm:h-42 object-contain rounded-t-[9rem] rounded-b-[9rem]"
                 />
                 <Image
                   width={350}
                   height={350}
                   alt="hero-image"
                   src={"/assets/images/hero/child3.png"}
-                  className="w-36 h-38 sm:w-36 sm:h-42 object-contain rounded-lg"
+                  className="w-36 h-38 sm:w-36 sm:h-42 object-contain rounded-t-[9rem] rounded-b-[9rem]"
                 />
               </div>
               
@@ -60,26 +60,28 @@ export default function Hero() {
                   height={250}
                   alt="hero-image"
                   src={"/assets/images/hero/child2.png"}
+                  className="rounded-t-[9rem] rounded-b-[9rem]"
                 />
                 <Image
                   width={250}
                   height={250}
                   alt="hero-image"
                   src={"/assets/images/hero/child1.png"}
-                  className="mt-16"
+                  className="mt-16 rounded-t-[9rem] rounded-b-[9rem]"
                 />
                 <Image
                   width={250}
                   height={250}
                   alt="hero-image"
                   src={"/assets/images/hero/child3.png"}
-                  className="mt-16"
+                  className="mt-16 rounded-t-[9rem] rounded-b-[9rem]"
                 />
                 <Image
                   width={250}
                   height={250}
                   alt="hero-image"
                   src={"/assets/images/hero/child4.png"}
+                  className="rounded-t-[9rem] rounded-b-[9rem]"
                 />
               </div>
             </div>
