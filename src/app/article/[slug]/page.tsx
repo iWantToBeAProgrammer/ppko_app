@@ -1,18 +1,16 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { articles } from "@/app/data/articles";
-import ReactMarkdown from "react-markdown";
 import ArticleRenderer from "@/components/article-renderer";
 import Footer from "@/components/sections/footer";
 
-type DetailArticlePageProps = {
-  params: { slug: string }; // no need for Promise here
-};
-
-export default function DetailArticlePage({ params }: DetailArticlePageProps) {
-  const { slug } = params;
+export default function DetailArticlePage() {
+  const params = useParams();
+  const slug = params.slug as string;
 
   const article = articles.find((a) => a.slug === slug);
 
