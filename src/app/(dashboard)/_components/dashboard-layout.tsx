@@ -112,8 +112,6 @@ export default function DashboardLayout({
     },
   });
 
-  // Calculate statistics from the actual data
-  console.log(users);
   const userTotal = users?.length || 0;
 
   // Get the latest measurement for each child to determine current status

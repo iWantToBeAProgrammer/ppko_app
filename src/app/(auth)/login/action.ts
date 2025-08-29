@@ -8,7 +8,7 @@ import {
 import { AuthFormState } from "@/types/auth";
 import { createClient } from "@/utils/supabase/server";
 import { loginSchemaForm } from "@/validations/auth-validation";
-import { PrismaClient, SubVillage } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import z from "zod";
@@ -47,30 +47,26 @@ export async function login(
     password: validatedFields.data.password,
   });
 
-  if (error) {
+  if (error || !user) {
     return {
       status: "error",
       errors: {
         ...prevState.errors,
-        _form: [error.message],
+        _form: [error?.message ?? "Invalid credentials"],
       },
     };
   }
 
+  // 🔹 Check if profile exists in your `public.user` table
   const profile = await prisma.user.findUnique({
-    where: { id: user?.id },
+    where: { id: user.id },
     include: { children: true },
   });
 
-  if (profile) {
-    const cookieStore = await cookies();
-    cookieStore.set("user", JSON.stringify(profile), {
-      httpOnly: true,
-      path: "/",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-    });
-  } else {
+  if (!profile) {
+    // Ensure Supabase session is cleaned up if profile not found
+    await supabase.auth.signOut();
+
     return {
       status: "error",
       errors: {
@@ -80,12 +76,18 @@ export async function login(
     };
   }
 
-  // Revalidate paths but don't redirect
-  const role = user?.role as SidebarMenuKey | undefined;
+  // ✅ Only set cookie after profile exists
+  const cookieStore = await cookies();
+  cookieStore.set("user", JSON.stringify(profile), {
+    httpOnly: true,
+    path: "/",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+  });
 
+  const role = user.role as SidebarMenuKey | undefined;
   const navigation = role ? SIDEBAR_MENU_LIST[role] : [];
 
-  // Revalidate paths
   if (role === "ADMIN" || role === "CADRE") {
     revalidatePath("/admin", "layout");
   }
@@ -96,6 +98,6 @@ export async function login(
     message: "Login successful",
     redirectTo: role === "ADMIN" || role === "CADRE" ? "/admin" : "/",
     user: profile,
-    navigation: navigation, // ✅ send navigation back
+    navigation,
   };
 }

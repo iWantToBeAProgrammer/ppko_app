@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { articles } from "@/app/data/articles";
 import ArticleRenderer from "@/components/article-renderer";
@@ -10,6 +10,7 @@ import Footer from "@/components/sections/footer";
 
 export default function DetailArticlePage() {
   const params = useParams();
+  const router = useRouter();
   const slug = params.slug as string;
 
   const article = articles.find((a) => a.slug === slug);
@@ -22,13 +23,13 @@ export default function DetailArticlePage() {
     <div className="min-h-screen pt-8 relative ">
       {/* Tombol Kembali */}
       <div className="absolute left-15 z-10 max-md:left-2">
-        <a
-          href="/article"
+        <button
+          onClick={() => router.back()}
           className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 px-4 py-2 text-xl"
         >
           <span className="mr-2 text-2xl font-medium">⟵</span>
           Kembali
-        </a>
+        </button>
       </div>
 
       <div className="container mx-auto px-4 max-w-6xl pt-12">

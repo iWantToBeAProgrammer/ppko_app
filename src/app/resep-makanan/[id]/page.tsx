@@ -1,10 +1,7 @@
 "use client";
 
-// app/food/[id]/page.tsx
 import Image from "next/image";
 import { ArrowLeft, Play } from "lucide-react";
-import Link from "next/link";
-import { FoodCategory } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/app/loading";
 import { useParams, useRouter } from "next/navigation";

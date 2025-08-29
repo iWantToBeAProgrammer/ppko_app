@@ -149,7 +149,7 @@ export default function ResepMakananPage() {
           <Badge variant="outline">{FoodCategoryLabels[ageCategory]}</Badge>
         </div>
       </div>
-      <div className="card-wrapper w-full grid grid-cols-4">
+      <div className="card-wrapper w-full grid grid-cols-2 sm:grid-cols-4 gap-4">
         {recipes.length > 0 ? (
           recipes.map((item: Recipe, index: number) => {
             const videoId = extractYouTubeID(item.youtubeUrl || "");
