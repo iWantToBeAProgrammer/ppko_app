@@ -261,6 +261,14 @@ export function StuntingCalculator({
   const handleSelectChild = (childId: string) => {
     const child = data?.children.find((c) => c.id === childId) || null;
     setSelectedChild(child);
+    setMeasurementResult({
+      status: "",
+      zScore: "",
+      keterangan: "",
+    });
+    setHeight("");
+    setShowResult(false);
+    setError(false);
   };
 
   const handleSubVillageChange = (value: string) => {

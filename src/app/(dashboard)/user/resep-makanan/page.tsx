@@ -66,9 +66,9 @@ export default function ResepMakananPage() {
   };
 
   const getAgeCategory = (ageInMonths: number) => {
-    if (ageInMonths >= 6 && ageInMonths <= 8) return "AGE_6_8";
-    if (ageInMonths >= 9 && ageInMonths <= 11) return "AGE_9_11";
-    if (ageInMonths >= 12 && ageInMonths <= 23) return "AGE_12_23";
+    if (ageInMonths >= 6 && ageInMonths <= 8) return FoodCategory.AGE_6_8;
+    if (ageInMonths >= 9 && ageInMonths <= 11) return FoodCategory.AGE_9_11;
+    if (ageInMonths >= 12 && ageInMonths <= 23) return FoodCategory.AGE_12_23;
     return null;
   };
 
@@ -84,7 +84,6 @@ export default function ResepMakananPage() {
     [FoodCategory.AGE_6_8]: "6 - 8 bulan",
     [FoodCategory.AGE_9_11]: "9 - 11 bulan",
     [FoodCategory.AGE_12_23]: "12 - 23 bulan",
-    
   };
 
   if (loading) {
@@ -115,6 +114,9 @@ export default function ResepMakananPage() {
 
   const ageInMonths = calculateAgeInMonths(child.dateOfBirth);
   const ageCategory = getAgeCategory(ageInMonths);
+  const filteredRecipes = ageCategory
+    ? recipes.filter((r: Recipe) => r.category === ageCategory)
+    : recipes;
 
   if (!ageCategory) {
     return (
@@ -123,7 +125,7 @@ export default function ResepMakananPage() {
           <Calendar className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
           <CardTitle>Belum Ada Rekomendasi</CardTitle>
           <CardDescription>
-            Rekomendasi makanan tersedia untuk anak usia 6-35 bulan.
+            Rekomendasi makanan tersedia untuk anak usia 6-24 bulan.
             {child.first_name + " " + child.last_name} saat ini berusia{" "}
             {ageInMonths} bulan.
           </CardDescription>
@@ -131,6 +133,7 @@ export default function ResepMakananPage() {
       </Card>
     );
   }
+
   return (
     <div className="space-y-6 px-8 pt-4">
       {/* Header */}
@@ -150,8 +153,8 @@ export default function ResepMakananPage() {
         </div>
       </div>
       <div className="card-wrapper w-full grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {recipes.length > 0 ? (
-          recipes.map((item: Recipe, index: number) => {
+        {filteredRecipes.length > 0 ? (
+          filteredRecipes.map((item: Recipe, index: number) => {
             const videoId = extractYouTubeID(item.youtubeUrl || "");
             const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
             return (
