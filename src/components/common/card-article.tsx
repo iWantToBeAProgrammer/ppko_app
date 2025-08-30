@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Url } from "url";
 
 type CardArticleProps = {
-  // imageSrc: string;
+  image: string;
   imageAlt: string;
   title: string;
   // author: string;
@@ -13,7 +13,7 @@ type CardArticleProps = {
 };
 
 export default function CardArticle({
-  // imageSrc,
+  image,
   imageAlt,
   title,
   // author,
@@ -23,7 +23,7 @@ export default function CardArticle({
     <Card className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-[shadow, transform] duration-300 cursor-pointer py-0">
       <div className="relative h-40 md:h-44 lg:h-48 overflow-hidden rounded-t-2xl">
         <Image
-          src={"/assets/images/article/article.png"}
+          src={image}
           alt={imageAlt}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

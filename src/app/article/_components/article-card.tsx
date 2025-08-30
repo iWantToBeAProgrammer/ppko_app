@@ -5,9 +5,11 @@ import Link from "next/link";
 
 export default function ArticleCard({
   title,
+  image,
   link,
 }: {
   title: string;
+  image: string;
   link: string;
 }) {
   return (
@@ -16,7 +18,7 @@ export default function ArticleCard({
         <Image
           width={900}
           height={420}
-          src={"/assets/images/article/article.png"}
+          src={image}
           alt={title}
           className="rounded-3xl"
         />

@@ -35,6 +35,7 @@ import {
   SIDEBAR_MENU_LIST,
   SidebarMenuKey,
 } from "@/constants/sidebar-contants";
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const profile = useAuthStore((state) => state.profile);
@@ -51,7 +52,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground  group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:w-full"
             >
               <div className="font-semibold">
-                <div className="flex items-center justify-center rounded-md ">
+                <Link href={"/"} className="flex items-center justify-center rounded-md ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -67,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       height="83"
                     />
                   </svg>
-                </div>
+                </Link>
                 <span className="text-md">PPKO Sikumbang</span>
               </div>
             </SidebarMenuButton>

@@ -15,6 +15,7 @@ import TestimonialCards from "./_components/testimonial-card";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { FoodCategory } from "@prisma/client";
+import Loading from "../loading";
 
 export default function ResepMakananPage() {
   // Types
@@ -53,10 +54,6 @@ export default function ResepMakananPage() {
     null
   );
 
-  if (isLoading) {
-    return <Loader2 className="animate-spin" />;
-  }
-
   function extractYouTubeID(url: string) {
     const regex =
       /(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=|v\/))([a-zA-Z0-9_-]{11})/;
@@ -86,6 +83,10 @@ export default function ResepMakananPage() {
   const filteredRecipes = selectedCategory
     ? recipes.filter((r: Recipe) => r.category === selectedCategory)
     : recipes;
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full min-h-screen overflow-hidden sm:pt-56 pt-28">
