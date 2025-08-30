@@ -33,7 +33,7 @@ export default function BlogCard({
           width={400}
           height={150}
           className="w-full object-cover object-center rounded-4xl"
-          src={"/assets/images/article/article.png"} // Ganti dengan path gambar Anda
+          src={image} // Ganti dengan path gambar Anda
           alt="Pentingnya Peran Keluarga dalam Mencegah Stunting"
         />
 
