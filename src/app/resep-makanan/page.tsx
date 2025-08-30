@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { FoodCategory } from "@prisma/client";
 import Loading from "../loading";
+import Footer from "@/components/sections/footer";
 
 export default function ResepMakananPage() {
   // Types
@@ -159,7 +160,7 @@ export default function ResepMakananPage() {
         )}
 
         {/* 🔹 Recommended Recipes */}
-        <div className="recommended-recipe w-full mt-12">
+        <div className="recommended-recipe w-full my-12">
           <div className="recommended-recipe-title w-full flex flex-col sm:flex-row sm:gap-0 gap-4 sm:items-center justify-between">
             <h1 className="text-2xl font-bold flex-1">Rekomendasi Menu</h1>
 
@@ -189,12 +190,10 @@ export default function ResepMakananPage() {
               );
             })}
           </div>
-
-          <div className="testimony-card mt-24 w-full">
-            <TestimonialCards />
-          </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
