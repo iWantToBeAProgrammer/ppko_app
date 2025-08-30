@@ -1,4 +1,5 @@
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
+import { useState } from "react";
 import {
   FormControl,
   FormField,
@@ -8,6 +9,8 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function FormInput<T extends FieldValues>({
   form,
@@ -22,6 +25,11 @@ export default function FormInput<T extends FieldValues>({
   type?: string;
   placeholder?: string;
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isPasswordField = type === "password";
+  const inputType = isPasswordField && showPassword ? "text" : type;
+
   return (
     <FormField
       control={form.control}
@@ -38,12 +46,30 @@ export default function FormInput<T extends FieldValues>({
                 className="resize-none"
               />
             ) : (
-              <Input
-                {...rest}
-                type={type}
-                placeholder={placeholder}
-                autoComplete="off"
-              />
+              <div className="relative">
+                <Input
+                  {...rest}
+                  type={inputType}
+                  placeholder={placeholder}
+                  autoComplete="off"
+                  className={isPasswordField ? "pr-10" : ""}
+                />
+                {isPasswordField && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                  </Button>
+                )}
+              </div>
             )}
           </FormControl>
           <FormMessage className="text-xs" />
