@@ -44,6 +44,7 @@ interface Recipe {
   cookingSteps: string[];
   createdById: string;
   isPublished: boolean;
+  isSnack: boolean;
   createdAt: Date;
   updatedAt: Date;
   createdBy: {
@@ -76,6 +77,7 @@ const recipeFormSchema = z.object({
     )
     .min(1, "Minimal satu langkah memasak diperlukan"),
   isPublished: z.boolean(),
+  isSnack: z.string(),
 });
 
 type RecipeFormValues = z.infer<typeof recipeFormSchema>;
@@ -100,6 +102,7 @@ const recipeApi = {
         (step: { value: string }) => step.value
       ),
       isPublished: data.isPublished,
+      isSnack: data.isSnack,
     };
 
     const response = await fetch("/api/recipes", {
@@ -123,6 +126,7 @@ const recipeApi = {
         (step: { value: string }) => step.value
       ),
       isPublished: data.isPublished,
+      isSnack: data.isSnack,
     };
 
     const response = await fetch(`/api/recipes/${id}`, {
@@ -167,6 +171,7 @@ function RecipeForm({
         { value: "" },
       ],
       isPublished: true,
+      isSnack: recipe?.isSnack ? "true" : "false",
     },
   });
 
@@ -196,6 +201,11 @@ function RecipeForm({
     [FoodCategory.AGE_6_8]: "6 - 8 bulan",
     [FoodCategory.AGE_9_11]: "9 - 11 bulan",
     [FoodCategory.AGE_12_23]: "12 - 23 bulan",
+  };
+
+  const SnackOptions = {
+    false: "Makanan Utama",
+    true: "Camilan/Snack",
   };
 
   return (
@@ -260,6 +270,37 @@ function RecipeForm({
                         )}
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isSnack"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jenis Makanan</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih jenis makanan" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.entries(SnackOptions).map(([key, label]) => (
+                          <SelectItem key={key} value={key}>
+                            {label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Tentukan apakah ini makanan utama atau camilan
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

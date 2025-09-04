@@ -75,6 +75,7 @@ export async function PUT(
       ingredients,
       cookingSteps,
       isPublished,
+      isSnack,
     } = await request.json();
 
     if (!name || !category || !ingredients?.length || !cookingSteps?.length) {
@@ -86,6 +87,8 @@ export async function PUT(
       );
     }
 
+    const transformIsSnack = isSnack === "true";
+
     const recipe = await prisma.recipe.update({
       where: { id: id },
       data: {
@@ -95,6 +98,7 @@ export async function PUT(
         ingredients,
         cookingSteps,
         isPublished: isPublished ?? true,
+        isSnack: transformIsSnack,
       },
       include: {
         createdBy: {

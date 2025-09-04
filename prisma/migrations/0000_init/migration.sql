@@ -1,20 +1,23 @@
--- CreateEnum
-CREATE TYPE "public"."Role" AS ENUM ('ADMIN', 'CADRE', 'PARENT');
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "public";
 
 -- CreateEnum
-CREATE TYPE "public"."SubVillage" AS ENUM ('GEMAWANG', 'PENANGKAN', 'DEPOK', 'KLODRAN', 'KALINONGKO', 'TEGAL_PARAKAN', 'DERMONGANTI', 'MARGOSARI');
+CREATE TYPE "public"."ArticleCategory" AS ENUM ('NUTRISI', 'KESEHATAN', 'PARENTING', 'RESEP', 'BERITA', 'TIPS');
+
+-- CreateEnum
+CREATE TYPE "public"."FoodCategory" AS ENUM ('AGE_6_8', 'AGE_9_11', 'AGE_12_23');
 
 -- CreateEnum
 CREATE TYPE "public"."Gender" AS ENUM ('MALE', 'FEMALE');
 
 -- CreateEnum
-CREATE TYPE "public"."FoodCategory" AS ENUM ('AGE_6_11', 'AGE_12_23', 'AGE_24_35', 'AGE_36_47', 'AGE_48_60');
+CREATE TYPE "public"."Role" AS ENUM ('ADMIN', 'CADRE', 'PARENT');
 
 -- CreateEnum
 CREATE TYPE "public"."StuntingStatus" AS ENUM ('NORMAL', 'STUNTING', 'STUNTING_BERAT');
 
 -- CreateEnum
-CREATE TYPE "public"."ArticleCategory" AS ENUM ('NUTRISI', 'KESEHATAN', 'PARENTING', 'RESEP', 'BERITA', 'TIPS');
+CREATE TYPE "public"."SubVillage" AS ENUM ('GEMAWANG', 'PENANGKAN', 'DEPOK', 'KLODRAN', 'KALINONGKO', 'TEGAL_PARAKAN', 'DERMONGANTI', 'MARGOSARI');
 
 -- CreateTable
 CREATE TABLE "public"."profiles" (
@@ -22,7 +25,7 @@ CREATE TABLE "public"."profiles" (
     "email" TEXT,
     "first_name" TEXT,
     "last_name" TEXT,
-    "role" "public"."Role" NOT NULL DEFAULT 'PARENT',
+    "role" "public"."Role" NOT NULL DEFAULT 'ADMIN',
     "phoneNumber" TEXT,
     "address" TEXT,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -114,6 +117,7 @@ CREATE TABLE "public"."Article" (
     "createdById" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" UUID,
 
     CONSTRAINT "Article_pkey" PRIMARY KEY ("id")
 );
@@ -161,16 +165,16 @@ CREATE INDEX "Gallery_createdById_idx" ON "public"."Gallery"("createdById");
 CREATE UNIQUE INDEX "Article_slug_key" ON "public"."Article"("slug");
 
 -- CreateIndex
-CREATE INDEX "Article_createdById_idx" ON "public"."Article"("createdById");
-
--- CreateIndex
 CREATE INDEX "Article_category_idx" ON "public"."Article"("category");
 
 -- CreateIndex
-CREATE INDEX "Article_isPublished_idx" ON "public"."Article"("isPublished");
+CREATE INDEX "Article_createdById_idx" ON "public"."Article"("createdById");
 
 -- CreateIndex
 CREATE INDEX "Article_isFeatured_idx" ON "public"."Article"("isFeatured");
+
+-- CreateIndex
+CREATE INDEX "Article_isPublished_idx" ON "public"."Article"("isPublished");
 
 -- CreateIndex
 CREATE INDEX "Article_publishedAt_idx" ON "public"."Article"("publishedAt");
@@ -197,4 +201,5 @@ ALTER TABLE "public"."Recipe" ADD CONSTRAINT "Recipe_createdById_fkey" FOREIGN K
 ALTER TABLE "public"."Gallery" ADD CONSTRAINT "Gallery_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "public"."profiles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."Article" ADD CONSTRAINT "Article_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "public"."profiles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."Article" ADD CONSTRAINT "Article_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."profiles"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+

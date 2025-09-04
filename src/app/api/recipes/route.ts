@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
       ingredients,
       cookingSteps,
       isPublished,
+      isSnack,
     } = await request.json();
 
     if (!name || !category || !ingredients?.length || !cookingSteps?.length) {
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+    const transformIsSnack = isSnack === "true";
 
     const recipe = await prisma.recipe.create({
       data: {
@@ -66,6 +68,7 @@ export async function POST(request: NextRequest) {
         youtubeUrl: youtubeUrl || null,
         ingredients,
         cookingSteps,
+        isSnack: transformIsSnack,
         isPublished: isPublished ?? true,
         createdById: user.id,
       },

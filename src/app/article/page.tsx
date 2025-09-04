@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import ArticleCard from "./_components/article-card";
 import { articles } from "../data/articles";
 import Link from "next/link";
+import Footer from "@/components/sections/footer";
 
 // Array data artikel
 const articlesData = articles;
@@ -113,6 +114,8 @@ export default function ArticlePage() {
           ))}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

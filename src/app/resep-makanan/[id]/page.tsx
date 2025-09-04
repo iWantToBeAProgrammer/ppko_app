@@ -9,6 +9,7 @@ import { useState } from "react";
 
 export default function FoodRecipeDetails() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
 
   const [isPlay, setIsPlay] = useState(false);
@@ -47,13 +48,12 @@ export default function FoodRecipeDetails() {
 
   const videoId = extractYouTubeID(data.youtubeUrl || "");
   const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
-  const router = useRouter();
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-4 mt-8">
       <button
         onClick={() => router.back()}
-        className="flex gap-2 items-center mb-4"
+        className="flex gap-2 items-center mb-4 cursor-pointer"
       >
         <ArrowLeft size={20} /> <span className="text-sm">Kembali</span>
       </button>
@@ -93,7 +93,9 @@ export default function FoodRecipeDetails() {
             height="500"
             className="aspect-video w-full h-auto"
             src={`https://youtube.com/embed/${videoId}?autoplay=1&mute=1`}
-          ></iframe>
+            title={data.name}
+            allowFullScreen
+          />
         </div>
       )}
 

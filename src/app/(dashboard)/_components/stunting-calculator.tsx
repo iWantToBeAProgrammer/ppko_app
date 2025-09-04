@@ -350,19 +350,19 @@ export function StuntingCalculator({
             {showSubVillageFilter && (
               <div>
                 <label className="block mb-2 font-medium text-gray-700">
-                  Filter Desa/Kelurahan
+                  Filter Dusun
                 </label>
                 <Select
                   value={selectedSubVillage}
                   onValueChange={handleSubVillageChange}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Pilih desa/kelurahan" />
+                    <SelectValue placeholder="Pilih Dusun" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Desa/Kelurahan</SelectLabel>
-                      <SelectItem value="all">Semua Desa/Kelurahan</SelectItem>
+                      <SelectLabel>Dusun</SelectLabel>
+                      <SelectItem value="all">Semua Dusun</SelectItem>
                       {isLoadingSubVillages ? (
                         <p className="px-2 text-sm">Loading...</p>
                       ) : (

@@ -1,4 +1,5 @@
 import ActivityCard from "@/components/common/activity-card";
+import Footer from "@/components/sections/footer";
 import {
   Carousel,
   CarouselContent,
@@ -167,6 +168,7 @@ export default function GalleryPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
