@@ -156,7 +156,7 @@ export default function ResepMakananPage() {
         {filteredRecipes.length > 0 ? (
           filteredRecipes.map((item: Recipe, index: number) => {
             const videoId = extractYouTubeID(item.youtubeUrl || "");
-            const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+            const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
             return (
               <div key={index} className="pt-6 sm:pt-12">
                 <RecipeCard

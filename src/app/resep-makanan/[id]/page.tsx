@@ -47,7 +47,7 @@ export default function FoodRecipeDetails() {
   }
 
   const videoId = extractYouTubeID(data.youtubeUrl || "");
-  const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+  const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-4 mt-8">

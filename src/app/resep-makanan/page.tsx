@@ -143,7 +143,7 @@ export default function ResepMakananPage() {
             <CarouselContent className="px-0">
               {filteredRecipes.map((item: Recipe, index: number) => {
                 const videoId = extractYouTubeID(item.youtubeUrl || "");
-                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
                 return (
                   <CarouselItem
                     key={index}
@@ -189,7 +189,7 @@ export default function ResepMakananPage() {
             {isSnack.length > 0 ? (
               isSnack.map((item: Recipe, index: number) => {
                 const videoId = extractYouTubeID(item.youtubeUrl || "");
-                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
                 return (
                   <div key={index} className="recommendation-card">
                     <RecipeCard
