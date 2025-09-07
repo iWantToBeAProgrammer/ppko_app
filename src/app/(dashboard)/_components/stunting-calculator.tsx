@@ -228,7 +228,7 @@ export function StuntingCalculator({
       } else {
         let status = "";
         if (result.zScore < -3) status = "Stunting Berat";
-        else if (result.zScore < -2) status = "Stunting Sedang";
+        else if (result.zScore < -2) status = "Stunting";
         else status = "Normal";
 
         const formattedResult: MeasurementResult = {
@@ -324,7 +324,7 @@ export function StuntingCalculator({
         {
           value: "STUNTING",
           color: "yellow",
-          label: "Stunting Sedang",
+          label: "Stunting",
         },
         {
           value: "STUNTING_BERAT",
