@@ -322,7 +322,7 @@ export function StuntingCalculator({
           label: "Normal",
         },
         {
-          value: "STUNTING_SEDANG",
+          value: "STUNTING",
           color: "yellow",
           label: "Stunting Sedang",
         },
