@@ -13,8 +13,11 @@ import RecipeCard from "../../components/common/recipe-card";
 import { Separator } from "@/components/ui/separator";
 import TestimonialCards from "./_components/testimonial-card";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { ChefHat, Loader2 } from "lucide-react";
 import { FoodCategory } from "@prisma/client";
+import Loading from "../loading";
+import Footer from "@/components/sections/footer";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 
 export default function ResepMakananPage() {
   // Types
@@ -27,6 +30,7 @@ export default function ResepMakananPage() {
     cookingSteps: string[];
     createdById: string;
     isPublished: boolean;
+    isSnack: boolean;
     createdAt: Date;
     updatedAt: Date;
     createdBy: {
@@ -52,10 +56,6 @@ export default function ResepMakananPage() {
   const [selectedCategory, setSelectedCategory] = useState<FoodCategory | null>(
     null
   );
-
-  if (isLoading) {
-    return <Loader2 className="animate-spin" />;
-  }
 
   function extractYouTubeID(url: string) {
     const regex =
@@ -84,17 +84,31 @@ export default function ResepMakananPage() {
 
   // 🔹 Filter recipes based on selected category
   const filteredRecipes = selectedCategory
-    ? recipes.filter((r: Recipe) => r.category === selectedCategory)
-    : recipes;
+    ? recipes.filter(
+        (r: Recipe) => r.category === selectedCategory && r.isSnack === false
+      )
+    : recipes.filter((r: Recipe) => r.isSnack === false);
+
+  const isSnack = selectedCategory
+    ? recipes.filter(
+        (r: Recipe) => r.category === selectedCategory && r.isSnack === true
+      )
+    : recipes.filter((r: Recipe) => r.isSnack === true);
+
+    console.log(isSnack)
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full min-h-screen overflow-hidden sm:pt-56 pt-28">
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <h1 className="text-4xl font-semibold mb-2">Semua Tentang Asupan</h1>
         <p className="text-sm mt-2 sm:text-lg text-foreground/50 sm:w-1/2 tracking-wider font-medium">
-          Explore different types of meals such as breakfast, brunch, lunch, and
-          more to find delicious recipes and ideas for every time of day for
-          your child.
+          Jelajahi berbagai jenis makanan seperti sarapan, makan siang, dan
+          lebih banyak lagi untuk menemukan resep lezat dan ide untuk setiap
+          waktu sepanjang hari untuk anak Anda.
         </p>
 
         <h1 className="mt-12 border-l-10 border-primary pl-2 text-2xl font-semibold">
@@ -129,11 +143,11 @@ export default function ResepMakananPage() {
             <CarouselContent className="px-0">
               {filteredRecipes.map((item: Recipe, index: number) => {
                 const videoId = extractYouTubeID(item.youtubeUrl || "");
-                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
                 return (
                   <CarouselItem
                     key={index}
-                    className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/4"
+                    className="pl-2 md:pl-4 basis-1/2  md:basis-1/4"
                   >
                     <div className="pt-6 sm:pt-12">
                       <RecipeCard
@@ -158,9 +172,9 @@ export default function ResepMakananPage() {
         )}
 
         {/* 🔹 Recommended Recipes */}
-        <div className="recommended-recipe w-full mt-12">
+        <div className="recommended-recipe w-full my-12">
           <div className="recommended-recipe-title w-full flex flex-col sm:flex-row sm:gap-0 gap-4 sm:items-center justify-between">
-            <h1 className="text-2xl font-bold flex-1">Rekomendasi Menu</h1>
+            <h1 className="text-2xl font-bold flex-1">Snack MPASI</h1>
 
             <p className="text-sm text-muted-foreground sm:w-1/3">
               Selamat datang di Galeri Resep Kami, tempat di mana kami
@@ -171,29 +185,38 @@ export default function ResepMakananPage() {
 
           <Separator className="my-4 mb-12" />
 
-          <div className="recommendation-cards-wrapper grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredRecipes.map((item: Recipe, index: number) => {
-              const videoId = extractYouTubeID(item.youtubeUrl || "");
-              const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
-              return (
-                <div key={index} className="recommendation-card">
-                  <RecipeCard
-                    id={item.id}
-                    title={item.name}
-                    description={""}
-                    image={youtubeThumbnail}
-                    category={FoodCategoryLabels[item.category]}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="testimony-card mt-24 w-full">
-            <TestimonialCards />
+          <div className="recommendation-cards-wrapper grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {isSnack.length > 0 ? (
+              isSnack.map((item: Recipe, index: number) => {
+                const videoId = extractYouTubeID(item.youtubeUrl || "");
+                const youtubeThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+                return (
+                  <div key={index} className="recommendation-card">
+                    <RecipeCard
+                      id={item.id}
+                      title={item.name}
+                      description={""}
+                      image={youtubeThumbnail}
+                      category={FoodCategoryLabels[item.category]}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <Card className="text-center text-xl col-span-4 text-muted-foreground">
+                <CardTitle className="text-center w-full justify-center flex">
+                  <ChefHat size={48} />
+                </CardTitle>
+                <CardDescription>
+                  Rekomendasi Snack MPASI Belum Ada
+                </CardDescription>
+              </Card>
+            )}
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

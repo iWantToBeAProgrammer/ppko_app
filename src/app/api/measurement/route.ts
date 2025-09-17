@@ -8,6 +8,8 @@ export async function POST(req: Request) {
     const { payload } = await req.json();
     const { childId, height, zScore, status } = payload;
 
+    console.log(status)
+
     // Supabase auth
     const supabase = await createClient();
     const {

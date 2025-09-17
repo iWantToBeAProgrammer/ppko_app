@@ -1,6 +1,7 @@
 export const articles = [
   {
     id: 1,
+    image: "/assets/images/article/article-1.webp",
     title:
       "Makanan dan Gizi yang Tepat untuk Anak Usia 6 Bulan hingga 5 Tahun: Penuhi Kebutuhan Gizi Sejak Dini",
     slug: "makanan-dan-gizi-anak-6-bulan-5-tahun",
@@ -75,6 +76,8 @@ Beberapa tips penting dalam memberikan makanan sehat dan bergizi:
   },
   {
     id: 2,
+    image: "/assets/images/article/article-2.webp",
+
     slug: "makanan-bergizi-ibu-hamil-anak-usia-dini",
     description:
       "Artikel ini membahas pentingnya gizi seimbang untuk ibu hamil dan anak usia dini, termasuk nutrisi penting, panduan MPASI, pola makan sehat, serta peran edukasi gizi bagi keluarga.",
@@ -154,6 +157,8 @@ Periode balita adalah **masa emas (golden age)** pertumbuhan anak. Kekurangan gi
   },
   {
     id: 3,
+    image: "/assets/images/article/article-3.webp",
+
     slug: "tahapan-perkembangan-balita-1-5-tahun",
     description:
       "Panduan tahapan perkembangan balita usia 1–5 tahun meliputi aspek motorik, bahasa, kognitif, sosial, dan emosional untuk membantu orang tua memberikan stimulasi yang tepat.",
@@ -303,6 +308,7 @@ Artikel ini membahas tahapan perkembangan balita usia 1–5 tahun meliputi aspek
   {
     id: 4,
     slug: "tahapan-pertumbuhan-perkembangan-bayi-0-6-bulan",
+    image: "/assets/images/article/article-4.webp",
     title: "Tahapan Pertumbuhan dan Perkembangan Bayi Usia 0–6 Bulan",
     description:
       "Ulasan detail mengenai tahapan pertumbuhan bayi usia 0–6 bulan, mulai dari perkembangan fisik, motorik, bahasa, sosial, hingga tanda kesiapan MPASI.",

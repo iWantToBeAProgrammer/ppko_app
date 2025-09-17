@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import ArticleCard from "./_components/article-card";
 import { articles } from "../data/articles";
 import Link from "next/link";
+import Footer from "@/components/sections/footer";
 
 // Array data artikel
 const articlesData = articles;
@@ -38,7 +39,7 @@ export default function ArticlePage() {
           <Card className="overflow-hidden shadow-lg rounded-lg pb-0 py-0">
             <div className="relative">
               <Image
-                src="/assets/images/article/article.png"
+                src={articles[3].image}
                 alt="article"
                 width={920}
                 height={420}
@@ -71,6 +72,7 @@ export default function ArticlePage() {
           <div className="flex flex-col sm:gap-0 gap-6 sm:items-start items-center justify-between sm:w-1/2">
             {articlesData.slice(0, 3).map((article, index) => (
               <ArticleCard
+                image={article.image}
                 key={index}
                 title={article.title}
                 link={`/article/${article.slug}`}
@@ -103,6 +105,7 @@ export default function ArticlePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {articlesData.map((article) => (
             <CardArticle
+              image={article.image}
               key={article.id}
               imageAlt={article.slug}
               title={article.title}
@@ -111,6 +114,8 @@ export default function ArticlePage() {
           ))}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

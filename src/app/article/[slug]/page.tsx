@@ -25,7 +25,7 @@ export default function DetailArticlePage() {
       <div className="absolute left-15 z-10 max-md:left-2">
         <button
           onClick={() => router.back()}
-          className="inline-flex items-center text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 px-4 py-2 text-xl"
+          className="inline-flex items-center cursor-pointer text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 px-4 py-2 text-xl"
         >
           <span className="mr-2 text-2xl font-medium">⟵</span>
           Kembali
@@ -47,7 +47,7 @@ export default function DetailArticlePage() {
         <div className="mb-4">
           <div className="relative w-full h-80 md:h-96 rounded-xl overflow-hidden shadow-lg">
             <Image
-              src="/assets/images/article/article.png"
+              src={article.image}
               alt={article.title}
               fill
               className="object-cover"

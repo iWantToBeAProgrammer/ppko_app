@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
-import { Role } from "@prisma/client";
+import { Role, StuntingStatus } from "@prisma/client";
 
 export async function GET(
   request: NextRequest,
@@ -113,7 +113,7 @@ export async function GET(
         gender: measurement.child.gender,
         height: measurement.height,
         zScore: measurement.heightForAgeZScore,
-        stuntingStatus: measurement.stuntingStatus,
+        stuntingStatus: measurement.stuntingStatus as StuntingStatus,
       };
     });
 

@@ -96,7 +96,7 @@ export default function UserPertumbuhanPage() {
           label: "Normal",
         },
         {
-          value: "STUNTING_SEDANG",
+          value: "STUNTING",
           color: "yellow",
           label: "Stunting Sedang",
         },

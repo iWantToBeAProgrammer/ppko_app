@@ -122,6 +122,7 @@ export default function UserForm({
         dob.getMonth() + 1
       ).padStart(2, "0")}${String(dob.getFullYear()).slice(-2)}`;
       password = `${first_name.toLowerCase()}${formattedDob}`;
+      console.log(password);
     }
 
     Object.entries(data).forEach(([key, value]) => {
@@ -150,6 +151,7 @@ export default function UserForm({
       createUserAction(formData);
     });
   });
+  console.log(form);
 
   const handleEmailSave = () => {
     const email = form.getValues("email");
@@ -442,7 +444,7 @@ export default function UserForm({
                                     }
                                     onSelect={(date) =>
                                       field.onChange(
-                                        date ? date.toISOString() : ""
+                                        date ? format(date, "yyyy-MM-dd") : ""
                                       )
                                     }
                                     disabled={(date) =>

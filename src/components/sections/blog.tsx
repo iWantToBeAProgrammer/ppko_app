@@ -22,7 +22,7 @@ export default function Blog() {
               width={960}
               height={960}
               className="w-full h-full object-cover rounded-lg"
-              src="/assets/images/article/article.png"
+              src={blogs[3].image}
               alt="Families In Need"
             />
           </div>
@@ -53,7 +53,7 @@ export default function Blog() {
             <BlogCard
               key={index}
               title={blog.title}
-              image={"/assets/image/article/article.png"}
+              image={blog.image}
               category={"Nutrisi"}
               description={blog.description}
               link={`/article/${blog.slug}`}

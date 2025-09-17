@@ -228,7 +228,7 @@ export function StuntingCalculator({
       } else {
         let status = "";
         if (result.zScore < -3) status = "Stunting Berat";
-        else if (result.zScore < -2) status = "Stunting Sedang";
+        else if (result.zScore < -2) status = "Stunting";
         else status = "Normal";
 
         const formattedResult: MeasurementResult = {
@@ -261,6 +261,14 @@ export function StuntingCalculator({
   const handleSelectChild = (childId: string) => {
     const child = data?.children.find((c) => c.id === childId) || null;
     setSelectedChild(child);
+    setMeasurementResult({
+      status: "",
+      zScore: "",
+      keterangan: "",
+    });
+    setHeight("");
+    setShowResult(false);
+    setError(false);
   };
 
   const handleSubVillageChange = (value: string) => {
@@ -314,9 +322,9 @@ export function StuntingCalculator({
           label: "Normal",
         },
         {
-          value: "STUNTING_SEDANG",
+          value: "STUNTING",
           color: "yellow",
-          label: "Stunting Sedang",
+          label: "Stunting",
         },
         {
           value: "STUNTING_BERAT",
@@ -342,19 +350,19 @@ export function StuntingCalculator({
             {showSubVillageFilter && (
               <div>
                 <label className="block mb-2 font-medium text-gray-700">
-                  Filter Desa/Kelurahan
+                  Filter Dusun
                 </label>
                 <Select
                   value={selectedSubVillage}
                   onValueChange={handleSubVillageChange}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Pilih desa/kelurahan" />
+                    <SelectValue placeholder="Pilih Dusun" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Desa/Kelurahan</SelectLabel>
-                      <SelectItem value="all">Semua Desa/Kelurahan</SelectItem>
+                      <SelectLabel>Dusun</SelectLabel>
+                      <SelectItem value="all">Semua Dusun</SelectItem>
                       {isLoadingSubVillages ? (
                         <p className="px-2 text-sm">Loading...</p>
                       ) : (

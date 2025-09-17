@@ -82,6 +82,7 @@ model Recipe {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   cookingSteps String[]
+  isSnack      Boolean?     @default(false)
   createdBy    User         @relation(fields: [createdById], references: [id])
 
   @@index([category])
@@ -121,8 +122,8 @@ model Article {
   createdById     String          @db.Uuid
   createdAt       DateTime        @default(now())
   updatedAt       DateTime
-  User            User?           @relation(fields: [userId], references: [id])
   userId          String?         @db.Uuid
+  User            User?           @relation(fields: [userId], references: [id])
 
   @@index([category])
   @@index([createdById])
