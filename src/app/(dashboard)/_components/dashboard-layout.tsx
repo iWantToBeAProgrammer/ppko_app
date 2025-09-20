@@ -328,12 +328,12 @@ export default function DashboardLayout({
         }`;
       },
       showOnDesktop: true,
-      showOnMobile: false,
+      showOnMobile: true,
     },
     {
       icon: <PenLine className="h-4 w-4" />,
       label: "Edit",
-      onClick: (row: any) => {
+      onClick: (row: any) => {  2
         setSelectedUser(row);
         setEditDialogOpen(true);
       },

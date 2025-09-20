@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "i.ytimg.com", // Replace with your allowed hostname
       },
+      {
+        protocol: "https",
+        hostname: "placehold.co", // Replace with your allowed hostname
+      },
     ],
   },
 };

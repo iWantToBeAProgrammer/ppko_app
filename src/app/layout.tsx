@@ -37,10 +37,10 @@ export const metadata: Metadata = {
     "kesehatan anak",
     "monitoring tinggi badan",
   ],
-  authors: [{ name: "Rumah Sahabat", url: "https://contoh-domain.com" }],
+  authors: [{ name: "Rumah Sahabat"}],
   creator: "Rumah Sahabat",
   publisher: "Rumah Sahabat",
-  metadataBase: new URL("https://contoh-domain.com"),
+  metadataBase: new URL("https://gemawangsehat.com"),
 };
 
 export default async function RootLayout({

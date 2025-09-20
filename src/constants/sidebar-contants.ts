@@ -7,6 +7,7 @@ import {
   UserCog,
   LucideIcon,
   User,
+  BookOpenText,
 } from "lucide-react";
 
 interface SidebarMenuItem {
@@ -54,6 +55,11 @@ export const SIDEBAR_MENU_LIST: {
       url: "/cadre/kalkulator",
       icon: Calculator,
     },
+    {
+      title: "Buku Panduan",
+      url: "/cadre/buku-panduan",
+      icon: BookOpenText,
+    }
   ],
 
   ADMIN: [

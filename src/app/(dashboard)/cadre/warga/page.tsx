@@ -115,7 +115,7 @@ export default function KaderWargaPage() {
         setSelectedUser(row);
       },
       showOnDesktop: true,
-      showOnMobile: false,
+      showOnMobile: true,
     },
     {
       icon: <PenLine className="h-4 w-4" />,
